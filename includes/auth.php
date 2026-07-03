@@ -133,10 +133,12 @@ function attempt_login(string $identifier, string $password, bool $remember = fa
         return ['success' => false, 'message' => 'Lütfen kullanıcı adı/e-posta ve şifre girin.'];
     }
 
+    // Not: PDO native prepared statement (EMULATE_PREPARES=false) ile aynı
+    // isimli parametre iki kez kullanılamaz; ayrı placeholder'lar kullanılır.
     $stmt = db()->prepare(
-        'SELECT * FROM users WHERE username = :id OR email = :id LIMIT 1'
+        'SELECT * FROM users WHERE username = :username OR email = :email LIMIT 1'
     );
-    $stmt->execute([':id' => $identifier]);
+    $stmt->execute([':username' => $identifier, ':email' => $identifier]);
     $user = $stmt->fetch();
 
     if ($user === false) {

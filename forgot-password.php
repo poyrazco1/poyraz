@@ -41,8 +41,8 @@ if (is_post()) {
             $isError = true;
             $message = 'Lütfen kullanıcı adı veya e-posta girin.';
         } else {
-            $stmt = db()->prepare('SELECT id FROM users WHERE (username = :id OR email = :id) AND status = 1 LIMIT 1');
-            $stmt->execute([':id' => $identifier]);
+            $stmt = db()->prepare('SELECT id FROM users WHERE (username = :username OR email = :email) AND status = 1 LIMIT 1');
+            $stmt->execute([':username' => $identifier, ':email' => $identifier]);
             $user = $stmt->fetch();
 
             if ($user !== false) {
