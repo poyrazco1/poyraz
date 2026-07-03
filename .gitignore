@@ -1,0 +1,6 @@
+# Çalışma zamanı log dosyaları (izleme dışı; .htaccess korunur)
+/logs/*.log
+
+# Ortama özel / geçici
+*.cache
+.DS_Store

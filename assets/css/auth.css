@@ -1,0 +1,352 @@
+/* =========================================================================
+   PoyrazTech Yönetim Paneli — public (landing) ve kimlik doğrulama stilleri
+   Sade, kurumsal, açık gri tema. Neon/gradient/cam efekti yoktur.
+   ========================================================================= */
+
+:root {
+    --bg:            #F3F4F6;
+    --bg-secondary:  #EEF0F3;
+    --surface:       #FFFFFF;
+    --border:        #E2E5EA;
+    --border-strong: #D5D9E0;
+    --text:          #1F2937;
+    --text-muted:    #6B7280;
+    --primary:       #1F2A44;
+    --primary-hover: #263455;
+    --success:       #15803D;
+    --success-bg:    #ECFDF3;
+    --danger:        #B91C1C;
+    --danger-bg:     #FEF2F2;
+    --info:          #1E4E8C;
+    --info-bg:       #EEF4FB;
+
+    --radius:    8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.05);
+    --shadow-md: 0 4px 16px rgba(17, 24, 39, 0.08);
+    --font:      system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Ortak buton (landing + auth) */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color .12s ease, border-color .12s ease;
+}
+.btn:hover { text-decoration: none; }
+.btn--primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+.btn--primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+.btn--lg { padding: 12px 24px; font-size: 15px; }
+.btn--block { width: 100%; }
+
+/* Ortak uyarılar */
+.alert {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 11px 14px;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+.alert--success { background: var(--success-bg); border-color: #C4EAD2; color: var(--success); }
+.alert--error   { background: var(--danger-bg);  border-color: #F6CFCF; color: var(--danger); }
+.alert--info    { background: var(--info-bg);    border-color: #CFE0F2; color: var(--info); }
+.alert a { color: inherit; }
+
+/* =========================================================================
+   Landing (public tek sayfa)
+   ========================================================================= */
+.landing__container {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.landing__header {
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+}
+.landing__header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 64px;
+}
+.landing__brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.landing__logo {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 auto;
+    border-radius: 7px;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+.landing__brand-text {
+    font-weight: 600;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.landing__hero { padding: 56px 0 40px; }
+.landing__hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 40px;
+    align-items: center;
+}
+.landing__eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 12px;
+    margin-bottom: 18px;
+}
+.landing__title {
+    font-size: 34px;
+    line-height: 1.2;
+    font-weight: 700;
+    margin: 0 0 16px;
+    color: var(--text);
+}
+.landing__lead {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin: 0 0 26px;
+    max-width: 46ch;
+}
+.landing__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Hero yanındaki sade dekoratif panel (görsel yok, saf CSS) */
+.landing__hero-panel { display: flex; justify-content: center; }
+.landing__card {
+    width: 100%;
+    max-width: 360px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 20px;
+}
+.landing__card-row { display: flex; gap: 6px; margin-bottom: 16px; }
+.landing__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border-strong); }
+.landing__card-line {
+    height: 12px;
+    border-radius: 6px;
+    background: var(--bg-secondary);
+    margin-bottom: 12px;
+}
+.landing__card-line--wide { width: 70%; }
+.landing__card-line--short { width: 40%; }
+.landing__card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+}
+.landing__card-tile {
+    height: 52px;
+    border-radius: var(--radius);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+}
+
+.landing__features { padding: 20px 0 56px; }
+.landing__features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.landing__feature {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: var(--shadow-sm);
+}
+.landing__feature h3 { font-size: 16px; margin: 0 0 8px; }
+.landing__feature p { margin: 0; color: var(--text-muted); font-size: 14px; }
+
+.landing__footer {
+    border-top: 1px solid var(--border);
+    padding: 22px 0;
+    color: var(--text-muted);
+    font-size: 13px;
+    text-align: center;
+    background: var(--surface);
+}
+
+/* =========================================================================
+   Kimlik doğrulama (login / forgot / reset)
+   ========================================================================= */
+.auth {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 32px 16px;
+}
+.auth__wrap { width: 100%; max-width: 400px; }
+
+.auth__card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 30px 28px;
+}
+
+.auth__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+.auth__logo {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 auto;
+    border-radius: 8px;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+}
+.auth__brand-text { font-weight: 600; font-size: 15px; }
+
+.auth__title { font-size: 20px; font-weight: 600; margin: 0 0 4px; }
+.auth__subtitle { color: var(--text-muted); font-size: 14px; margin: 0 0 22px; }
+
+.auth__form { margin-top: 4px; }
+
+.form-group { display: flex; flex-direction: column; margin-bottom: 16px; min-width: 0; }
+.form-group label { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+
+.form-control {
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    width: 100%;
+    max-width: 100%;
+    transition: border-color .12s ease, box-shadow .12s ease;
+}
+.form-control:focus {
+    outline: none;
+    border-color: #9AA6BE;
+    box-shadow: 0 0 0 3px rgba(31, 42, 68, 0.08);
+}
+.form-control.is-invalid { border-color: #D98A8A; }
+
+.form-hint { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+.form-error { font-size: 12px; color: var(--danger); margin-top: 5px; }
+
+/* Şifre göster/gizle */
+.password-field { position: relative; }
+.password-field .form-control { padding-right: 44px; }
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    padding: 0;
+}
+.password-toggle:hover { color: var(--text); }
+.password-toggle__eye { width: 20px; height: 20px; fill: currentColor; }
+.password-toggle.is-visible { color: var(--primary); }
+
+/* Beni hatırla + şifremi unuttum satırı */
+.auth__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 4px 0 20px;
+}
+.checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--text);
+}
+.checkbox input { width: 16px; height: 16px; accent-color: var(--primary); }
+.auth__link { font-size: 13px; color: var(--primary); }
+
+.auth__foot { text-align: center; margin-top: 18px; font-size: 13px; }
+
+/* =========================================================================
+   Duyarlı düzen
+   ========================================================================= */
+@media (max-width: 860px) {
+    .landing__hero-inner { grid-template-columns: 1fr; gap: 28px; }
+    .landing__hero-panel { order: -1; }
+    .landing__title { font-size: 28px; }
+    .landing__features-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+    .auth__card { padding: 24px 20px; }
+    .landing__hero { padding: 40px 0 28px; }
+}
