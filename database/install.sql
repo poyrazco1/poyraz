@@ -1,0 +1,809 @@
+-- ============================================================================
+-- D4stattoo — Kurulum SQL Dosyası (TEK DOSYA)
+-- MySQL 5.7+ / MariaDB 10.3+ (Plesk uyumlu) — utf8mb4_unicode_ci
+--
+-- Kullanım: Plesk > Veritabanları > phpMyAdmin > İçe Aktar ile bu dosyayı
+-- seçin. Tablolar IF NOT EXISTS ile oluşturulur, demo kayıtlar INSERT IGNORE
+-- ile eklenir; dosya ikinci kez import edilirse mevcut veriler bozulmaz.
+-- ============================================================================
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------------------------------------------------------
+-- 1. settings — panelden yönetilen site ayarları (dil bazlı)
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `settings` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `setting_key` VARCHAR(100) NOT NULL,
+  `setting_value` TEXT NULL,
+  `setting_type` VARCHAR(20) NOT NULL DEFAULT 'text', -- text|textarea|image|url|color
+  `lang` VARCHAR(5) NOT NULL DEFAULT 'tr',
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_setting_lang` (`setting_key`, `lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 2. admins — yönetici hesapları (şifreler password_hash ile)
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `admins` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL DEFAULT '',
+  `email` VARCHAR(190) NOT NULL,
+  `password_hash` VARCHAR(255) NOT NULL,
+  `role` VARCHAR(20) NOT NULL DEFAULT 'admin',
+  `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `last_login_at` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_admin_email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 3. pages — statik içerik sayfaları (hakkımızda, hijyen, kvkk...)
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `pages` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lang` VARCHAR(5) NOT NULL DEFAULT 'tr',
+  `title` VARCHAR(190) NOT NULL,
+  `slug` VARCHAR(190) NOT NULL,
+  `body` MEDIUMTEXT NULL,
+  `meta_title` VARCHAR(190) NULL,
+  `meta_description` VARCHAR(300) NULL,
+  `status` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_page_slug_lang` (`slug`, `lang`),
+  KEY `ix_page_lang` (`lang`, `status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 4. services — hizmetler (her hizmet ayrı SEO sayfası)
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `services` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lang` VARCHAR(5) NOT NULL DEFAULT 'tr',
+  `title` VARCHAR(190) NOT NULL,
+  `slug` VARCHAR(190) NOT NULL,
+  `short_description` VARCHAR(500) NULL,
+  `content` MEDIUMTEXT NULL,
+  `image` VARCHAR(255) NULL,
+  `icon` VARCHAR(50) NULL,
+  `sort_order` INT NOT NULL DEFAULT 0,
+  `meta_title` VARCHAR(190) NULL,
+  `meta_description` VARCHAR(300) NULL,
+  `status` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_service_slug_lang` (`slug`, `lang`),
+  KEY `ix_service_lang` (`lang`, `status`, `sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 5. blog_categories
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blog_categories` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lang` VARCHAR(5) NOT NULL DEFAULT 'tr',
+  `name` VARCHAR(150) NOT NULL,
+  `slug` VARCHAR(190) NOT NULL,
+  `status` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_bcat_slug_lang` (`slug`, `lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 6. blog_posts
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blog_posts` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lang` VARCHAR(5) NOT NULL DEFAULT 'tr',
+  `title` VARCHAR(190) NOT NULL,
+  `slug` VARCHAR(190) NOT NULL,
+  `excerpt` VARCHAR(500) NULL,
+  `content` MEDIUMTEXT NULL,
+  `cover_image` VARCHAR(255) NULL,
+  `category_id` INT UNSIGNED NULL,
+  `meta_title` VARCHAR(190) NULL,
+  `meta_description` VARCHAR(300) NULL,
+  `tags` VARCHAR(300) NULL,
+  `status` TINYINT(1) NOT NULL DEFAULT 1, -- 1 yayında, 0 taslak
+  `published_at` DATETIME NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_post_slug_lang` (`slug`, `lang`),
+  KEY `ix_post_lang` (`lang`, `status`, `published_at`),
+  KEY `ix_post_cat` (`category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 7. gallery_categories
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `gallery_categories` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lang` VARCHAR(5) NOT NULL DEFAULT 'tr',
+  `name` VARCHAR(150) NOT NULL,
+  `slug` VARCHAR(190) NOT NULL,
+  `sort_order` INT NOT NULL DEFAULT 0,
+  `status` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_gcat_slug_lang` (`slug`, `lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 8. gallery_items — type: image | before_after | model
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `gallery_items` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `category_id` INT UNSIGNED NULL,
+  `title` VARCHAR(190) NULL,
+  `image` VARCHAR(255) NULL,
+  `before_image` VARCHAR(255) NULL,
+  `after_image` VARCHAR(255) NULL,
+  `type` VARCHAR(20) NOT NULL DEFAULT 'image',
+  `alt_text` VARCHAR(190) NULL,
+  `sort_order` INT NOT NULL DEFAULT 0,
+  `status` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `ix_gitem_cat` (`category_id`, `status`, `sort_order`),
+  KEY `ix_gitem_type` (`type`, `status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 9. appointments — randevu talepleri
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `appointments` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `full_name` VARCHAR(150) NOT NULL,
+  `phone` VARCHAR(30) NOT NULL,
+  `email` VARCHAR(190) NULL,
+  `tattoo_area` VARCHAR(150) NULL,
+  `tattoo_size` VARCHAR(100) NULL,
+  `color_type` VARCHAR(30) NULL, -- color|blackgray|undecided
+  `style` VARCHAR(150) NULL,
+  `reference_image` VARCHAR(255) NULL,
+  `description` TEXT NULL,
+  `preferred_datetime` VARCHAR(190) NULL,
+  `has_previous_tattoo` TINYINT(1) NOT NULL DEFAULT 0,
+  `status` VARCHAR(20) NOT NULL DEFAULT 'new', -- new|confirmed|completed|cancelled
+  `admin_note` TEXT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `ix_appt_status` (`status`, `created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 10. quote_requests — fiyat teklifi talepleri
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `quote_requests` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `full_name` VARCHAR(150) NOT NULL,
+  `phone` VARCHAR(30) NOT NULL,
+  `email` VARCHAR(190) NULL,
+  `tattoo_area` VARCHAR(150) NULL,
+  `tattoo_size` VARCHAR(100) NULL,
+  `color_type` VARCHAR(30) NULL,
+  `style` VARCHAR(150) NULL,
+  `reference_image` VARCHAR(255) NULL,
+  `description` TEXT NULL,
+  `budget_range` VARCHAR(100) NULL,
+  `status` VARCHAR(20) NOT NULL DEFAULT 'new', -- new|quoted|accepted|closed
+  `admin_note` TEXT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `ix_quote_status` (`status`, `created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 11. contact_messages — iletişim formu mesajları
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `contact_messages` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `full_name` VARCHAR(150) NOT NULL,
+  `phone` VARCHAR(30) NULL,
+  `email` VARCHAR(190) NULL,
+  `subject` VARCHAR(190) NULL,
+  `message` TEXT NOT NULL,
+  `status` VARCHAR(20) NOT NULL DEFAULT 'new', -- new|read
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `ix_msg_status` (`status`, `created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 12. faq_items
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `faq_items` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lang` VARCHAR(5) NOT NULL DEFAULT 'tr',
+  `question` VARCHAR(300) NOT NULL,
+  `answer` TEXT NOT NULL,
+  `sort_order` INT NOT NULL DEFAULT 0,
+  `status` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `ix_faq_lang` (`lang`, `status`, `sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 13. price_list_items
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `price_list_items` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lang` VARCHAR(5) NOT NULL DEFAULT 'tr',
+  `title` VARCHAR(190) NOT NULL,
+  `description` TEXT NULL,
+  `price_text` VARCHAR(100) NULL,
+  `sort_order` INT NOT NULL DEFAULT 0,
+  `status` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `ix_price_lang` (`lang`, `status`, `sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 14. testimonials — müşteri yorumları (google | instagram | site)
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `testimonials` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lang` VARCHAR(5) NOT NULL DEFAULT 'tr',
+  `name` VARCHAR(150) NOT NULL,
+  `source` VARCHAR(20) NOT NULL DEFAULT 'google', -- google|instagram|site
+  `rating` TINYINT NOT NULL DEFAULT 5,
+  `comment` TEXT NOT NULL,
+  `image` VARCHAR(255) NULL,
+  `status` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `ix_testi_lang` (`lang`, `status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 15. campaigns — kampanyalar
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `campaigns` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lang` VARCHAR(5) NOT NULL DEFAULT 'tr',
+  `title` VARCHAR(190) NOT NULL,
+  `description` TEXT NULL,
+  `button_text` VARCHAR(100) NULL,
+  `button_url` VARCHAR(255) NULL,
+  `start_date` DATE NULL,
+  `end_date` DATE NULL,
+  `status` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `ix_camp_lang` (`lang`, `status`, `start_date`, `end_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 16. languages
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `languages` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `code` VARCHAR(5) NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
+  `direction` VARCHAR(3) NOT NULL DEFAULT 'ltr', -- ltr|rtl
+  `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+  `sort_order` INT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_lang_code` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 17. customer_tracking — müşteri takip kodları
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `customer_tracking` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `tracking_code` VARCHAR(20) NOT NULL,
+  `full_name` VARCHAR(150) NOT NULL,
+  `phone` VARCHAR(30) NULL,
+  `service_type` VARCHAR(150) NULL,
+  `status` VARCHAR(20) NOT NULL DEFAULT 'pending', -- pending|confirmed|in_progress|completed|cancelled
+  `public_note` TEXT NULL,
+  `private_note` TEXT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_track_code` (`tracking_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- ============================================================================
+-- DEMO / BAŞLANGIÇ VERİLERİ
+-- Tüm içerikler admin panelden değiştirilebilir. INSERT IGNORE sayesinde
+-- dosya tekrar import edildiğinde mevcut kayıtlar korunur.
+-- ============================================================================
+
+-- Yönetici (şifre: Hasanacar123123++ — password_hash/bcrypt)
+INSERT IGNORE INTO `admins` (`id`, `name`, `email`, `password_hash`, `role`, `is_active`) VALUES
+(1, 'Hasan Acar', 'hasanacar6161@gmail.com', '$2y$12$hCy.crRBxKDX2x9bVw4AcOUtHGHCXscSHmbMlPDCVAs.eGXEgIfTq', 'admin', 1);
+
+-- Diller
+INSERT IGNORE INTO `languages` (`id`, `code`, `name`, `direction`, `is_active`, `sort_order`) VALUES
+(1, 'tr', 'Türkçe',  'ltr', 1, 1),
+(2, 'en', 'English', 'ltr', 1, 2),
+(3, 'ar', 'العربية', 'rtl', 1, 3),
+(4, 'ru', 'Русский', 'ltr', 1, 4);
+
+-- ----------------------------------------------------------------------------
+-- Ayarlar (TR + diğer diller için hero/başlık çevirileri)
+-- ----------------------------------------------------------------------------
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`, `setting_type`, `lang`) VALUES
+('site_name',        'D4stattoo', 'text', 'tr'),
+('site_slogan',      'Teninde iz bırakacak özel tasarımlar', 'text', 'tr'),
+('site_description', 'İstanbul Bağcılar''da kişiye özel dövme tasarımları. Minimal, realistic, fine line, blackwork, cover-up ve daha fazlası. Hijyenik uygulama, tek kullanımlık iğne, ücretsiz ön görüşme.', 'textarea', 'tr'),
+('phone',            '+90 505 801 61 26', 'text', 'tr'),
+('whatsapp_number',  '905058016126', 'text', 'tr'),
+('instagram_url',    'https://instagram.com/D4stattoo', 'url', 'tr'),
+('working_hours',    'Her gün 09:00 – 23:00', 'text', 'tr'),
+('location_text',    'İstanbul / Bağcılar', 'text', 'tr'),
+('experience_years', '3', 'text', 'tr'),
+('logo',             '', 'image', 'tr'),
+('favicon',          '', 'image', 'tr'),
+('og_image',         '', 'image', 'tr'),
+('primary_color',    '#e11d2e', 'color', 'tr'),
+('hero_title',       'Teninde İz Bırakacak Özel Tasarımlar', 'text', 'tr'),
+('hero_subtitle',    'İstanbul Bağcılar''da kişiye özel dövme tasarımları, hijyenik uygulama ve sanatsal yaklaşım.', 'textarea', 'tr'),
+('hero_btn_primary', 'Randevu Al', 'text', 'tr'),
+('hero_btn_secondary','WhatsApp''tan Teklif Al', 'text', 'tr'),
+('footer_text',      'D4stattoo — İstanbul Bağcılar''da kişiye özel dövme stüdyosu. Tek kullanımlık iğne, steril ekipman ve sanatsal yaklaşım.', 'textarea', 'tr'),
+('artist_name',      'D4stattoo Artist', 'text', 'tr'),
+('artist_bio',       'Üç yıldır İstanbul''da kişiye özel dövme tasarlıyorum. Minimal, fine line ve realistic çalışmalarda uzmanlaştım; her projeye ücretsiz ön görüşme ve özgün bir eskizle başlıyorum. Amacım, teninde yıllarca gururla taşıyacağın bir iz bırakmak.', 'textarea', 'tr'),
+('artist_image',     '', 'image', 'tr'),
+('campaign_show',    '1', 'text', 'tr'),
+('popup_show',       '1', 'text', 'tr'),
+('google_reviews_url', '', 'url', 'tr');
+
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`, `setting_type`, `lang`) VALUES
+('hero_title',    'Custom Designs That Leave a Mark on Your Skin', 'text', 'en'),
+('hero_subtitle', 'Custom tattoo designs, hygienic application and an artistic approach in Bağcılar, Istanbul.', 'textarea', 'en'),
+('hero_btn_primary', 'Book Now', 'text', 'en'),
+('hero_btn_secondary', 'Get a Quote on WhatsApp', 'text', 'en'),
+('site_slogan',   'Custom designs that leave a mark on your skin', 'text', 'en'),
+('site_description', 'Custom tattoo designs in Bağcılar, Istanbul. Minimal, realistic, fine line, blackwork, cover-up and more. Hygienic application, single-use needles, free consultation.', 'textarea', 'en'),
+('footer_text',   'D4stattoo — custom tattoo studio in Bağcılar, Istanbul. Single-use needles, sterile equipment and an artistic approach.', 'textarea', 'en'),
+('artist_bio',    'I have been designing custom tattoos in Istanbul for three years, specialising in minimal, fine line and realistic work. Every project starts with a free consultation and an original sketch.', 'textarea', 'en'),
+('working_hours', 'Every day 09:00 – 23:00', 'text', 'en'),
+('location_text', 'Istanbul / Bağcılar', 'text', 'en');
+
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`, `setting_type`, `lang`) VALUES
+('hero_title',    'تصاميم خاصة تترك أثراً على جلدك', 'text', 'ar'),
+('hero_subtitle', 'تصاميم وشم خاصة بك، تطبيق صحي ونهج فني في باغجيلار، إسطنبول.', 'textarea', 'ar'),
+('hero_btn_primary', 'احجز موعداً', 'text', 'ar'),
+('hero_btn_secondary', 'اطلب عرض سعر عبر واتساب', 'text', 'ar'),
+('site_slogan',   'تصاميم خاصة تترك أثراً على جلدك', 'text', 'ar'),
+('site_description', 'تصاميم وشم خاصة بك في باغجيلار، إسطنبول. مينيمال، واقعي، فاين لاين، بلاك وورك، كوفر أب والمزيد. تطبيق صحي وإبر للاستخدام الواحد واستشارة مجانية.', 'textarea', 'ar'),
+('footer_text',   'D4stattoo — استوديو وشم خاص في باغجيلار، إسطنبول. إبر للاستخدام الواحد ومعدات معقمة ونهج فني.', 'textarea', 'ar'),
+('working_hours', 'يومياً 09:00 – 23:00', 'text', 'ar'),
+('location_text', 'إسطنبول / باغجيلار', 'text', 'ar');
+
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`, `setting_type`, `lang`) VALUES
+('hero_title',    'Индивидуальные тату, которые оставят след на вашей коже', 'text', 'ru'),
+('hero_subtitle', 'Индивидуальный дизайн тату, гигиеничная работа и художественный подход в Багджыларе, Стамбул.', 'textarea', 'ru'),
+('hero_btn_primary', 'Записаться', 'text', 'ru'),
+('hero_btn_secondary', 'Узнать цену в WhatsApp', 'text', 'ru'),
+('site_slogan',   'Индивидуальные тату, которые оставят след', 'text', 'ru'),
+('site_description', 'Индивидуальный дизайн тату в Багджыларе, Стамбул. Минимализм, реализм, fine line, blackwork, cover-up и другое. Гигиена, одноразовые иглы, бесплатная консультация.', 'textarea', 'ru'),
+('footer_text',   'D4stattoo — студия индивидуальной татуировки в Багджыларе, Стамбул. Одноразовые иглы, стерильное оборудование, художественный подход.', 'textarea', 'ru'),
+('working_hours', 'Ежедневно 09:00 – 23:00', 'text', 'ru'),
+('location_text', 'Стамбул / Багджылар', 'text', 'ru');
+
+-- ----------------------------------------------------------------------------
+-- Sayfalar (TR dolu, diğer diller temel içerik)
+-- ----------------------------------------------------------------------------
+INSERT IGNORE INTO `pages` (`id`, `lang`, `title`, `slug`, `body`, `meta_title`, `meta_description`, `status`) VALUES
+(1, 'tr', 'Hakkımızda', 'hakkimizda',
+'<p>D4stattoo, İstanbul Bağcılar''da hizmet veren <strong>kişiye özel dövme stüdyosudur</strong>. Üç yıllık deneyimimizle; minimal dövmeden realistic portreye, fine line''dan cover-up''a kadar geniş bir yelpazede çalışıyoruz.</p><h2>Yaklaşımımız</h2><p>Bizim için her dövme bir hikâyedir. Hazır kataloglardan seçmek yerine, seninle oturup dinliyor, hikâyeni anlıyor ve <strong>sadece sana ait bir tasarım</strong> çiziyoruz. Uygulama öncesi ücretsiz ön görüşme yapıyor, eskizi birlikte son haline getiriyoruz.</p><h2>Neden D4stattoo?</h2><ul><li>Kişiye özel, özgün tasarımlar — asla kopya çalışma yok</li><li>Tek kullanımlık iğne ve steril ekipman</li><li>Uygulama öncesi ücretsiz ön görüşme ve eskiz çalışması</li><li>Dövme sonrası detaylı bakım rehberi ve takip</li><li>Her gün 09:00 – 23:00 arası esnek randevu saatleri</li></ul><h2>İstanbul''da Tattoo Studio Arayanlara</h2><p>Bağcılar dövme stüdyosu olarak İstanbul''un her yerinden misafir ağırlıyoruz. İlk dövmesini yaptıracaklar için sabırlı ve bilgilendirici bir süreç yürütüyor; deneyimli dövme severlere ise cesur ve sanatsal projelerde eşlik ediyoruz.</p>',
+'Hakkımızda — İstanbul Bağcılar Dövme Stüdyosu', 'D4stattoo: İstanbul Bağcılar''da kişiye özel dövme stüdyosu. 3 yıllık deneyim, steril ekipman, tek kullanımlık iğne ve ücretsiz ön görüşme.', 1),
+
+(2, 'tr', 'Hijyen ve Sterilizasyon', 'hijyen',
+'<p>Dövmede güzellik kadar <strong>güvenlik ve hijyen</strong> de önceliğimizdir. Stüdyomuzda her uygulama, sağlık standartlarına uygun steril bir ortamda gerçekleştirilir.</p><h2>Hijyen Standartlarımız</h2><ul><li><strong>Tek kullanımlık iğne:</strong> Her seansta iğne, kartuş ve eldiven ambalajı müşterinin gözü önünde açılır ve seans sonunda tıbbi atık olarak imha edilir.</li><li><strong>Steril ekipman:</strong> Tek kullanımlık olmayan tüm ekipman her seans öncesi dezenfekte edilir ve hijyen kurallarına uygun saklanır.</li><li><strong>Yüzey dezenfeksiyonu:</strong> Çalışma alanı, koltuk ve tüm yüzeyler her müşteriden önce ve sonra medikal dezenfektanlarla temizlenir.</li><li><strong>Tek kullanımlık sarf malzemeleri:</strong> Boya kapları, streç örtüler, jiletler ve peçeteler her müşteri için yenidir.</li></ul><h2>Uygulama Öncesi</h2><p>Ön görüşmede cilt durumun değerlendirilir, alerji geçmişin sorulur ve süreç adım adım anlatılır. Kendini güvende hissetmen bizim için uygulamanın kendisi kadar önemli.</p><h2>Uygulama Sonrası</h2><p>Seans sonunda bölge steril şekilde kapatılır ve sana özel <a href="/bakim-talimatlari">bakım talimatları</a> verilir. İyileşme sürecinde her sorunda bize WhatsApp üzerinden ulaşabilirsin.</p>',
+'Hijyen ve Sterilizasyon — Güvenli Dövme', 'D4stattoo hijyen standartları: tek kullanımlık iğne, steril ekipman, medikal dezenfeksiyon ve dövme sonrası bakım takibi.', 1),
+
+(3, 'tr', 'Dövme Sonrası Bakım Talimatları', 'bakim-talimatlari',
+'<p>Dövmenin kalıcı güzelliği, ilk haftalardaki bakıma bağlıdır. Aşağıdaki adımları uygularsan dövmen hem sağlıklı iyileşir hem de renklerini uzun yıllar korur.</p><h2>İlk 24 Saat</h2><ul><li>Sanatçının kapattığı koruyucu bandı önerilen süre boyunca (2-4 saat, özel bantlarda 3-4 gün) çıkarma.</li><li>Bandı çıkardıktan sonra dövmeyi ılık su ve parfümsüz sabunla nazikçe yıka, temiz kağıt havluyla kurula.</li><li>İnce bir tabaka halinde önerilen bakım kremini sür.</li></ul><h2>İlk 2 Hafta</h2><ul><li>Dövmeyi günde 2-3 kez yıka ve nemlendir.</li><li>Kabuklanmaları asla kaşıma ve koparma; kendiliğinden dökülmelerini bekle.</li><li>Havuz, deniz, sauna ve solaryumdan uzak dur.</li><li>Doğrudan güneş ışığından koru; güneşe çıkman gerekiyorsa bölgeyi kapat.</li><li>Bol oksijen alması için dar ve sürtünen kıyafetlerden kaçın.</li></ul><h2>Uzun Vadede</h2><ul><li>İyileşme tamamlandıktan sonra da düzenli nemlendirme renklerin canlı kalmasını sağlar.</li><li>Yazın yüksek faktörlü güneş kremi kullan; UV ışınları renkleri soldurur.</li></ul><h2>Ne Zaman Bize Ulaşmalısın?</h2><p>Aşırı kızarıklık, şişlik, ateş veya beklenmeyen bir reaksiyon görürsen hem bize hem de bir sağlık kuruluşuna başvur. WhatsApp hattımız her gün 09:00 – 23:00 arası açık.</p>',
+'Dövme Sonrası Bakım Talimatları', 'Dövme sonrası bakım rehberi: ilk 24 saat, ilk 2 hafta ve uzun vadeli bakım adımları. Dövmenizin renklerini koruyun.', 1),
+
+(4, 'tr', 'KVKK ve Gizlilik Politikası', 'kvkk',
+'<p>D4stattoo olarak kişisel verilerinizin güvenliğine önem veriyoruz. Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") kapsamında aydınlatma yükümlülüğümüzü yerine getirmek amacıyla hazırlanmıştır.</p><h2>Hangi Verileri Topluyoruz?</h2><p>Web sitemizdeki randevu, fiyat teklifi ve iletişim formları aracılığıyla; ad soyad, telefon numarası, e-posta adresi, dövme tercihlerinize ilişkin bilgiler ve ilettiğiniz referans görseller işlenmektedir.</p><h2>Verilerinizi Hangi Amaçla Kullanıyoruz?</h2><ul><li>Randevu ve fiyat teklifi taleplerinizi yanıtlamak</li><li>Hizmet öncesi ön görüşme sürecini yürütmek</li><li>Talebiniz halinde size bilgilendirme yapmak</li></ul><h2>Verileriniz Kimlerle Paylaşılır?</h2><p>Kişisel verileriniz üçüncü kişilerle <strong>paylaşılmaz</strong>, pazarlama amacıyla kullanılmaz ve yurt dışına aktarılmaz. Veriler yalnızca stüdyomuzun hizmet süreçleri için saklanır.</p><h2>Haklarınız</h2><p>KVKK''nın 11. maddesi kapsamında; verilerinize erişme, düzeltilmesini veya silinmesini talep etme hakkına sahipsiniz. Talepleriniz için iletişim sayfamızdan bize ulaşabilirsiniz.</p><h2>Çerezler</h2><p>Sitemiz, oturum yönetimi için zorunlu çerezler dışında izleme çerezi kullanmaz.</p>',
+'KVKK ve Gizlilik Politikası', 'D4stattoo kişisel verilerin korunması ve gizlilik politikası. Form verilerinizin nasıl işlendiğini öğrenin.', 1);
+
+INSERT IGNORE INTO `pages` (`id`, `lang`, `title`, `slug`, `body`, `meta_title`, `meta_description`, `status`) VALUES
+(5, 'en', 'About Us', 'hakkimizda',
+'<p>D4stattoo is a custom tattoo studio in Bağcılar, Istanbul. With three years of experience we work in a wide range of styles — from minimal tattoos and fine line to realistic portraits and cover-ups.</p><h2>Why D4stattoo?</h2><ul><li>Original, custom designs — never copies</li><li>Single-use needles and sterile equipment</li><li>Free consultation and sketch before every session</li><li>Detailed aftercare guide and follow-up</li><li>Open every day 09:00 – 23:00</li></ul>',
+'About Us — Tattoo Studio in Istanbul', 'D4stattoo: custom tattoo studio in Bağcılar, Istanbul. 3 years of experience, sterile equipment, single-use needles, free consultation.', 1),
+(6, 'en', 'Hygiene & Sterilization', 'hijyen',
+'<p>Safety and hygiene are as important to us as artistry. Every procedure takes place in a sterile environment that meets health standards.</p><ul><li><strong>Single-use needles</strong> opened in front of you and disposed of as medical waste</li><li><strong>Sterile equipment</strong> disinfected before every session</li><li><strong>Surface disinfection</strong> before and after every client</li><li><strong>Disposable supplies</strong> — ink caps, wraps, razors are new for each client</li></ul>',
+'Hygiene & Sterilization', 'D4stattoo hygiene standards: single-use needles, sterile equipment and medical disinfection.', 1),
+(7, 'en', 'Tattoo Aftercare Instructions', 'bakim-talimatlari',
+'<p>The lasting beauty of your tattoo depends on the first weeks of care.</p><h2>First 24 Hours</h2><ul><li>Keep the protective film on for the recommended time.</li><li>Wash gently with lukewarm water and fragrance-free soap; pat dry.</li><li>Apply a thin layer of the recommended cream.</li></ul><h2>First 2 Weeks</h2><ul><li>Wash and moisturise 2-3 times a day.</li><li>Never scratch or pick the scabs.</li><li>Avoid pools, sea, sauna and direct sunlight.</li></ul>',
+'Tattoo Aftercare Instructions', 'Tattoo aftercare guide: first 24 hours, first 2 weeks and long-term care steps.', 1),
+(8, 'en', 'Privacy Policy', 'kvkk',
+'<p>We only process the data you submit via our forms (name, phone, e-mail, tattoo preferences, reference images) to respond to your appointment and quote requests. Your data is never shared with third parties or used for marketing.</p>',
+'Privacy Policy', 'D4stattoo privacy policy. Learn how your form data is processed.', 1);
+
+INSERT IGNORE INTO `pages` (`id`, `lang`, `title`, `slug`, `body`, `meta_title`, `meta_description`, `status`) VALUES
+(9, 'ar', 'من نحن', 'hakkimizda',
+'<p>D4stattoo هو استوديو وشم خاص في باغجيلار، إسطنبول. بخبرة ثلاث سنوات نعمل بأساليب متعددة — من الوشم المينيمال والفاين لاين إلى البورتريه الواقعي والكوفر أب.</p><ul><li>تصاميم أصلية خاصة بك</li><li>إبر للاستخدام الواحد ومعدات معقمة</li><li>استشارة مجانية قبل كل جلسة</li><li>مفتوح يومياً 09:00 – 23:00</li></ul>',
+'من نحن — استوديو وشم في إسطنبول', 'D4stattoo: استوديو وشم خاص في باغجيلار، إسطنبول. خبرة 3 سنوات، معدات معقمة، إبر للاستخدام الواحد.', 1),
+(10, 'ar', 'النظافة والتعقيم', 'hijyen',
+'<p>السلامة والنظافة أولوية لدينا. كل إجراء يتم في بيئة معقمة وفق المعايير الصحية: إبر للاستخدام الواحد تُفتح أمامك، معدات معقمة، وتطهير جميع الأسطح قبل وبعد كل عميل.</p>',
+'النظافة والتعقيم', 'معايير النظافة في D4stattoo: إبر للاستخدام الواحد ومعدات معقمة.', 1),
+(11, 'ar', 'تعليمات العناية بعد الوشم', 'bakim-talimatlari',
+'<p>جمال وشمك الدائم يعتمد على العناية في الأسابيع الأولى: اغسل الوشم بلطف بماء فاتر وصابون بدون عطر، رطّبه 2-3 مرات يومياً، لا تخدش القشور، وتجنب المسبح والبحر والساونا وأشعة الشمس المباشرة لمدة أسبوعين.</p>',
+'تعليمات العناية بعد الوشم', 'دليل العناية بعد الوشم: أول 24 ساعة وأول أسبوعين.', 1),
+(12, 'ar', 'سياسة الخصوصية', 'kvkk',
+'<p>نعالج البيانات التي ترسلها عبر نماذجنا (الاسم، الهاتف، البريد، تفضيلات الوشم، الصور المرجعية) فقط للرد على طلبات الموعد وعرض السعر. لا تُشارك بياناتك مع أطراف ثالثة.</p>',
+'سياسة الخصوصية', 'سياسة الخصوصية في D4stattoo.', 1);
+
+INSERT IGNORE INTO `pages` (`id`, `lang`, `title`, `slug`, `body`, `meta_title`, `meta_description`, `status`) VALUES
+(13, 'ru', 'О нас', 'hakkimizda',
+'<p>D4stattoo — студия индивидуальной татуировки в Багджыларе, Стамбул. Три года опыта в разных стилях: от минимализма и fine line до реалистичных портретов и cover-up.</p><ul><li>Оригинальные индивидуальные эскизы</li><li>Одноразовые иглы и стерильное оборудование</li><li>Бесплатная консультация перед каждым сеансом</li><li>Открыто ежедневно 09:00 – 23:00</li></ul>',
+'О нас — тату-студия в Стамбуле', 'D4stattoo: студия индивидуальной татуировки в Багджыларе, Стамбул. 3 года опыта, стерильность, одноразовые иглы.', 1),
+(14, 'ru', 'Гигиена и стерилизация', 'hijyen',
+'<p>Безопасность и гигиена — наш приоритет. Каждый сеанс проходит в стерильных условиях: одноразовые иглы вскрываются при вас, оборудование дезинфицируется, все поверхности обрабатываются до и после каждого клиента.</p>',
+'Гигиена и стерилизация', 'Стандарты гигиены D4stattoo: одноразовые иглы и стерильное оборудование.', 1),
+(15, 'ru', 'Уход за тату после сеанса', 'bakim-talimatlari',
+'<p>Красота вашей тату зависит от ухода в первые недели: мойте тату тёплой водой с мылом без отдушек, увлажняйте 2-3 раза в день, не сдирайте корочки, избегайте бассейна, моря, сауны и прямого солнца в течение двух недель.</p>',
+'Уход за тату', 'Руководство по уходу за тату: первые 24 часа и первые 2 недели.', 1),
+(16, 'ru', 'Политика конфиденциальности', 'kvkk',
+'<p>Мы обрабатываем данные, отправленные через формы (имя, телефон, e-mail, предпочтения по тату, референсы), только для ответа на ваши заявки. Данные не передаются третьим лицам.</p>',
+'Политика конфиденциальности', 'Политика конфиденциальности D4stattoo.', 1);
+
+-- ----------------------------------------------------------------------------
+-- Hizmetler — TR (her biri ayrı SEO sayfası; içerik bölümleri h2 ile ayrılır)
+-- ----------------------------------------------------------------------------
+INSERT IGNORE INTO `services` (`id`, `lang`, `title`, `slug`, `short_description`, `content`, `image`, `icon`, `sort_order`, `meta_title`, `meta_description`, `status`) VALUES
+(1, 'tr', 'Minimal Tattoo', 'minimal-tattoo',
+'Az çizgiyle çok şey anlatan, zarif ve zamansız minimal dövmeler. İlk dövmesini yaptıracaklar için ideal başlangıç.',
+'<h2>Bu Stil Nedir?</h2><p>Minimal dövme; sade çizgiler, küçük semboller ve az detayla güçlü bir anlam taşıyan dövme stilidir. Gösterişten uzak ama karakteri güçlü bu stil, son yıllarda <strong>minimal dövme İstanbul</strong> aramalarında en çok tercih edilen tarzların başında geliyor.</p><h2>Kimler İçin Uygundur?</h2><p>İlk dövmesini yaptıracaklar, işi gereği görünür bölgelerde iddiasız bir tasarım isteyenler ve "az ama öz" felsefesini benimseyenler için idealdir. Kadın müşterilerimizin en çok tercih ettiği stildir.</p><h2>Hangi Bölgelere Yakışır?</h2><p>Bilek, ayak bileği, kulak arkası, parmak, köprücük kemiği ve ense minimal dövmenin en zarif durduğu bölgelerdir.</p><h2>Ortalama Süreç</h2><p>Tasarıma göre 15 dakika ile 1 saat arasında tamamlanır. Ön görüşmede tasarımı birlikte netleştirir, aynı gün ya da ertesi gün uygulamayı yapabiliriz.</p><h2>İyileşme ve Bakım</h2><p>Küçük boyutu sayesinde iyileşme genellikle 1-2 hafta sürer. İlk günlerde nemlendirme ve güneşten koruma yeterlidir; detaylar bakım talimatları sayfamızdadır.</p><h2>Fiyat Nasıl Belirlenir?</h2><p>Minimal dövmede fiyat; ölçü, bölge ve çizgi yoğunluğuna göre belirlenir. Başlangıç fiyatları için fiyat listemize bakabilir, net rakam için ücretsiz ön değerlendirme talep edebilirsiniz.</p><h3>Minimal dövme kalıcı mıdır?</h3><p>Evet; ince çizgili olsa da profesyonel uygulamada kalıcıdır. Zamanla incelme olursa ücretsiz rötuş yapıyoruz.</p><h3>Minimal dövme ağrır mı?</h3><p>Küçük boyutu ve kısa süresi nedeniyle en az ağrılı dövme türüdür; çoğu müşterimiz "karınca ısırığı gibi" diye tanımlar.</p>',
+'assets/img/demo/service-minimal.svg', 'minimal', 1,
+'Minimal Dövme İstanbul | Minimal Tattoo — D4stattoo',
+'İstanbul Bağcılar''da minimal dövme. Zarif, sade ve zamansız minimal tattoo tasarımları. Tek kullanımlık iğne, ücretsiz ön görüşme. Hemen randevu alın.', 1),
+
+(2, 'tr', 'Realistic Tattoo', 'realistic-tattoo',
+'Fotoğraf gerçekliğinde gölgelendirme ve derinlik. Portre, hayvan figürü ve doğa temalı realistic çalışmalar.',
+'<h2>Bu Stil Nedir?</h2><p>Realistic (gerçekçi) dövme; bir fotoğrafı ya da nesneyi gölge, ışık ve derinlik kullanarak tene fotoğraf gerçekliğinde aktaran ileri seviye bir stildir. <strong>İstanbul tattoo studio</strong> seçerken bu stilde sanatçının portfolyosunu incelemek özellikle önemlidir.</p><h2>Kimler İçin Uygundur?</h2><p>Sevdiği bir insanın, hayvanının ya da anısının fotoğraf gerçekliğinde tende yaşamasını isteyenler için uygundur. Orta-büyük ölçekli çalışmalara açık olanlar en iyi sonucu alır.</p><h2>Hangi Bölgelere Yakışır?</h2><p>Üst kol, ön kol, göğüs, sırt ve bacak gibi geniş ve düz alanlar realistic detayların en iyi işlendiği bölgelerdir.</p><h2>Ortalama Süreç</h2><p>Boyuta göre 3-8 saat; büyük projelerde birden fazla seans gerekebilir. Ön görüşmede referans fotoğrafını değerlendirir, seans planını birlikte çıkarırız.</p><h2>İyileşme ve Bakım</h2><p>Yoğun gölgelendirme nedeniyle iyileşme 2-4 hafta sürebilir. Nemlendirme ve güneş koruması, tonların uzun yıllar canlı kalması için kritiktir.</p><h2>Fiyat Nasıl Belirlenir?</h2><p>Realistic çalışmalarda fiyat; boyut, detay yoğunluğu ve seans sayısına göre belirlenir. Referans görselinizle fiyat teklifi formunu doldurun, size özel değerlendirme yapalım.</p><h3>Realistic dövme zamanla bozulur mu?</h3><p>Doğru bakım ve güneş korumasıyla uzun yıllar netliğini korur; gerektiğinde rötuşla tazelenir.</p><h3>Referans fotoğrafım düşük kaliteli, sorun olur mu?</h3><p>Ön görüşmede fotoğrafı birlikte değerlendirir, gerekirse kompozisyonu yeniden kurgularız.</p>',
+'assets/img/demo/service-realistic.svg', 'realistic', 2,
+'Realistic Tattoo İstanbul | Gerçekçi Dövme — D4stattoo',
+'İstanbul''da realistic tattoo. Fotoğraf gerçekliğinde portre ve figür dövmeleri. 3 yıllık deneyim, steril ekipman. Ücretsiz ön görüşme için ulaşın.', 1),
+
+(3, 'tr', 'Fine Line Tattoo', 'fine-line-tattoo',
+'Tek iğneyle atılan incecik çizgiler; zarif, detaylı ve modern fine line çalışmalar.',
+'<h2>Bu Stil Nedir?</h2><p>Fine line; çok ince uçlu iğnelerle atılan, hassas ve zarif çizgilerden oluşan bir dövme stilidir. Çiçekler, yazılar, mikro portreler ve geometrik desenler bu teknikle âdeta kalemle çizilmiş gibi görünür. <strong>Fine line tattoo İstanbul</strong> arayanların ilk durağı olmayı hedefliyoruz.</p><h2>Kimler İçin Uygundur?</h2><p>Zarif ve dikkat çekmeyen ama yakından bakıldığında etkileyici detaylara sahip bir dövme isteyenler için mükemmeldir. Kadın müşterilerimiz arasında en popüler ikinci stildir.</p><h2>Hangi Bölgelere Yakışır?</h2><p>Köprücük kemiği, kaburga, bilek, el üstü ve omuz fine line''ın en zarif durduğu alanlardır.</p><h2>Ortalama Süreç</h2><p>Tasarıma göre 30 dakika ile 3 saat arası sürer. İnce çizgiler yüksek konsantrasyon gerektirdiği için acele etmeden çalışırız.</p><h2>İyileşme ve Bakım</h2><p>İnce çizgiler cildi az travmatize ettiği için iyileşme hızlıdır (1-2 hafta). İlk yıl güneş koruması çizgilerin netliğini korur.</p><h2>Fiyat Nasıl Belirlenir?</h2><p>Çizgi uzunluğu, detay seviyesi ve bölgeye göre belirlenir. Net fiyat için referans görselinizle teklif formunu doldurmanız yeterli.</p><h3>Fine line dövme silikleşir mi?</h3><p>Kaliteli boya ve doğru derinlikte uygulamayla kalıcıdır; ilk yıldan sonra hafif yumuşama doğaldır ve stile karakter katar.</p><h3>Fine line ile minimal dövme aynı şey mi?</h3><p>Minimal, tasarım sadeliğini; fine line ise çizgi inceliğini tanımlar. Bir dövme hem minimal hem fine line olabilir.</p>',
+'assets/img/demo/service-fineline.svg', 'fineline', 3,
+'Fine Line Tattoo İstanbul | İnce Çizgi Dövme — D4stattoo',
+'Fine line tattoo İstanbul: tek iğneyle incecik, zarif dövmeler. Çiçek, yazı ve mikro tasarımlar. Bağcılar''da hijyenik stüdyo. Randevu alın.', 1),
+
+(4, 'tr', 'Blackwork', 'blackwork',
+'Yoğun siyah alanlar, güçlü kontrastlar ve cesur kompozisyonlar. Karakteri güçlü blackwork çalışmalar.',
+'<h2>Bu Stil Nedir?</h2><p>Blackwork; yalnızca siyah mürekkep kullanılarak yapılan, dolgun siyah alanlar, güçlü geometri ve yüksek kontrast içeren cesur bir dövme stilidir. Grafik etkisi çok güçlüdür ve uzaktan bile net okunur.</p><h2>Kimler İçin Uygundur?</h2><p>İddialı, karakterli ve gözden kaçmayan bir dövme isteyenler; soyut sanat, grafik tasarım ve koyu estetik sevenler için idealdir. Eski ve dağınık dövmelerin kapatılmasında da sık tercih edilir.</p><h2>Hangi Bölgelere Yakışır?</h2><p>Kol kaplama (sleeve), ön kol, baldır ve sırt blackwork''ün etkisini en güçlü gösterdiği bölgelerdir. <strong>Kol kaplama</strong> projeleri için en dayanıklı stillerden biridir.</p><h2>Ortalama Süreç</h2><p>Dolgu yoğunluğuna göre 2-6 saat; kol kaplama gibi büyük projelerde birden fazla seans planlanır.</p><h2>İyileşme ve Bakım</h2><p>Geniş dolgu alanları ilk hafta daha hassastır; düzenli nemlendirme ile 2-4 haftada iyileşir. Siyahın derinliği doğru bakımla yıllarca korunur.</p><h2>Fiyat Nasıl Belirlenir?</h2><p>Dolgu alanının büyüklüğü ve seans sayısına göre belirlenir. Kol kaplama dövme fiyatları için ücretsiz ön görüşmeye bekleriz.</p><h3>Blackwork zamanla griye döner mi?</h3><p>Kaliteli mürekkep ve doğru derinlikte uygulamayla siyah, yıllarca yoğunluğunu korur.</p><h3>Blackwork acı verir mi?</h3><p>Dolgu alanları çizgiden biraz daha yoğun hissedilir; molalarla süreci konforlu tutuyoruz.</p>',
+'assets/img/demo/service-blackwork.svg', 'blackwork', 4,
+'Blackwork Dövme İstanbul | Kol Kaplama — D4stattoo',
+'Blackwork dövme İstanbul: yoğun siyah, güçlü kontrast, cesur tasarımlar. Kol kaplama ve büyük projeler için ücretsiz ön görüşme.', 1),
+
+(5, 'tr', 'Color Tattoo', 'color-tattoo',
+'Canlı renkler, yumuşak geçişler ve sanatsal kompozisyonlar. Teninde yaşayan renkli tablolar.',
+'<h2>Bu Stil Nedir?</h2><p>Color tattoo; canlı pigmentler ve renk geçişleriyle çalışılan, suluboya etkisinden neo-traditional''a uzanan renkli dövme stilidir. Doğru renk seçimiyle ten üzerinde âdeta bir tablo etkisi yaratır.</p><h2>Kimler İçin Uygundur?</h2><p>Enerjik, dikkat çekici ve sanatsal bir görünüm isteyenler için idealdir. Çiçek, hayvan, anime ve doğa temalı çalışmalarda renk, tasarıma ayrı bir ruh katar.</p><h2>Hangi Bölgelere Yakışır?</h2><p>Üst kol, omuz, kalça ve bacak gibi güneşe daha az maruz kalan bölgeler renklerin uzun ömrü için avantajlıdır.</p><h2>Ortalama Süreç</h2><p>Renk katmanları ekstra işçilik gerektirir; orta boy bir çalışma 3-6 saat sürebilir. Cilt tonunuza göre renk paletini ön görüşmede birlikte seçeriz.</p><h2>İyileşme ve Bakım</h2><p>Renkli dövmelerde güneş koruması özellikle önemlidir; UV ışınları pigmentleri soldurabilir. Düzenli nemlendirme ve yüksek faktörlü krem, renklerin canlılığını uzun yıllar korur.</p><h2>Fiyat Nasıl Belirlenir?</h2><p>Renk sayısı, geçiş yoğunluğu ve boyuta göre belirlenir. Örnek başlangıç fiyatları fiyat listemizde; net rakam için teklif formunu doldurun.</p><h3>Renkli dövme her ten rengine uyar mı?</h3><p>Her ten tonuna uygun bir palet vardır; ön görüşmede cilt tonunuza en uygun renkleri birlikte belirleriz.</p><h3>Renkler zamanla solar mı?</h3><p>Tüm dövmeler zamanla yumuşar; güneş koruması ve bakım ile renkli dövmeler yıllarca canlı kalır, gerekirse rötuşlanır.</p>',
+'assets/img/demo/service-color.svg', 'color', 5,
+'Renkli Dövme İstanbul | Color Tattoo — D4stattoo',
+'İstanbul''da renkli dövme: canlı pigmentler, suluboya ve neo-traditional çalışmalar. Cilt tonunuza özel renk paleti. Randevu için ulaşın.', 1),
+
+(6, 'tr', 'Cover-up / Kapatma Dövme', 'cover-up',
+'Eski, soluk ya da pişman olunan dövmeleri sanata dönüştürüyoruz. Ücretsiz cover-up değerlendirmesi.',
+'<h2>Bu Stil Nedir?</h2><p>Cover-up; mevcut bir dövmenin üzerine, onu tamamen gizleyen yeni bir tasarım uygulanmasıdır. <strong>Cover up dövme İstanbul</strong> arayanların çoğu, eski bir dövmenin verdiği pişmanlıkla gelir ve yepyeni bir sanat eseriyle ayrılır.</p><h2>Kimler İçin Uygundur?</h2><p>Eski, soluk, kötü uygulanmış ya da artık anlamını yitirmiş dövmesi olanlar için birebirdir. İsim dövmeleri ve gençlik dönemi çalışmaları en sık kapattığımız işlerdir.</p><h2>Nasıl Çalışır?</h2><p>Ön görüşmede mevcut dövmenin koyuluğu, yaşı ve konumu değerlendirilir. Buna göre kapatma için doğru stil (genellikle blackwork, realistic gölgeleme ya da yoğun renkli kompozisyonlar) önerilir. Bazı durumlarda 1-2 seans lazer ile soldurma, çok daha özgür bir tasarım imkânı sağlar; bu ihtimali de dürüstçe paylaşırız.</p><h2>Ortalama Süreç</h2><p>Kapatılacak dövmenin durumuna göre 3-8 saat; büyük işlerde birden fazla seans gerekebilir.</p><h2>İyileşme ve Bakım</h2><p>Cover-up''ta cilt ikinci kez işlem gördüğü için bakım daha da önemlidir; iyileşme 2-4 hafta sürer.</p><h2>Fiyat Nasıl Belirlenir?</h2><p>Kapatılacak dövmenin boyutu, koyuluğu ve yeni tasarımın kapsamına göre belirlenir. <strong>Fotoğrafını teklif formundan gönder, ücretsiz değerlendirme yapalım.</strong></p><h3>Her dövme kapatılabilir mi?</h3><p>Çok koyu ve geniş dövmelerde önce soldurma önerilebilir; ancak doğru tasarımla neredeyse her dövme kapatılabilir.</p><h3>Cover-up eski dövmemden büyük mü olur?</h3><p>Genellikle evet; eski çalışmayı tamamen gizlemek için yeni tasarım bir miktar daha büyük ve koyu olur.</p>',
+'assets/img/demo/service-coverup.svg', 'coverup', 6,
+'Cover Up Dövme İstanbul | Kapatma Dövme — D4stattoo',
+'Cover up dövme İstanbul: eski ve soluk dövmeleri yeni bir tasarımla kapatıyoruz. Fotoğrafını gönder, ücretsiz cover-up değerlendirmesi al.', 1),
+
+(7, 'tr', 'Eski Dövme Yenileme', 'eski-dovme-yenileme',
+'Solmuş çizgileri ve renkleri tazeliyoruz. Eski dövmene ilk günkü canlılığını geri kazandır.',
+'<h2>Bu Hizmet Nedir?</h2><p>Dövme yenileme (rötuş/restorasyon); yıllar içinde solmuş, çizgileri yumuşamış ya da rengi açılmış dövmelerin orijinal tasarıma sadık kalarak tazelenmesidir. Kapatma değil, <strong>yeniden canlandırma</strong>dır.</p><h2>Kimler İçin Uygundur?</h2><p>Dövmesinin tasarımını hâlâ seven ama görünümünden memnun olmayanlar için idealdir. Başka stüdyolarda yapılmış dövmeleri de yeniliyoruz.</p><h2>Nasıl Çalışır?</h2><p>Ön görüşmede dövmenin mevcut durumu incelenir; hangi çizgilerin netleştirileceği, hangi alanların yeniden renklendirileceği planlanır. İstersen yenileme sırasında tasarıma küçük eklemeler de yapabiliriz.</p><h2>Ortalama Süreç</h2><p>Çoğu yenileme tek seansta, 1-3 saatte tamamlanır.</p><h2>İyileşme ve Bakım</h2><p>Normal dövmeyle aynıdır; bölge zaten alışkın olduğu için süreç genellikle daha konforlu geçer.</p><h2>Fiyat Nasıl Belirlenir?</h2><p>Yenilenecek alanın büyüklüğüne ve işçilik yoğunluğuna göre belirlenir; fotoğrafla ücretsiz ön değerlendirme yapıyoruz.</p><h3>Başka stüdyoda yapılan dövmeyi yeniler misiniz?</h3><p>Evet; dövmenin fotoğrafını gönderin, yapılabilecekleri dürüstçe değerlendirelim.</p>',
+'assets/img/demo/service-renewal.svg', 'renewal', 7,
+'Eski Dövme Yenileme İstanbul — D4stattoo',
+'Solmuş ve eskimiş dövmeleri yeniliyoruz. Çizgi netleştirme, renk tazeleme ve restorasyon. İstanbul Bağcılar''da ücretsiz değerlendirme.', 1),
+
+(8, 'tr', 'Yazı Dövmesi', 'yazi-dovmesi',
+'İsimler, tarihler, sözler ve mantralar; sana özel tipografiyle zarif yazı dövmeleri.',
+'<h2>Bu Stil Nedir?</h2><p>Yazı dövmesi; isim, tarih, söz, şiir dizesi ya da mantranın estetik bir tipografiyle tene işlenmesidir. Font seçimi bu stilin ruhudur: aynı kelime, farklı el yazısıyla bambaşka bir karakter kazanır.</p><h2>Kimler İçin Uygundur?</h2><p>Anlamı kendisi için net olan, sade ama kişisel bir dövme isteyenler için idealdir. İlk dövme olarak en çok tercih edilen türlerden biridir.</p><h2>Hangi Bölgelere Yakışır?</h2><p>Bilek iç kısmı, ön kol, köprücük kemiği, kaburga ve ense yazı dövmelerinin klasik bölgeleridir.</p><h2>Ortalama Süreç</h2><p>Uzunluğa göre 15-60 dakika. Ön görüşmede font alternatiflerini teninde deneyip birlikte seçeriz. Farklı dillerde (Arapça, Rusça vb.) yazımlarda doğruluğu birlikte teyit ederiz.</p><h2>İyileşme ve Bakım</h2><p>İnce işçilik hızlı iyileşir (1-2 hafta). Harflerin netliği için ilk aylarda güneş koruması önemlidir.</p><h2>Fiyat Nasıl Belirlenir?</h2><p>Harf sayısı, font detayı ve bölgeye göre belirlenir; kısa yazılar başlangıç fiyatlarımızla yapılabilir.</p><h3>Çok küçük punto mümkün mü?</h3><p>Okunabilirlik ve uzun ömür için minimum punto öneriyoruz; ön görüşmede birlikte karar veririz.</p>',
+'assets/img/demo/service-lettering.svg', 'lettering', 8,
+'Yazı Dövmesi İstanbul | İsim ve Söz Dövmeleri — D4stattoo',
+'İstanbul''da yazı dövmesi: isim, tarih, söz ve mantralar. Sana özel font seçimi, zarif tipografi. Bağcılar tattoo stüdyosu.', 1),
+
+(9, 'tr', 'Portre Dövme', 'portre-dovme',
+'Sevdiklerinin yüzü, gerçekçi detaylarla teninde. İleri seviye portre dövme çalışmaları.',
+'<h2>Bu Stil Nedir?</h2><p>Portre dövme; bir insanın ya da evcil hayvanın yüzünün fotoğraf referansıyla, gerçekçi oran ve gölgelendirmeyle tene aktarılmasıdır. Realistic stilin en üst seviye dalıdır ve ciddi teknik ustalık ister.</p><h2>Kimler İçin Uygundur?</h2><p>Sevdiği bir insanı, kaybettiği bir yakınını ya da can dostunu teninde yaşatmak isteyenler için en anlamlı seçimdir.</p><h2>Hangi Bölgelere Yakışır?</h2><p>Üst kol, ön kol ve göğüs; portrenin oranlarının korunacağı geniş ve düz alanlar en doğru tercihlerdir.</p><h2>Ortalama Süreç</h2><p>Tek portre 4-8 saat sürebilir; detay yoğunluğuna göre iki seansa bölünebilir. Yüksek çözünürlüklü ve iyi ışıklı bir referans fotoğraf sonucun kalitesini doğrudan etkiler.</p><h2>İyileşme ve Bakım</h2><p>Yoğun gölgeleme alanları 2-4 haftada iyileşir. Yüz detaylarının netliği için güneş koruması şarttır.</p><h2>Fiyat Nasıl Belirlenir?</h2><p>Portre sayısı, boyut ve arka plan kompozisyonuna göre belirlenir. Referans fotoğrafınla teklif formunu doldur; uygulanabilirliği birlikte değerlendirelim.</p><h3>Fotoğraf hangi kalitede olmalı?</h3><p>Yüz detaylarının seçilebildiği, iyi ışıklı, yüksek çözünürlüklü bir fotoğraf idealdir; elimizdeki fotoğrafı ön görüşmede birlikte değerlendiririz.</p>',
+'assets/img/demo/service-portrait.svg', 'portrait', 9,
+'Portre Dövme İstanbul | Realistic Portre — D4stattoo',
+'İstanbul''da portre dövme: sevdiklerinizin yüzü gerçekçi detaylarla teninizde. İleri seviye realistic portre çalışmaları. Ücretsiz ön görüşme.', 1),
+
+(10, 'tr', 'Geometrik Dövme', 'geometrik-dovme',
+'Kusursuz simetri, kutsal geometri ve modern desenler. Matematik ile sanatın buluştuğu stil.',
+'<h2>Bu Stil Nedir?</h2><p>Geometrik dövme; düzgün çizgiler, simetrik formlar, mandala ve kutsal geometri desenlerinden oluşan, düzeni ve dengeyi tende görselleştiren bir stildir. Dotwork (noktalama) tekniğiyle sık birleştirilir.</p><h2>Kimler İçin Uygundur?</h2><p>Simetri ve düzen estetiğinden hoşlananlar, minimalden daha iddialı ama figüratif olmayan bir tasarım arayanlar için idealdir.</p><h2>Hangi Bölgelere Yakışır?</h2><p>Ön kol, dirsek çevresi, göğüs ve sırt; simetrinin vücut hatlarıyla hizalanabildiği bölgeler en etkileyici sonucu verir.</p><h2>Ortalama Süreç</h2><p>Desen yoğunluğuna göre 2-6 saat. Geometride milimetrik hassasiyet gerektiği için şablon hazırlığına özel zaman ayırırız.</p><h2>İyileşme ve Bakım</h2><p>Standart süreçtir (2-3 hafta); çizgilerin keskinliği doğru bakımla yıllarca korunur.</p><h2>Fiyat Nasıl Belirlenir?</h2><p>Desen karmaşıklığı, dolgu-nokta yoğunluğu ve boyuta göre belirlenir; teklif formundan ücretsiz değerlendirme alabilirsin.</p><h3>Mandala ile geometrik dövme aynı mı?</h3><p>Mandala, geometrik stilin dairesel-simetrik bir alt türüdür; ikisini birleştiren kompozisyonlar da çok popülerdir.</p>',
+'assets/img/demo/service-geometric.svg', 'geometric', 10,
+'Geometrik Dövme İstanbul | Mandala & Dotwork — D4stattoo',
+'İstanbul''da geometrik dövme: mandala, kutsal geometri ve dotwork desenleri. Kusursuz simetri, milimetrik işçilik. Randevu alın.', 1),
+
+(11, 'tr', 'Tribal Dövme', 'tribal',
+'Köklü kültürlerden gelen güçlü hatlar. Klasik ve modern yorumuyla tribal çalışmalar.',
+'<h2>Bu Stil Nedir?</h2><p>Tribal; Polinezya, Maori ve Borneo gibi köklü kültürlerin desenlerinden doğan, kalın siyah hatlar ve akıcı formlarla vücut hatlarını takip eden en eski dövme stillerinden biridir. Modern yorumlarıyla bugün de güçlü bir tercih olmaya devam ediyor.</p><h2>Kimler İçin Uygundur?</h2><p>Güçlü, maskülen ve zamansız bir görünüm isteyenler; kas hatlarını vurgulayan akıcı bir tasarım arayanlar için idealdir.</p><h2>Hangi Bölgelere Yakışır?</h2><p>Omuz-üst kol bölgesi tribal''ın klasik alanıdır; göğüs uzantılı kompozisyonlar ve baldır çalışmaları da çok etkileyicidir.</p><h2>Ortalama Süreç</h2><p>Dolgu yoğunluğuna göre 2-6 saat; omuz-göğüs kompozisyonlarında iki seans planlanabilir.</p><h2>İyileşme ve Bakım</h2><p>Yoğun siyah dolgular 2-4 haftada iyileşir; siyahın derinliği düzenli nemlendirmeyle korunur.</p><h2>Fiyat Nasıl Belirlenir?</h2><p>Kapladığı alana ve dolgu oranına göre belirlenir; vücut ölçüne özel tasarım için ön görüşmeye bekleriz.</p><h3>Tribal dövme demode mi?</h3><p>Hayır; modern tribal yorumları ve blackwork ile harmanlanan tasarımlar son yıllarda yeniden yükselişte.</p>',
+'assets/img/demo/service-tribal.svg', 'tribal', 11,
+'Tribal Dövme İstanbul — D4stattoo',
+'İstanbul''da tribal dövme: Polinezya ve Maori esintili güçlü hatlar, modern yorumlar. Vücut hattına özel tasarım. Bağcılar tattoo.', 1);
+
+-- Diğer diller için temel hizmet kayıtları (başlık + kısa açıklama + özet içerik)
+INSERT IGNORE INTO `services` (`id`, `lang`, `title`, `slug`, `short_description`, `content`, `image`, `icon`, `sort_order`, `meta_title`, `meta_description`, `status`) VALUES
+(21, 'en', 'Minimal Tattoo', 'minimal-tattoo', 'Elegant, timeless minimal tattoos that say a lot with a few lines.', '<h2>What Is This Style?</h2><p>Minimal tattoos carry strong meaning with simple lines, small symbols and little detail — the perfect first tattoo.</p><h2>Process</h2><p>15 minutes to 1 hour depending on the design. Free consultation before every session.</p><h2>Pricing</h2><p>Determined by size, placement and line density. Request a free assessment via the quote form.</p>', 'assets/img/demo/service-minimal.svg', 'minimal', 1, 'Minimal Tattoo Istanbul — D4stattoo', 'Minimal tattoo in Istanbul. Elegant, simple, timeless designs. Single-use needles, free consultation.', 1),
+(22, 'en', 'Realistic Tattoo', 'realistic-tattoo', 'Photo-realistic shading and depth: portraits, animals and nature.', '<h2>What Is This Style?</h2><p>Realistic tattooing transfers a photo or object onto skin with photographic depth, light and shadow.</p><h2>Process</h2><p>3-8 hours depending on size; large projects may need several sessions.</p><h2>Pricing</h2><p>Based on size, detail and sessions. Send your reference image via the quote form.</p>', 'assets/img/demo/service-realistic.svg', 'realistic', 2, 'Realistic Tattoo Istanbul — D4stattoo', 'Realistic tattoo in Istanbul: photo-real portraits and figures. Free consultation.', 1),
+(23, 'en', 'Fine Line Tattoo', 'fine-line-tattoo', 'Delicate single-needle lines: flowers, script and micro designs.', '<h2>What Is This Style?</h2><p>Fine line uses very thin needles for precise, elegant linework that looks hand-drawn.</p><h2>Process</h2><p>30 minutes to 3 hours. Fast healing (1-2 weeks).</p><h2>Pricing</h2><p>Based on line length, detail and placement.</p>', 'assets/img/demo/service-fineline.svg', 'fineline', 3, 'Fine Line Tattoo Istanbul — D4stattoo', 'Fine line tattoo in Istanbul: delicate, elegant single-needle work.', 1),
+(24, 'en', 'Blackwork', 'blackwork', 'Bold black fields, strong contrast and daring compositions.', '<h2>What Is This Style?</h2><p>Blackwork uses only black ink: solid fills, strong geometry, high contrast. A powerful choice for sleeves and cover-ups.</p><h2>Process</h2><p>2-6 hours; sleeves are planned over multiple sessions.</p>', 'assets/img/demo/service-blackwork.svg', 'blackwork', 4, 'Blackwork Tattoo Istanbul — D4stattoo', 'Blackwork tattoo in Istanbul: solid black, strong contrast, bold designs.', 1),
+(25, 'en', 'Color Tattoo', 'color-tattoo', 'Vivid colors, soft transitions, artistic compositions.', '<h2>What Is This Style?</h2><p>Color tattooing works with vivid pigments and gradients — from watercolor effects to neo-traditional.</p><h2>Aftercare</h2><p>Sun protection is essential to keep colors vivid for years.</p>', 'assets/img/demo/service-color.svg', 'color', 5, 'Color Tattoo Istanbul — D4stattoo', 'Color tattoo in Istanbul: vivid pigments and artistic compositions.', 1),
+(26, 'en', 'Cover-up', 'cover-up', 'We turn old, faded or regretted tattoos into new art. Free assessment.', '<h2>What Is This Style?</h2><p>A cover-up hides an existing tattoo under a brand-new design. Send a photo of your old tattoo for a free assessment.</p><h2>Process</h2><p>3-8 hours depending on the old tattoo; laser fading may be suggested for very dark pieces.</p>', 'assets/img/demo/service-coverup.svg', 'coverup', 6, 'Cover Up Tattoo Istanbul — D4stattoo', 'Cover-up tattoo in Istanbul: we hide old and faded tattoos under new designs.', 1),
+(27, 'en', 'Tattoo Renewal', 'eski-dovme-yenileme', 'We refresh faded lines and colors of old tattoos.', '<h2>What Is This Service?</h2><p>Renewal restores faded tattoos true to their original design — lines are sharpened and colors refreshed, usually in a single 1-3 hour session.</p>', 'assets/img/demo/service-renewal.svg', 'renewal', 7, 'Tattoo Renewal Istanbul — D4stattoo', 'We renew faded and aged tattoos in Istanbul.', 1),
+(28, 'en', 'Lettering Tattoo', 'yazi-dovmesi', 'Names, dates, quotes and mantras in custom typography.', '<h2>What Is This Style?</h2><p>Lettering turns a name, date or quote into elegant typography on skin. Font choice is everything — we pick it together.</p>', 'assets/img/demo/service-lettering.svg', 'lettering', 8, 'Lettering Tattoo Istanbul — D4stattoo', 'Lettering tattoos in Istanbul: names, quotes and mantras in custom typography.', 1),
+(29, 'en', 'Portrait Tattoo', 'portre-dovme', 'The faces of your loved ones, in realistic detail.', '<h2>What Is This Style?</h2><p>Portrait tattooing renders a person or pet with realistic proportion and shading — the most advanced branch of realism.</p><h2>Process</h2><p>4-8 hours; a high-resolution reference photo is key.</p>', 'assets/img/demo/service-portrait.svg', 'portrait', 9, 'Portrait Tattoo Istanbul — D4stattoo', 'Portrait tattoos in Istanbul: realistic faces of your loved ones.', 1),
+(30, 'en', 'Geometric Tattoo', 'geometrik-dovme', 'Perfect symmetry, sacred geometry and modern patterns.', '<h2>What Is This Style?</h2><p>Geometric tattooing combines clean lines, symmetry, mandalas and dotwork into balanced compositions.</p>', 'assets/img/demo/service-geometric.svg', 'geometric', 10, 'Geometric Tattoo Istanbul — D4stattoo', 'Geometric tattoos in Istanbul: mandalas, sacred geometry and dotwork.', 1),
+(31, 'en', 'Tribal Tattoo', 'tribal', 'Powerful lines rooted in ancient cultures, in classic and modern interpretations.', '<h2>What Is This Style?</h2><p>Tribal comes from Polynesian, Maori and Borneo traditions: bold black lines flowing with the body.</p>', 'assets/img/demo/service-tribal.svg', 'tribal', 11, 'Tribal Tattoo Istanbul — D4stattoo', 'Tribal tattoos in Istanbul: bold flowing linework.', 1);
+
+INSERT IGNORE INTO `services` (`id`, `lang`, `title`, `slug`, `short_description`, `content`, `image`, `icon`, `sort_order`, `meta_title`, `meta_description`, `status`) VALUES
+(41, 'ar', 'وشم مينيمال', 'minimal-tattoo', 'وشوم مينيمال أنيقة وخالدة تقول الكثير بخطوط قليلة.', '<h2>ما هو هذا الأسلوب؟</h2><p>الوشم المينيمال يحمل معنى قوياً بخطوط بسيطة ورموز صغيرة — الخيار الأمثل للوشم الأول. تستغرق الجلسة من 15 دقيقة إلى ساعة.</p>', 'assets/img/demo/service-minimal.svg', 'minimal', 1, 'وشم مينيمال إسطنبول — D4stattoo', 'وشم مينيمال في إسطنبول. تصاميم أنيقة وبسيطة وخالدة.', 1),
+(42, 'ar', 'وشم واقعي', 'realistic-tattoo', 'تظليل وعمق بواقعية فوتوغرافية: بورتريهات وحيوانات وطبيعة.', '<h2>ما هو هذا الأسلوب؟</h2><p>الوشم الواقعي ينقل صورة إلى الجلد بعمق فوتوغرافي. تستغرق الجلسة 3-8 ساعات حسب الحجم.</p>', 'assets/img/demo/service-realistic.svg', 'realistic', 2, 'وشم واقعي إسطنبول — D4stattoo', 'وشم واقعي في إسطنبول: بورتريهات بواقعية فوتوغرافية.', 1),
+(43, 'ar', 'فاين لاين', 'fine-line-tattoo', 'خطوط رفيعة دقيقة بإبرة واحدة: زهور وكتابات وتصاميم دقيقة.', '<h2>ما هو هذا الأسلوب؟</h2><p>الفاين لاين يستخدم إبراً رفيعة جداً لخطوط دقيقة وأنيقة تبدو مرسومة باليد.</p>', 'assets/img/demo/service-fineline.svg', 'fineline', 3, 'فاين لاين إسطنبول — D4stattoo', 'وشم فاين لاين في إسطنبول: خطوط رفيعة أنيقة.', 1),
+(44, 'ar', 'بلاك وورك', 'blackwork', 'مساحات سوداء كثيفة وتباين قوي وتكوينات جريئة.', '<h2>ما هو هذا الأسلوب؟</h2><p>البلاك وورك يستخدم الحبر الأسود فقط: تعبئة صلبة وهندسة قوية وتباين عالٍ.</p>', 'assets/img/demo/service-blackwork.svg', 'blackwork', 4, 'بلاك وورك إسطنبول — D4stattoo', 'وشم بلاك وورك في إسطنبول.', 1),
+(45, 'ar', 'وشم ملون', 'color-tattoo', 'ألوان زاهية وانتقالات ناعمة وتكوينات فنية.', '<h2>ما هو هذا الأسلوب؟</h2><p>الوشم الملون يعمل بأصباغ زاهية وتدرجات — من تأثير الألوان المائية إلى النيو تراديشنال.</p>', 'assets/img/demo/service-color.svg', 'color', 5, 'وشم ملون إسطنبول — D4stattoo', 'وشم ملون في إسطنبول: أصباغ زاهية وتكوينات فنية.', 1),
+(46, 'ar', 'كوفر أب', 'cover-up', 'نحوّل الوشوم القديمة والباهتة إلى فن جديد. تقييم مجاني.', '<h2>ما هو هذا الأسلوب؟</h2><p>الكوفر أب يخفي وشماً قديماً تحت تصميم جديد تماماً. أرسل صورة وشمك القديم لتقييم مجاني.</p>', 'assets/img/demo/service-coverup.svg', 'coverup', 6, 'كوفر أب إسطنبول — D4stattoo', 'وشم كوفر أب في إسطنبول: نخفي الوشوم القديمة تحت تصاميم جديدة.', 1),
+(47, 'ar', 'تجديد الوشم القديم', 'eski-dovme-yenileme', 'نجدد الخطوط والألوان الباهتة.', '<h2>ما هي هذه الخدمة؟</h2><p>التجديد يعيد للوشم الباهت حيويته وفق تصميمه الأصلي، عادة في جلسة واحدة من 1-3 ساعات.</p>', 'assets/img/demo/service-renewal.svg', 'renewal', 7, 'تجديد الوشم إسطنبول — D4stattoo', 'نجدد الوشوم الباهتة والقديمة في إسطنبول.', 1),
+(48, 'ar', 'وشم الكتابة', 'yazi-dovmesi', 'أسماء وتواريخ وأقوال بخطوط مخصصة لك.', '<h2>ما هو هذا الأسلوب؟</h2><p>وشم الكتابة يحول اسماً أو تاريخاً أو قولاً إلى خط أنيق على الجلد. اختيار الخط هو كل شيء.</p>', 'assets/img/demo/service-lettering.svg', 'lettering', 8, 'وشم كتابة إسطنبول — D4stattoo', 'وشم الكتابة في إسطنبول: أسماء وأقوال بخط مخصص.', 1),
+(49, 'ar', 'وشم بورتريه', 'portre-dovme', 'وجوه أحبائك بتفاصيل واقعية.', '<h2>ما هو هذا الأسلوب؟</h2><p>وشم البورتريه يرسم شخصاً أو حيواناً أليفاً بنسب وتظليل واقعيين — أرقى فروع الواقعية.</p>', 'assets/img/demo/service-portrait.svg', 'portrait', 9, 'وشم بورتريه إسطنبول — D4stattoo', 'وشم بورتريه في إسطنبول: وجوه واقعية.', 1),
+(50, 'ar', 'وشم هندسي', 'geometrik-dovme', 'تناظر مثالي وهندسة مقدسة وأنماط حديثة.', '<h2>ما هو هذا الأسلوب؟</h2><p>الوشم الهندسي يجمع الخطوط النظيفة والتناظر والماندالا والدوت وورك في تكوينات متوازنة.</p>', 'assets/img/demo/service-geometric.svg', 'geometric', 10, 'وشم هندسي إسطنبول — D4stattoo', 'وشم هندسي في إسطنبول: ماندالا وهندسة مقدسة.', 1),
+(51, 'ar', 'وشم تريبال', 'tribal', 'خطوط قوية من ثقافات عريقة بتفسيرات كلاسيكية وحديثة.', '<h2>ما هو هذا الأسلوب؟</h2><p>التريبال يأتي من تقاليد بولينيزيا والماوري: خطوط سوداء جريئة تنساب مع الجسم.</p>', 'assets/img/demo/service-tribal.svg', 'tribal', 11, 'وشم تريبال إسطنبول — D4stattoo', 'وشم تريبال في إسطنبول.', 1);
+
+INSERT IGNORE INTO `services` (`id`, `lang`, `title`, `slug`, `short_description`, `content`, `image`, `icon`, `sort_order`, `meta_title`, `meta_description`, `status`) VALUES
+(61, 'ru', 'Минимализм', 'minimal-tattoo', 'Элегантные, вневременные минималистичные тату: многое — парой линий.', '<h2>Что это за стиль?</h2><p>Минималистичная тату несёт сильный смысл простыми линиями и маленькими символами — идеальный вариант для первой татуировки. Сеанс занимает от 15 минут до часа.</p>', 'assets/img/demo/service-minimal.svg', 'minimal', 1, 'Тату минимализм Стамбул — D4stattoo', 'Минималистичные тату в Стамбуле: элегантные и лаконичные эскизы.', 1),
+(62, 'ru', 'Реализм', 'realistic-tattoo', 'Фотореалистичные тени и глубина: портреты, животные, природа.', '<h2>Что это за стиль?</h2><p>Реализм переносит фото на кожу с фотографической глубиной. Сеанс 3-8 часов в зависимости от размера.</p>', 'assets/img/demo/service-realistic.svg', 'realistic', 2, 'Тату реализм Стамбул — D4stattoo', 'Реалистичные тату в Стамбуле: портреты с фотографической точностью.', 1),
+(63, 'ru', 'Fine Line', 'fine-line-tattoo', 'Тончайшие линии одной иглой: цветы, надписи, микро-эскизы.', '<h2>Что это за стиль?</h2><p>Fine line — очень тонкие иглы и точные элегантные линии, будто нарисованные от руки.</p>', 'assets/img/demo/service-fineline.svg', 'fineline', 3, 'Fine line тату Стамбул — D4stattoo', 'Fine line тату в Стамбуле: тонкие элегантные линии.', 1),
+(64, 'ru', 'Blackwork', 'blackwork', 'Плотный чёрный, сильный контраст, смелые композиции.', '<h2>Что это за стиль?</h2><p>Blackwork использует только чёрные чернила: плотные заливки, строгая геометрия, высокий контраст.</p>', 'assets/img/demo/service-blackwork.svg', 'blackwork', 4, 'Blackwork тату Стамбул — D4stattoo', 'Blackwork тату в Стамбуле.', 1),
+(65, 'ru', 'Цветная тату', 'color-tattoo', 'Яркие цвета, мягкие переходы, художественные композиции.', '<h2>Что это за стиль?</h2><p>Цветная татуировка — яркие пигменты и градиенты: от акварели до нео-традишнл.</p>', 'assets/img/demo/service-color.svg', 'color', 5, 'Цветная тату Стамбул — D4stattoo', 'Цветные тату в Стамбуле: яркие пигменты и художественные композиции.', 1),
+(66, 'ru', 'Cover-up', 'cover-up', 'Превращаем старые и неудачные тату в новое искусство. Бесплатная оценка.', '<h2>Что это за стиль?</h2><p>Cover-up скрывает старую татуировку под совершенно новым дизайном. Отправьте фото старой тату для бесплатной оценки.</p>', 'assets/img/demo/service-coverup.svg', 'coverup', 6, 'Cover-up тату Стамбул — D4stattoo', 'Cover-up в Стамбуле: перекрываем старые тату новым дизайном.', 1),
+(67, 'ru', 'Обновление тату', 'eski-dovme-yenileme', 'Освежаем выцветшие линии и цвета старых тату.', '<h2>Что это за услуга?</h2><p>Обновление возвращает выцветшей тату свежесть по оригинальному эскизу — обычно за один сеанс 1-3 часа.</p>', 'assets/img/demo/service-renewal.svg', 'renewal', 7, 'Обновление тату Стамбул — D4stattoo', 'Обновляем выцветшие тату в Стамбуле.', 1),
+(68, 'ru', 'Надписи', 'yazi-dovmesi', 'Имена, даты, цитаты и мантры в индивидуальной типографике.', '<h2>Что это за стиль?</h2><p>Тату-надпись превращает имя, дату или цитату в элегантную типографику. Выбор шрифта — это всё; выбираем вместе.</p>', 'assets/img/demo/service-lettering.svg', 'lettering', 8, 'Тату надписи Стамбул — D4stattoo', 'Тату-надписи в Стамбуле: имена и цитаты в индивидуальной типографике.', 1),
+(69, 'ru', 'Портрет', 'portre-dovme', 'Лица ваших близких в реалистичных деталях.', '<h2>Что это за стиль?</h2><p>Портретная тату передаёт человека или питомца с реалистичными пропорциями и тенями — высшая ступень реализма.</p>', 'assets/img/demo/service-portrait.svg', 'portrait', 9, 'Тату портрет Стамбул — D4stattoo', 'Портретные тату в Стамбуле: реалистичные лица близких.', 1),
+(70, 'ru', 'Геометрия', 'geometrik-dovme', 'Идеальная симметрия, сакральная геометрия, современные узоры.', '<h2>Что это за стиль?</h2><p>Геометрическая тату сочетает чистые линии, симметрию, мандалы и dotwork в сбалансированных композициях.</p>', 'assets/img/demo/service-geometric.svg', 'geometric', 10, 'Геометрическая тату Стамбул — D4stattoo', 'Геометрические тату в Стамбуле: мандалы и dotwork.', 1),
+(71, 'ru', 'Трайбл', 'tribal', 'Мощные линии древних культур в классической и современной трактовке.', '<h2>Что это за стиль?</h2><p>Трайбл происходит из традиций Полинезии и Маори: смелые чёрные линии, следующие за телом.</p>', 'assets/img/demo/service-tribal.svg', 'tribal', 11, 'Трайбл тату Стамбул — D4stattoo', 'Трайбл тату в Стамбуле.', 1);
+
+-- ----------------------------------------------------------------------------
+-- Blog kategorileri
+-- ----------------------------------------------------------------------------
+INSERT IGNORE INTO `blog_categories` (`id`, `lang`, `name`, `slug`, `status`) VALUES
+(1, 'tr', 'Blog', 'blog', 1),
+(2, 'tr', 'Bakım', 'bakim', 1),
+(3, 'tr', 'Akademi', 'akademi', 1),
+(4, 'en', 'Blog', 'blog', 1),
+(5, 'en', 'Academy', 'akademi', 1),
+(6, 'ar', 'المدونة', 'blog', 1),
+(7, 'ar', 'الأكاديمية', 'akademi', 1),
+(8, 'ru', 'Блог', 'blog', 1),
+(9, 'ru', 'Академия', 'akademi', 1);
+
+-- ----------------------------------------------------------------------------
+-- Blog yazıları — TR (10 demo yazı; 3'ü Akademi kategorisinde)
+-- ----------------------------------------------------------------------------
+INSERT IGNORE INTO `blog_posts` (`id`, `lang`, `title`, `slug`, `excerpt`, `content`, `cover_image`, `category_id`, `meta_title`, `meta_description`, `tags`, `status`, `published_at`) VALUES
+(1, 'tr', 'İlk Dövme Öncesi Bilmen Gerekenler', 'ilk-dovme-oncesi-bilmen-gerekenler',
+'İlk dövmeni yaptırmadan önce stüdyo seçiminden ağrı beklentisine, tasarım kararından seans gününe kadar bilmen gereken her şey.',
+'<p>İlk dövme heyecanı güzeldir ama doğru hazırlık, bu deneyimi çok daha keyifli hale getirir. İşte ilk dövmesini yaptıracaklar için adım adım rehber.</p><h2>1. Stüdyo Seçimi Her Şeydir</h2><p>İstanbul tattoo studio ararken ilk bakacağın şey hijyen olmalı: tek kullanımlık iğne, steril ekipman ve senin önünde açılan sarf malzemeleri pazarlık konusu değildir. Sanatçının portfolyosunu mutlaka incele; her sanatçının güçlü olduğu stil farklıdır.</p><h2>2. Tasarımına Zaman Ayır</h2><p>Trend olduğu için değil, sana bir şey ifade ettiği için seç. İyi bir stüdyo sana hazır katalog dayatmaz; hikâyeni dinleyip kişiye özel tasarım çıkarır. Kararsızsan minimal bir başlangıç her zaman güvenlidir.</p><h2>3. Ağrı Konusunda Gerçekçi Ol</h2><p>Ağrı; bölgeye, boyuta ve kişiye göre değişir. Bilek, kaburga ve ayak üstü daha hassastır; üst kol ve baldır daha konforludur. Çoğu müşterimiz "beklediğimden azmış" der.</p><h2>4. Seans Gününe Hazırlık</h2><ul><li>Aç karnına gelme; seans öncesi iyi beslen.</li><li>24 saat öncesinden alkol alma — kanamayı artırır.</li><li>Rahat, işlem bölgesini açıkta bırakan kıyafet giy.</li><li>Bol su iç, uykunu al.</li></ul><h2>5. Sonrası da Süreç İster</h2><p>Dövmen bittiğinde işin yarısı tamam; kalan yarısı bakım. İlk iki hafta talimatlara uyarsan dövmen ilk günkü gibi iyileşir. Detaylar için bakım talimatları sayfamıza göz at.</p><p>Sorularına hızlı yanıt için WhatsApp hattımız her gün açık. İlk dövmeni birlikte planlayalım!</p>',
+'assets/img/demo/blog-first-tattoo.svg', 1,
+'İlk Dövme Öncesi Bilmen Gerekenler | D4stattoo Blog',
+'İlk dövme rehberi: stüdyo seçimi, tasarım kararı, ağrı beklentisi ve seans günü hazırlığı. İstanbul''da ilk dövmesini yaptıracaklar için.',
+'ilk dövme,dövme rehberi,istanbul tattoo', 1, '2026-06-20 10:00:00'),
+
+(2, 'tr', 'Dövme Sonrası Bakım Nasıl Yapılır?', 'dovme-sonrasi-bakim-nasil-yapilir',
+'Dövmenin ilk 24 saati, ilk iki haftası ve uzun vadeli bakımı için uygulaman gereken adımlar bu rehberde.',
+'<p>Dövmenin kalitesi kadar, iyileşme dönemindeki bakım da sonucu belirler. Yanlış bakım; renk kaybına, çizgi bozulmasına ve enfeksiyon riskine yol açabilir.</p><h2>İlk 24 Saat: Koruma</h2><p>Sanatçının kapattığı bandı önerilen süre boyunca çıkarma. Bandı çıkardıktan sonra dövmeyi ılık su ve parfümsüz sabunla nazikçe yıka; temiz kağıt havluyla tampon yaparak kurula ve ince bir tabaka bakım kremi sür.</p><h2>İlk 2 Hafta: Disiplin</h2><ul><li>Günde 2-3 kez yıka ve nemlendir.</li><li>Kabukları asla koparma — renk kaybının bir numaralı sebebi budur.</li><li>Havuz, deniz, sauna ve küvet yasak; kısa duş serbest.</li><li>Doğrudan güneş ışığından koru.</li><li>Bölgeyi sıkan kıyafetlerden kaçın.</li></ul><h2>Uzun Vade: Canlılık</h2><p>İyileşme bittikten sonra da düzenli nemlendirme ve yazın güneş kremi, dövmenin renklerini yıllarca canlı tutar. Dövme solmaya başlarsa yenileme (rötuş) hizmetimizle tazeleyebiliriz.</p><h2>Bunları Görürsen Bize Ulaş</h2><p>Aşırı kızarıklık, artan şişlik, ateş veya iltihap belirtisi görürsen hem bize hem bir sağlık kuruluşuna başvur. Müşterilerimize iyileşme boyunca WhatsApp desteği veriyoruz.</p>',
+'assets/img/demo/blog-aftercare.svg', 2,
+'Dövme Sonrası Bakım Nasıl Yapılır? | D4stattoo Blog',
+'Dövme bakımı rehberi: ilk 24 saat, ilk 2 hafta ve uzun vadeli bakım adımları. Dövmenizin renklerini uzun yıllar koruyun.',
+'dövme bakımı,dövme sonrası,bakım rehberi', 1, '2026-06-15 10:00:00'),
+
+(3, 'tr', 'Minimal Dövme Kimler İçin Uygundur?', 'minimal-dovme-kimler-icin-uygundur',
+'Minimal dövme neden bu kadar popüler? Kimlere yakışır, hangi bölgelere uygulanır ve nelere dikkat edilmeli?',
+'<p>Son yıllarda minimal dövme İstanbul aramalarının zirveye çıkması tesadüf değil: az çizgiyle çok şey anlatan bu stil, dövmeye yeni başlayanların da deneyimlilerin de favorisi.</p><h2>Minimal Dövme Kime Göre?</h2><ul><li><strong>İlk dövmesini yaptıracaklar:</strong> Kısa seans, düşük ağrı ve zamansız görünüm.</li><li><strong>Profesyonel hayatı yoğun olanlar:</strong> Görünür bölgelerde bile rahatsız etmeyen zarafet.</li><li><strong>"Az ama öz" diyenler:</strong> Tek bir sembolün gücüne inananlar.</li></ul><h2>En Çok Tercih Edilen Minimal Tasarımlar</h2><p>İnce çizgili çiçekler, küçük semboller, koordinatlar, doğum tarihleri, tek kelimelik yazılar ve mini hayvan silüetleri öne çıkıyor. Kadın müşterilerimizde bilek, kulak arkası ve köprücük kemiği; erkeklerde ön kol ve el üstü en popüler bölgeler.</p><h2>Dikkat Edilmesi Gerekenler</h2><p>Minimal dövmede hata payı yoktur: tek bir eğri çizgi bile tasarımı bozar. Bu yüzden ince işçilikte deneyimli bir sanatçı seçmek kritik. Ayrıca çok küçük ve çok detaylı tasarımlar zamanla birbirine karışabilir; ön görüşmede uygulanabilir minimum boyutu birlikte belirliyoruz.</p><p>Aklındaki minimal tasarımı bize WhatsApp''tan gönder, ölçü ve bölgeye göre fiyat aralığını hemen öğren.</p>',
+'assets/img/demo/blog-minimal.svg', 1,
+'Minimal Dövme Kimler İçin Uygundur? | D4stattoo Blog',
+'Minimal dövme rehberi: kimlere uygun, hangi bölgelere yakışır, nelere dikkat edilmeli? Minimal dövme İstanbul için D4stattoo.',
+'minimal dövme,minimal tattoo,ilk dövme', 1, '2026-06-10 10:00:00'),
+
+(4, 'tr', 'Fine Line Tattoo Nedir?', 'fine-line-tattoo-nedir',
+'Tek iğneyle atılan incecik çizgiler: fine line tekniğinin detayları, kalıcılığı ve minimal dövmeden farkı.',
+'<p>Fine line tattoo İstanbul''da son yılların en çok konuşulan stillerinden. Peki bu incecik çizgiler nasıl atılıyor ve gerçekten kalıcı mı?</p><h2>Teknik Olarak Fine Line</h2><p>Fine line, adı üstünde "ince çizgi" tekniğidir: 1RL veya 3RL gibi çok ince iğne konfigürasyonlarıyla, düşük hız ve yüksek hassasiyetle çalışılır. Sonuç; âdeta 0.1 uçlu kalemle çizilmiş gibi duran zarif bir görünümdür.</p><h2>Minimal Dövmeden Farkı Ne?</h2><p>Sık karıştırılır: <strong>minimal</strong> tasarımın sadeliğini, <strong>fine line</strong> ise çizginin inceliğini tanımlar. Kocaman bir çiçek kompozisyonu fine line olabilir; kalın çizgili küçük bir kalp minimaldir ama fine line değildir.</p><h2>Kalıcılık Meselesi</h2><p>"İnce çizgi çabuk silinir" efsanesi, yanlış derinlikte çalışan uygulamalardan doğar. Doğru derinlik ve kaliteli pigmentle fine line dövme kalıcıdır; ilk yıldan sonra çizgilerde hafif bir yumuşama olur ki bu da stile karakterini veren doğal bir dokudur.</p><h2>En Çok Yakıştığı Yerler</h2><p>Köprücük kemiği, kaburga, bilek ve el üstü... İnce çizgiler vücudun zarif hatlarını takip ettiğinde etkisi katlanır.</p><p>Fine line portfolyomuzu galeri sayfamızda incele; kendi tasarımın için ücretsiz ön görüşmeye bekleriz.</p>',
+'assets/img/demo/blog-fineline.svg', 1,
+'Fine Line Tattoo Nedir? | D4stattoo Blog',
+'Fine line tattoo tekniği: nasıl uygulanır, kalıcı mıdır, minimal dövmeden farkı nedir? Fine line tattoo İstanbul rehberi.',
+'fine line tattoo,ince çizgi dövme,fine line istanbul', 1, '2026-06-05 10:00:00'),
+
+(5, 'tr', 'Cover-up Dövme Nedir?', 'cover-up-dovme-nedir',
+'Pişman olduğun dövmeye mahkûm değilsin. Cover-up sürecinin nasıl işlediğini ve nelerin mümkün olduğunu anlattık.',
+'<p>Cover up dövme İstanbul aramalarında her yıl artış var; çünkü hepimizin "keşke yaptırmasaydım" dediği bir gençlik anısı olabilir. İyi haber: doğru planlamayla neredeyse her dövme kapatılabilir.</p><h2>Cover-up Nasıl Çalışır?</h2><p>Kapatma dövmesi, eski dövmenin çizgilerini ve gölgelerini yeni tasarımın içinde eritme sanatıdır. Yeni tasarım; eski işten bir miktar büyük, stratejik olarak daha koyu ve yoğun dokulu olur.</p><h2>Hangi Stiller Kapatmada İyi Çalışır?</h2><ul><li><strong>Blackwork:</strong> En garantili kapatıcı; koyu ve dolgun.</li><li><strong>Realistic gölgeleme:</strong> Eski dövmeyi derinlik içinde kaybeder.</li><li><strong>Yoğun renkli kompozisyonlar:</strong> Çiçek ve doğa temaları kapatmada çok başarılıdır.</li></ul><h2>Süreç Nasıl İlerliyor?</h2><p>Önce eski dövmenin fotoğrafını değerlendiriyoruz: koyuluğu, yaşı ve konumu kapatma stratejisini belirler. Çok koyu işlerde 1-2 seans lazer soldurma önerebiliriz; bu, tasarım özgürlüğünü ciddi artırır. Sonra sana özel kapatma tasarımı çizip onayınla uygulamaya geçiyoruz.</p><h2>Gerçekçi Beklentiler</h2><p>Cover-up sihir değil, strateji işidir: yeni tasarım eskisinden küçük olamaz ve bazı renk kombinasyonları sınırlıdır. Ön görüşmede neyin mümkün olduğunu dürüstçe söyleriz — çünkü ikinci kez pişmanlık yaşamanı istemiyoruz.</p><p>Eski dövmenin fotoğrafını teklif formundan gönder; ücretsiz cover-up değerlendirmesi yapalım.</p>',
+'assets/img/demo/blog-coverup.svg', 1,
+'Cover-up Dövme Nedir? | D4stattoo Blog',
+'Cover-up (kapatma) dövme rehberi: süreç nasıl işler, hangi stiller kullanılır, neler mümkün? Cover up dövme İstanbul.',
+'cover-up,kapatma dövme,cover up istanbul', 1, '2026-05-28 10:00:00'),
+
+(6, 'tr', 'Kol Kaplama Dövme Fiyatları Nasıl Belirlenir?', 'kol-kaplama-dovme-fiyatlari-nasil-belirlenir',
+'Sleeve (kol kaplama) projelerinde fiyatı belirleyen faktörler: boyut, stil, seans sayısı ve tasarım süreci.',
+'<p>Kol kaplama dövme fiyatları, dövme dünyasının en çok merak edilen sorularından. Net bir rakam vermek neden zor ve fiyatı asıl belirleyen ne? Şeffafça anlatalım.</p><h2>Fiyatı Belirleyen 5 Faktör</h2><ol><li><strong>Kapsam:</strong> Yarım kol (half sleeve) ile tam kol (full sleeve) arasında hem alan hem süre olarak ciddi fark vardır.</li><li><strong>Stil:</strong> Blackwork dolgu ile realistic detay aynı sürede işlenmez; detay yoğunluğu arttıkça seans sayısı artar.</li><li><strong>Seans sayısı:</strong> Tam kol kaplama genellikle 3-6 seans sürer; cilt her seans arasında dinlenmelidir.</li><li><strong>Tasarım süreci:</strong> Kişiye özel kompozisyon; eskiz, yerleşim provası ve revizyonlar içerir.</li><li><strong>Mevcut dövmeler:</strong> Kaplamanın içine alınacak ya da kapatılacak eski dövmeler planlamayı etkiler.</li></ol><h2>Nasıl Bütçelenir?</h2><p>Kol kaplama projelerinde seans bazlı fiyatlandırma yapıyoruz; böylece projeyi kendi hızında ve bütçende ilerletebilirsin. İlk seans öncesi ücretsiz ön görüşmede toplam seans tahmini ve seans başı aralığı net olarak paylaşıyoruz.</p><h2>Neden "Fiyat Listesi" Yerine Ön Görüşme?</h2><p>Her kol farklı, her tasarım farklı. Standart bir fiyat söyleyip sonra değiştirmek yerine; kolunu görüp, tasarımı konuşup gerçekçi bir rakam veriyoruz. Bu görüşme ücretsiz ve seni hiçbir şeye zorunlu bırakmıyor.</p><p>Kol kaplama hayalini teklif formundan ya da WhatsApp''tan anlat; birlikte planlayalım.</p>',
+'assets/img/demo/blog-sleeve.svg', 1,
+'Kol Kaplama Dövme Fiyatları Nasıl Belirlenir? | D4stattoo',
+'Kol kaplama dövme fiyatları hangi faktörlere göre belirlenir? Sleeve projelerinde boyut, stil, seans sayısı ve bütçeleme rehberi.',
+'kol kaplama,sleeve,kol kaplama dövme fiyatları', 1, '2026-05-20 10:00:00'),
+
+(7, 'tr', 'Realistic Tattoo Yaptırmadan Önce Nelere Dikkat Edilmeli?', 'realistic-tattoo-yaptirmadan-once-nelere-dikkat-edilmeli',
+'Gerçekçi dövmede sonucu belirleyen faktörler: referans fotoğraf, sanatçı portfolyosu, bölge seçimi ve sabır.',
+'<p>Realistic tattoo, dövme sanatının zirvesi kabul edilir — ama aynı zamanda hata affetmeyen bir stildir. Yaptırmadan önce şu başlıkları mutlaka değerlendir.</p><h2>1. Portfolyo İncele, Hem de Detaylıca</h2><p>Realistic çalışan her sanatçının seviyesi aynı değildir. İyileşmiş (taze değil!) realistic işlerin fotoğraflarını iste; gölge geçişlerinin yumuşaklığına ve oranların doğruluğuna bak.</p><h2>2. Referans Fotoğrafın Kalitesi Sonucun Kalitesidir</h2><p>Düşük çözünürlüklü, kötü ışıklı bir fotoğraftan harika bir portre çıkmaz. Yüz detaylarının net seçildiği, doğal ışıklı bir referans idealdir. Fotoğrafın zayıfsa ön görüşmede alternatif kompozisyonlar öneriyoruz.</p><h2>3. Doğru Bölge, Doğru Boyut</h2><p>Realistic detay küçük alana sıkışmaz: bir portrenin gerçekçi durması için minimum boyut gerekir. Üst kol, ön kol ve göğüs gibi geniş, düz alanlar en doğru tuvaldir.</p><h2>4. Seans Planına Sabır</h2><p>Kaliteli realistic iş 3-8 saat sürer, büyük projeler seanslara bölünür. Aceleye getirilen gölgeleme, iyileşince kendini belli eder.</p><h2>5. Bakıma Ekstra Özen</h2><p>Yoğun gölgeli alanlar bakım hatalarını affetmez; ilk haftalarda nemlendirme ve güneş koruması kritik önemdedir.</p><p>Realistic projeni konuşmak için ücretsiz ön görüşmeye bekliyoruz; referans fotoğrafını birlikte değerlendirelim.</p>',
+'assets/img/demo/blog-realistic.svg', 1,
+'Realistic Tattoo Öncesi Dikkat Edilmesi Gerekenler | D4stattoo',
+'Realistic dövme yaptırmadan önce: referans fotoğraf seçimi, portfolyo incelemesi, bölge ve boyut kararı. İstanbul realistic tattoo rehberi.',
+'realistic tattoo,gerçekçi dövme,portre dövme', 1, '2026-05-12 10:00:00'),
+
+(8, 'tr', 'Dövme İğneleri ve Ekipmanları Hakkında Bilmen Gerekenler', 'dovme-igneleri-ve-ekipmanlari',
+'RL, RS, M1 ne demek? Dövme makinesi türleri, iğne konfigürasyonları ve kaliteli ekipmanın sonuca etkisi.',
+'<p>Dövme sanatının mutfağına merak duyanlar için ekipman dünyasına giriş: iğneler, makineler ve sarf malzemeleri.</p><h2>İğne Konfigürasyonları</h2><p>İğne kodlarındaki sayı iğne adedini, harfler dizilimi anlatır:</p><ul><li><strong>RL (Round Liner):</strong> Daire dizilim, çizgi işleri. 1RL-3RL fine line''ın kalbidir.</li><li><strong>RS (Round Shader):</strong> Daha gevşek daire, yumuşak gölgeleme.</li><li><strong>M1 (Magnum):</strong> Yelpaze dizilim; geniş alan dolgusu ve realistic gölgeleme.</li><li><strong>RM (Round Magnum):</strong> Kavisli magnum; cilde nazik geçişler.</li></ul><h2>Kartuş Sistemi vs Klasik İğne</h2><p>Modern stüdyolar ağırlıkla tek kullanımlık kartuş sistemi kullanır: iğne, membranlı kapalı kartuşun içindedir ve çapraz bulaşma riskini sıfıra indirir. Stüdyomuzda tüm işler steril ambalajlı, tek kullanımlık kartuşlarla yapılır.</p><h2>Makine Türleri</h2><p><strong>Rotary</strong> (döner motorlu) makineler sessiz, hafif ve stabildir; bugün sektörün standardıdır. <strong>Coil</strong> (bobinli) makineler klasik "vızıltı" sesiyle bilinir ve hâlâ tercih eden ustalar vardır.</p><h2>Ekipman Kalitesi Neyi Değiştirir?</h2><p>Kaliteli pigment daha az solar, kaliteli iğne cildi daha az travmatize eder, stabil makine daha net çizgi atar. "Ucuz dövme" çoğu zaman bu üç kalemden kısılarak yapılır — ve farkı iyileşince görürsün.</p>',
+'assets/img/demo/blog-equipment.svg', 3,
+'Dövme İğneleri ve Ekipmanları | D4stattoo Akademi',
+'Dövme iğnesi türleri (RL, RS, M1), kartuş sistemi, rotary ve coil makineler. Dövme ekipmanları hakkında akademi rehberi.',
+'dövme iğnesi,dövme makinesi,dövme ekipmanları,akademi', 1, '2026-05-05 10:00:00'),
+
+(9, 'tr', 'Dövmede Hijyen Neden Önemlidir?', 'dovmede-hijyen-neden-onemlidir',
+'Steril çalışma alanı, tek kullanımlık sarf ve doğru atık yönetimi: güvenli dövmenin görünmeyen kahramanları.',
+'<p>Bir dövmenin güzelliği yıllar içinde anlaşılır ama hijyeni ilk saniyeden itibaren hayatidir. Dövme, sonuçta kontrollü bir cilt işlemidir ve ciddiyet ister.</p><h2>Riskler Neler?</h2><p>Hijyenik olmayan uygulamada; bakteriyel enfeksiyonlar, hepatit B/C gibi kan yoluyla bulaşan hastalıklar ve alerjik reaksiyonlar riski vardır. Bu risklerin tamamı, doğru protokollerle önlenebilir.</p><h2>Güvenli Stüdyonun Kontrol Listesi</h2><ul><li>İğne ve kartuşlar steril ambalajından <strong>senin önünde</strong> açılıyor mu?</li><li>Sanatçı her aşamada yeni eldiven kullanıyor mu?</li><li>Koltuk, tezgâh ve makine streçle kaplanıyor mu?</li><li>Boya kapları tek kullanımlık mı?</li><li>Atıklar tıbbi atık kutusuna mı gidiyor?</li><li>Çalışma alanı her müşteri arasında dezenfekte ediliyor mu?</li></ul><p>Bu soruların herhangi birine "hayır" cevabı alıyorsan, o stüdyodan uzak dur — fiyatı ne kadar cazip olursa olsun.</p><h2>D4stattoo''da Hijyen Protokolü</h2><p>Stüdyomuzda tüm sarf malzemeleri tek kullanımlıktır; yüzeyler her seans öncesi ve sonrası medikal dezenfektanla temizlenir, atıklar ayrıştırılır. Ön görüşmede tüm süreci yerinde görebilir, istediğin her soruyu sorabilirsin. Detaylar hijyen sayfamızda.</p>',
+'assets/img/demo/blog-hygiene.svg', 3,
+'Dövmede Hijyen Neden Önemlidir? | D4stattoo Akademi',
+'Dövmede hijyen: riskler, güvenli stüdyo kontrol listesi ve D4stattoo hijyen protokolü. Güvenli dövme için akademi rehberi.',
+'dövme hijyen,steril dövme,güvenli dövme,akademi', 1, '2026-04-28 10:00:00'),
+
+(10, 'tr', 'Dövme Renkleri Zamanla Solar mı?', 'dovme-renkleri-zamanla-solar-mi',
+'Güneş, cilt yenilenmesi ve pigment kalitesi: dövme renklerinin ömrünü belirleyen faktörler ve canlı tutma yolları.',
+'<p>Kısa cevap: her dövme zamanla bir miktar yumuşar — ama solma hızını büyük ölçüde sen kontrol edersin.</p><h2>Solmanın Bilimi</h2><p>Dövme pigmenti, cildin orta katmanına (dermis) yerleşir. Üst deri sürekli yenilendiği için dövme ilk haftalarda "netleşir"; yıllar içindeki yavaş yumuşama ise UV ışınları, cilt yenilenmesi ve pigment kalitesinin ortak sonucudur.</p><h2>Renkleri Soldurmayan 5 Alışkanlık</h2><ol><li><strong>Güneş kremi:</strong> UV, pigmentin bir numaralı düşmanı. Yazın SPF 30+ şart.</li><li><strong>Düzenli nemlendirme:</strong> Nemli cilt pigmenti daha iyi taşır.</li><li><strong>Solaryumdan uzak dur:</strong> Yoğun UV dozu renkleri hızla soldurur.</li><li><strong>İyileşme dönemine sadakat:</strong> İlk iki haftadaki bakım, dövmenin bütün ömrünü belirler.</li><li><strong>Kaliteli pigment seçimi:</strong> Bu bizim işimiz — stüdyomuzda uzun ömürlü, sertifikalı pigmentler kullanıyoruz.</li></ol><h2>Hangi Renkler Daha Dayanıklı?</h2><p>Siyah ve koyu tonlar en dayanıklı olanlardır; kırmızı ve mavi uzun yıllar formda kalır; sarı, açık yeşil ve pastel tonlar daha sık tazeleme ister.</p><h2>Solmuş Dövmeye Çözüm</h2><p>Yıllar içinde yumuşamış dövmeler için yenileme (rötuş) hizmetimizle çizgileri netleştirip renkleri tazeliyoruz. Fotoğraf gönder, ücretsiz değerlendirelim.</p>',
+'assets/img/demo/blog-colors.svg', 2,
+'Dövme Renkleri Zamanla Solar mı? | D4stattoo Blog',
+'Dövme renkleri neden solar, nasıl korunur? Güneş, nemlendirme ve pigment kalitesi hakkında bilmeniz gerekenler.',
+'dövme solması,renkli dövme,dövme bakımı', 1, '2026-04-20 10:00:00');
+
+-- Diğer diller için temel blog yazıları
+INSERT IGNORE INTO `blog_posts` (`id`, `lang`, `title`, `slug`, `excerpt`, `content`, `cover_image`, `category_id`, `meta_title`, `meta_description`, `tags`, `status`, `published_at`) VALUES
+(21, 'en', 'What You Should Know Before Your First Tattoo', 'ilk-dovme-oncesi-bilmen-gerekenler',
+'Everything you need to know before your first tattoo: choosing a studio, design decisions, pain expectations and session-day prep.',
+'<p>Getting your first tattoo is exciting — good preparation makes it even better.</p><h2>Choose the Studio Wisely</h2><p>Hygiene comes first: single-use needles and sterile equipment are non-negotiable. Always review the artist''s portfolio.</p><h2>Session Day</h2><ul><li>Eat well beforehand, stay hydrated.</li><li>No alcohol for 24 hours.</li><li>Wear comfortable clothing that exposes the area.</li></ul><p>Questions? Message us on WhatsApp any day between 09:00 and 23:00.</p>',
+'assets/img/demo/blog-first-tattoo.svg', 4, 'Before Your First Tattoo | D4stattoo Blog', 'First tattoo guide: studio choice, design, pain and session-day preparation.', 'first tattoo,guide', 1, '2026-06-20 10:00:00'),
+(22, 'en', 'How to Care for a New Tattoo', 'dovme-sonrasi-bakim-nasil-yapilir',
+'The first 24 hours, the first two weeks and long-term care of your new tattoo.',
+'<p>Aftercare determines the final result as much as the tattooing itself.</p><h2>First 24 Hours</h2><p>Keep the protective film on as instructed, then wash gently with lukewarm water and fragrance-free soap.</p><h2>First 2 Weeks</h2><ul><li>Wash and moisturise 2-3 times a day.</li><li>Never pick the scabs.</li><li>No pools, sea, sauna or direct sun.</li></ul>',
+'assets/img/demo/blog-aftercare.svg', 4, 'Tattoo Aftercare Guide | D4stattoo Blog', 'How to care for a new tattoo: first 24 hours, first two weeks, long-term.', 'aftercare,tattoo care', 1, '2026-06-15 10:00:00'),
+(23, 'ar', 'ما يجب معرفته قبل وشمك الأول', 'ilk-dovme-oncesi-bilmen-gerekenler',
+'كل ما تحتاج معرفته قبل وشمك الأول: اختيار الاستوديو والتصميم وتوقعات الألم.',
+'<p>وشمك الأول تجربة مميزة — والتحضير الجيد يجعلها أفضل.</p><h2>اختر الاستوديو بعناية</h2><p>النظافة أولاً: إبر للاستخدام الواحد ومعدات معقمة أمران لا تفاوض فيهما. اطلع دائماً على أعمال الفنان.</p><h2>يوم الجلسة</h2><ul><li>تناول طعاماً جيداً واشرب ماءً كافياً.</li><li>لا كحول قبل 24 ساعة.</li><li>ارتدِ ملابس مريحة تكشف مكان الوشم.</li></ul>',
+'assets/img/demo/blog-first-tattoo.svg', 6, 'قبل وشمك الأول | مدونة D4stattoo', 'دليل الوشم الأول: اختيار الاستوديو والتصميم والتحضير.', 'الوشم الأول,دليل', 1, '2026-06-20 10:00:00'),
+(24, 'ru', 'Что нужно знать перед первой татуировкой', 'ilk-dovme-oncesi-bilmen-gerekenler',
+'Всё, что нужно знать перед первой тату: выбор студии, дизайн, ожидания по боли и подготовка к сеансу.',
+'<p>Первая татуировка — это волнительно, а хорошая подготовка делает опыт ещё лучше.</p><h2>Выбирайте студию внимательно</h2><p>Гигиена прежде всего: одноразовые иглы и стерильное оборудование обязательны. Обязательно изучите портфолио мастера.</p><h2>День сеанса</h2><ul><li>Хорошо поешьте, пейте воду.</li><li>Никакого алкоголя за 24 часа.</li><li>Наденьте удобную одежду, открывающую место тату.</li></ul>',
+'assets/img/demo/blog-first-tattoo.svg', 8, 'Перед первой тату | Блог D4stattoo', 'Гид по первой татуировке: выбор студии, дизайн и подготовка.', 'первая тату,гид', 1, '2026-06-20 10:00:00');
+
+-- ----------------------------------------------------------------------------
+-- Galeri kategorileri ve görselleri (demo SVG görselleri assets/img/demo altında)
+-- ----------------------------------------------------------------------------
+INSERT IGNORE INTO `gallery_categories` (`id`, `lang`, `name`, `slug`, `sort_order`, `status`) VALUES
+(1, 'tr', 'Minimal', 'minimal', 1, 1),
+(2, 'tr', 'Realistic', 'realistic', 2, 1),
+(3, 'tr', 'Fine Line', 'fine-line', 3, 1),
+(4, 'tr', 'Blackwork', 'blackwork', 4, 1),
+(5, 'tr', 'Renkli', 'renkli', 5, 1),
+(6, 'tr', 'Cover-up', 'cover-up', 6, 1);
+
+INSERT IGNORE INTO `gallery_items` (`id`, `category_id`, `title`, `image`, `before_image`, `after_image`, `type`, `alt_text`, `sort_order`, `status`) VALUES
+(1, 1, 'Minimal bilek çalışması', 'assets/img/demo/gallery-minimal-1.svg', NULL, NULL, 'image', 'Bilek üzerine minimal çizgi dövme', 1, 1),
+(2, 1, 'Minimal sembol', 'assets/img/demo/gallery-minimal-2.svg', NULL, NULL, 'image', 'Kulak arkası minimal sembol dövmesi', 2, 1),
+(3, 2, 'Realistic portre', 'assets/img/demo/gallery-realistic-1.svg', NULL, NULL, 'image', 'Ön kol realistic portre dövmesi', 3, 1),
+(4, 2, 'Realistic aslan', 'assets/img/demo/gallery-realistic-2.svg', NULL, NULL, 'image', 'Üst kol realistic aslan dövmesi', 4, 1),
+(5, 3, 'Fine line çiçek', 'assets/img/demo/gallery-fineline-1.svg', NULL, NULL, 'image', 'Köprücük kemiği fine line çiçek dövmesi', 5, 1),
+(6, 3, 'Fine line yazı', 'assets/img/demo/gallery-fineline-2.svg', NULL, NULL, 'image', 'Bilek fine line yazı dövmesi', 6, 1),
+(7, 4, 'Blackwork kol', 'assets/img/demo/gallery-blackwork-1.svg', NULL, NULL, 'image', 'Kol kaplama blackwork dövme', 7, 1),
+(8, 4, 'Geometrik blackwork', 'assets/img/demo/gallery-blackwork-2.svg', NULL, NULL, 'image', 'Ön kol geometrik blackwork dövme', 8, 1),
+(9, 5, 'Renkli suluboya', 'assets/img/demo/gallery-color-1.svg', NULL, NULL, 'image', 'Omuz renkli suluboya dövme', 9, 1),
+(10, 5, 'Renkli çiçek kompozisyonu', 'assets/img/demo/gallery-color-2.svg', NULL, NULL, 'image', 'Üst kol renkli çiçek dövmesi', 10, 1),
+(11, 6, 'İsim kapatma', NULL, 'assets/img/demo/gallery-ba-before-1.svg', 'assets/img/demo/gallery-ba-after-1.svg', 'before_after', 'Eski isim dövmesinin çiçek kompozisyonuyla kapatılması', 11, 1),
+(12, 6, 'Soluk dövme yenileme', NULL, 'assets/img/demo/gallery-ba-before-2.svg', 'assets/img/demo/gallery-ba-after-2.svg', 'before_after', 'Solmuş dövmenin blackwork ile kapatılması', 12, 1),
+(13, 1, 'Minimal model — dağ', 'assets/img/demo/model-1.svg', NULL, NULL, 'model', 'Minimal dağ dövme modeli', 13, 1),
+(14, 3, 'Fine line model — çiçek', 'assets/img/demo/model-2.svg', NULL, NULL, 'model', 'Fine line çiçek dövme modeli', 14, 1),
+(15, 4, 'Geometrik model — mandala', 'assets/img/demo/model-3.svg', NULL, NULL, 'model', 'Mandala dövme modeli', 15, 1),
+(16, 5, 'Renkli model — kelebek', 'assets/img/demo/model-4.svg', NULL, NULL, 'model', 'Renkli kelebek dövme modeli', 16, 1);
+
+-- ----------------------------------------------------------------------------
+-- SSS
+-- ----------------------------------------------------------------------------
+INSERT IGNORE INTO `faq_items` (`id`, `lang`, `question`, `answer`, `sort_order`, `status`) VALUES
+(1, 'tr', 'Dövme yaptırmak çok ağrılı mı?', 'Ağrı; bölgeye, boyuta ve kişisel eşiğe göre değişir. Bilek, kaburga ve ayak üstü daha hassastır; üst kol ve baldır oldukça konforludur. Çoğu müşterimiz ağrıyı "beklediğimden az" olarak tanımlıyor. Seans sırasında dilediğin kadar mola verebilirsin.', 1, 1),
+(2, 'tr', 'Fiyatlar nasıl belirleniyor?', 'Fiyat; dövmenin boyutuna, uygulanacağı bölgeye, stiline ve detay yoğunluğuna göre belirlenir. Fiyat listemizdeki tutarlar örnek başlangıç fiyatlarıdır; net fiyat için fotoğraf/ölçü bilgisiyle ücretsiz ön değerlendirme yapıyoruz.', 2, 1),
+(3, 'tr', 'Randevu almadan gelebilir miyim?', 'Stüdyomuz randevu sistemiyle çalışır; böylece sana kesintisiz zaman ayırabiliyoruz. Randevu formundan ya da WhatsApp üzerinden aynı gün için bile uygunluk sorabilirsin.', 3, 1),
+(4, 'tr', 'Dövme ne kadar sürede iyileşir?', 'Yüzeysel iyileşme 1-2 hafta, tam iyileşme 4-6 hafta sürer. İlk iki haftadaki bakım rutini sonucu doğrudan etkiler; detaylar bakım talimatları sayfamızdadır.', 4, 1),
+(5, 'tr', 'Kendi tasarımımla gelebilir miyim?', 'Elbette! Kendi çizimin, referans görselin ya da sadece fikrinle gelebilirsin. Tasarımı tenine ve bölgeye uygun şekilde birlikte geliştiririz — birebir kopya yerine sana özel yorumu öneririz.', 5, 1),
+(6, 'tr', '18 yaşından küçüğüm, dövme yaptırabilir miyim?', 'Hayır. Yasal düzenlemeler gereği 18 yaş altına, veli izni olsa dahi dövme uygulamıyoruz.', 6, 1),
+(7, 'tr', 'Hangi ödeme yöntemlerini kabul ediyorsunuz?', 'Nakit ve banka havalesi/EFT kabul ediyoruz. Büyük projelerde seans bazlı ödeme planı yapıyoruz; detayları ön görüşmede konuşabiliriz.', 7, 1),
+(8, 'tr', 'Dövme öncesi nelere dikkat etmeliyim?', 'Seans öncesi iyi beslen, bol su iç ve uykunu al. 24 saat öncesinden alkol alma; kan sulandırıcı kullanıyorsan mutlaka önceden bildir. Rahat kıyafetlerle gel.', 8, 1),
+(9, 'en', 'Does getting a tattoo hurt a lot?', 'Pain depends on placement, size and personal threshold. Wrists and ribs are more sensitive; upper arms and calves are quite comfortable. Most clients say it hurts less than expected.', 1, 1),
+(10, 'en', 'How are prices determined?', 'Price depends on size, placement, style and detail. Listed prices are starting samples; we offer a free assessment for an exact quote.', 2, 1),
+(11, 'en', 'How long does a tattoo take to heal?', 'Surface healing takes 1-2 weeks, full healing 4-6 weeks. The first two weeks of aftercare directly affect the result.', 3, 1),
+(12, 'en', 'Can I bring my own design?', 'Absolutely! Bring your drawing, reference image or just an idea — we will develop it together to fit your body and style.', 4, 1),
+(13, 'ar', 'هل الوشم مؤلم جداً؟', 'يعتمد الألم على المكان والحجم وتحمّل الشخص. المعصم والأضلاع أكثر حساسية؛ أعلى الذراع والساق مريحان. معظم عملائنا يقولون إن الألم أقل من المتوقع.', 1, 1),
+(14, 'ar', 'كيف تُحدد الأسعار؟', 'يعتمد السعر على الحجم والمكان والأسلوب والتفاصيل. الأسعار المعلنة أمثلة للبداية؛ نقدم تقييماً مجانياً لتحديد السعر النهائي.', 2, 1),
+(15, 'ar', 'كم يستغرق شفاء الوشم؟', 'الشفاء السطحي 1-2 أسبوع، والشفاء الكامل 4-6 أسابيع. العناية في الأسبوعين الأولين تؤثر مباشرة على النتيجة.', 3, 1),
+(16, 'ru', 'Больно ли делать тату?', 'Боль зависит от места, размера и личного порога. Запястья и рёбра чувствительнее; плечо и голень достаточно комфортны. Большинство клиентов говорят, что боль меньше ожидаемой.', 1, 1),
+(17, 'ru', 'Как формируются цены?', 'Цена зависит от размера, места, стиля и детализации. Указанные цены — стартовые примеры; для точной цены мы делаем бесплатную оценку.', 2, 1),
+(18, 'ru', 'Сколько заживает тату?', 'Поверхностное заживление 1-2 недели, полное — 4-6 недель. Уход в первые две недели напрямую влияет на результат.', 3, 1);
+
+-- ----------------------------------------------------------------------------
+-- Fiyat listesi (örnek / ön değerlendirme mantığında)
+-- ----------------------------------------------------------------------------
+INSERT IGNORE INTO `price_list_items` (`id`, `lang`, `title`, `description`, `price_text`, `sort_order`, `status`) VALUES
+(1, 'tr', 'Minimal Dövme', 'Küçük boyutlu, sade çizgili çalışmalar (yaklaşık 5 cm''e kadar).', '1.500 ₺''den başlayan örnek fiyat', 1, 1),
+(2, 'tr', 'Yazı Dövmesi', 'İsim, tarih veya kısa söz; font seçimi ön görüşmede birlikte yapılır.', '1.500 ₺''den başlayan örnek fiyat', 2, 1),
+(3, 'tr', 'Fine Line Çalışma', 'İnce çizgili çiçek, sembol ve mikro tasarımlar.', '2.000 ₺''den başlayan örnek fiyat', 3, 1),
+(4, 'tr', 'Cover-up Değerlendirme', 'Eski dövmenin fotoğrafı üzerinden kapatma planı ve fiyatlandırma.', 'Ücretsiz ön değerlendirme', 4, 1),
+(5, 'tr', 'Kol Kaplama (Sleeve)', 'Yarım veya tam kol projeleri; seans bazlı planlama yapılır.', 'Ön görüşme ile seans bazlı fiyat', 5, 1),
+(6, 'tr', 'Portre Dövme', 'Fotoğraf referanslı gerçekçi portre çalışmaları.', '6.000 ₺''den başlayan örnek fiyat', 6, 1),
+(7, 'tr', 'Renkli Dövme', 'Renk yoğunluğuna ve boyuta göre değişen sanatsal çalışmalar.', '2.500 ₺''den başlayan örnek fiyat', 7, 1),
+(8, 'en', 'Minimal Tattoo', 'Small, simple line work (up to ~5 cm).', 'Sample price from 1,500 TRY', 1, 1),
+(9, 'en', 'Lettering', 'Name, date or short quote; font chosen together at consultation.', 'Sample price from 1,500 TRY', 2, 1),
+(10, 'en', 'Cover-up Assessment', 'Cover-up plan and pricing based on a photo of your old tattoo.', 'Free pre-assessment', 3, 1),
+(11, 'en', 'Sleeve Project', 'Half or full sleeve; planned per session.', 'Per-session pricing at consultation', 4, 1),
+(12, 'ar', 'وشم مينيمال', 'أعمال صغيرة بخطوط بسيطة (حتى ~5 سم).', 'سعر تقريبي يبدأ من 1500 ليرة', 1, 1),
+(13, 'ar', 'تقييم كوفر أب', 'خطة التغطية والتسعير بناءً على صورة وشمك القديم.', 'تقييم مسبق مجاني', 2, 1),
+(14, 'ru', 'Минимал тату', 'Небольшие лаконичные работы (до ~5 см).', 'Примерная цена от 1500 лир', 1, 1),
+(15, 'ru', 'Оценка cover-up', 'План перекрытия и цена по фото вашей старой тату.', 'Бесплатная предварительная оценка', 2, 1);
+
+-- ----------------------------------------------------------------------------
+-- Yorumlar (google | instagram | site)
+-- ----------------------------------------------------------------------------
+INSERT IGNORE INTO `testimonials` (`id`, `lang`, `name`, `source`, `rating`, `comment`, `image`, `status`) VALUES
+(1, 'tr', 'Elif K.', 'google', 5, 'İlk dövmemi burada yaptırdım, süreç boyunca her adımı anlattılar. Hijyen konusundaki titizlikleri gerçekten güven veriyor. Bileğimdeki fine line çiçeğe bayılıyorum!', NULL, 1),
+(2, 'tr', 'Merve A.', 'instagram', 5, 'Kulak arkası minimal dövmem tam hayal ettiğim gibi oldu. Tasarımı benimle birlikte çizdiler, hazır şablon dayatmadılar. Kesinlikle tavsiye ederim.', NULL, 1),
+(3, 'tr', 'Burak T.', 'google', 5, 'Eski isim dövmemi kapattırdım; yerine öyle bir iş çıktı ki eskisinin izini bulmak imkânsız. Cover-up düşünen herkes önce buraya danışsın.', NULL, 1),
+(4, 'tr', 'Zeynep S.', 'instagram', 5, 'Kaburgama yazı dövmesi yaptırdım. İnce işçilik, sabırlı yaklaşım ve süper temiz stüdyo. Bakım sürecinde bile WhatsApp''tan destek oldular.', NULL, 1),
+(5, 'tr', 'Caner D.', 'google', 4, 'Kol kaplamama iki seansta başladık, planlama çok profesyoneldi. Fiyatı da ön görüşmede net söylediler, sürpriz yok. Devam seanslarını iple çekiyorum.', NULL, 1),
+(6, 'en', 'Sarah M.', 'google', 5, 'Got my first tattoo here while visiting Istanbul. Super clean studio, patient artist, perfect fine line work. Highly recommended!', NULL, 1),
+(7, 'ru', 'Анна В.', 'google', 5, 'Делала минималистичную тату на запястье. Очень чисто, мастер внимательный, эскиз нарисовали специально для меня. Рекомендую!', NULL, 1),
+(8, 'ar', 'محمد ر.', 'google', 5, 'استوديو نظيف جداً وفنان محترف. صمم لي وشماً خاصاً ولم يستخدم قوالب جاهزة. أنصح به بشدة.', NULL, 1);
+
+-- ----------------------------------------------------------------------------
+-- Kampanyalar
+-- ----------------------------------------------------------------------------
+INSERT IGNORE INTO `campaigns` (`id`, `lang`, `title`, `description`, `button_text`, `button_url`, `start_date`, `end_date`, `status`) VALUES
+(1, 'tr', 'İlk Dövmeye Özel %15 İndirim', 'İlk dövmesini D4stattoo''da yaptıranlara tüm minimal ve yazı dövmelerinde %15 indirim. Randevu formunda "İlk dövmem" yazman yeterli.', 'Hemen Randevu Al', '/randevu-al', '2026-01-01', '2026-12-31', 1),
+(2, 'en', '15% Off Your First Tattoo', '15% off all minimal and lettering tattoos for first-timers at D4stattoo. Just write "my first tattoo" in the booking form.', 'Book Now', '/en/randevu-al', '2026-01-01', '2026-12-31', 1);
+
+-- ----------------------------------------------------------------------------
+-- Müşteri takip (demo kayıt)
+-- ----------------------------------------------------------------------------
+INSERT IGNORE INTO `customer_tracking` (`id`, `tracking_code`, `full_name`, `phone`, `service_type`, `status`, `public_note`, `private_note`) VALUES
+(1, 'DEMO1234', 'Demo Müşteri', '+90 500 000 00 00', 'Kol kaplama — 2. seans', 'in_progress', 'Tasarımınızın 2. seans eskizi hazır; randevu gününüzü bekliyoruz.', 'Demo kayıt — panelden silinebilir.');
+
+-- Kurulum tamamlandı.
