@@ -748,3 +748,17 @@ main, section, footer, header { max-width: 100%; }
 @media (max-width: 768px) {
     .wa-float { inset-inline-end: 16px; width: 50px; height: 50px; min-width: 50px; min-height: 50px; }
 }
+
+/* --- Lokasyon SEO sayfaları: chip/etiket ---------------------------------- */
+.chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--bg-elev); border: 1px solid var(--line); border-radius: 100px;
+    padding: 8px 16px; font-size: .85rem; color: #d6d6da;
+}
+.chip .icon { color: var(--red); }
+.loc-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip-link { transition: border-color .2s, color .2s; min-height: 40px; }
+.chip-link:hover { border-color: var(--red); color: var(--red); }
+.loc-card { text-decoration: none; }
+.loc-card .card-link { color: var(--red); font-weight: 700; font-size: .85rem; display: inline-flex; align-items: center; gap: 4px; }

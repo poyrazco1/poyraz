@@ -33,6 +33,7 @@ class Router
         'kvkk'              => 'kvkk',
         'gizlilik-politikasi' => 'kvkk',
         'takip'             => 'tracking',
+        'istanbul'          => 'locations',
         'sitemap.xml'       => 'sitemap',
         'robots.txt'        => 'robots',
     ];
@@ -43,6 +44,7 @@ class Router
         'blog'      => 'blog-detail',
         'akademi'   => 'blog-detail',
         'takip'     => 'tracking',
+        'istanbul'  => 'location-detail',
         'sayfa'     => 'page',
     ];
 

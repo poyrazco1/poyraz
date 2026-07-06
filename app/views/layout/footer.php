@@ -24,6 +24,7 @@ $footServices = rows_lang(
                 <li><a href="<?= e(url('randevu-al')) ?>"><?= e(t('nav.appointment')) ?></a></li>
                 <li><a href="<?= e(url('fiyat-teklifi-al')) ?>"><?= e(t('btn.quote')) ?></a></li>
                 <li><a href="<?= e(url('sss')) ?>"><?= e(t('nav.faq')) ?></a></li>
+                <li><a href="<?= e(url('istanbul')) ?>">İstanbul Tattoo Bölgeleri</a></li>
                 <li><a href="<?= e(url('takip')) ?>"><?= e(t('nav.tracking')) ?></a></li>
                 <li><a href="<?= e(url('kvkk')) ?>"><?= e(t('nav.kvkk')) ?></a></li>
             </ul>

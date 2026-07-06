@@ -24,6 +24,7 @@ $menu = [
         'gallery'    => ['gallery.php', 'Galeri', 0, 'gallery'],
         'gallery-categories' => ['gallery-categories.php', 'Galeri Kategorileri', 0, 'image'],
         'faq'        => ['faq.php', 'SSS', 0, 'faq'],
+        'location-pages' => ['location-pages.php', 'Lokasyon SEO', 0, 'location'],
         'prices'     => ['prices.php', 'Fiyat Listesi', 0, 'price'],
         'testimonials' => ['testimonials.php', 'Yorumlar', 0, 'quote'],
         'campaigns'  => ['campaigns.php', 'Kampanyalar', 0, 'campaign'],
