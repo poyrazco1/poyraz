@@ -423,6 +423,7 @@ p { margin: 0 0 1em; }
     position: fixed; inset: 0; z-index: 250; background: rgba(0, 0, 0, .75);
     display: flex; align-items: center; justify-content: center; padding: 20px;
 }
+.popup-overlay[hidden] { display: none; }
 .popup-box {
     background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius);
     max-width: 420px; width: 100%; padding: 30px; position: relative; box-shadow: var(--shadow);
@@ -496,11 +497,12 @@ p { margin: 0 0 1em; }
     .nav-toggle { display: flex; }
     .main-nav {
         position: fixed; top: 68px; inset-inline: 0; bottom: 0; background: var(--bg);
-        transform: translateX(105%); transition: transform .3s ease; overflow-y: auto;
+        transform: translateX(105%); transition: transform .3s ease, visibility .3s;
+        visibility: hidden; overflow-y: auto;
         border-top: 1px solid var(--line); padding: 16px 20px 90px; z-index: 90;
     }
     .rtl .main-nav { transform: translateX(-105%); }
-    .main-nav.open { transform: translateX(0); }
+    .main-nav.open { transform: translateX(0); visibility: visible; }
     .nav-list { flex-direction: column; align-items: stretch; gap: 0; }
     .nav-list > li { border-bottom: 1px solid var(--line); }
     .nav-list > li > a, .drop-btn { padding: 15px 4px; width: 100%; text-align: start; font-size: 1rem; display: flex; justify-content: space-between; align-items: center; }

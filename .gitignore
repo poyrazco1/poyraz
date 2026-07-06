@@ -1,0 +1,10 @@
+# Loglar
+storage/logs/*.log
+
+# Panelden yüklenen dosyalar (demo görseller assets/img altında tutulur)
+assets/uploads/*/*
+!assets/uploads/*/.gitkeep
+
+# Sistem dosyaları
+.DS_Store
+Thumbs.db
