@@ -49,7 +49,7 @@ require BASE_PATH . '/app/views/layout/header.php';
             </div>
             <?php if ($post['cover_image']): ?>
             <div class="post-cover">
-                <img src="<?= e(upload_url($post['cover_image'])) ?>" alt="<?= e($post['title']) ?>">
+                <img src="<?= e(media_url($post['cover_image'], blog_fallback_image())) ?>" alt="<?= e($post['title']) ?>">
             </div>
             <?php endif; ?>
             <div class="prose"><?= clean_html($post['content'] ?? '') ?></div>

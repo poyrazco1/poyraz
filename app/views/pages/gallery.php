@@ -33,19 +33,16 @@ require BASE_PATH . '/app/views/layout/header.php';
             <button type="button" class="filter-btn" data-filter="<?= e($c['slug']) ?>"><?= e($c['name']) ?></button>
             <?php endforeach; ?>
         </div>
-        <?php if ($items): ?>
+        <?php if (empty($items)) { $items = demo_gallery_items(); } ?>
         <div class="gallery-grid">
-            <?php foreach ($items as $g): ?>
+            <?php foreach ($items as $g): $gImg = media_url($g['image'], gallery_fallback_image()); ?>
             <button type="button" class="gallery-item" data-cat="<?= e($g['cat_slug'] ?? '') ?>"
-                    data-lightbox="<?= e(upload_url($g['image'])) ?>" data-caption="<?= e($g['title']) ?>">
-                <img src="<?= e(upload_url($g['image'])) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" loading="lazy">
-                <span class="gi-label"><?= e($g['title']) ?><?= $g['cat_name'] ? ' — ' . e($g['cat_name']) : '' ?></span>
+                    data-lightbox="<?= e($gImg) ?>" data-caption="<?= e($g['title']) ?>">
+                <img src="<?= e($gImg) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" loading="lazy">
+                <span class="gi-label"><?= e($g['title']) ?><?= !empty($g['cat_name']) ? ' — ' . e($g['cat_name']) : '' ?></span>
             </button>
             <?php endforeach; ?>
         </div>
-        <?php else: ?>
-        <p class="gallery-empty"><?= e(t('gallery.empty')) ?></p>
-        <?php endif; ?>
         <div class="section-more">
             <a class="btn btn-outline" href="<?= e(url('once-sonra')) ?>"><?= e(t('nav.before_after')) ?></a>
             <a class="btn btn-primary" href="<?= e(url('randevu-al')) ?>"><?= e(t('btn.appointment')) ?></a>

@@ -87,7 +87,7 @@ require __DIR__ . '/partials/header.php';
     <div>
         <form class="filter-bar" method="get" action="">
             <?= lang_select('lang', $langFilter, true) ?>
-            <button class="btn btn-sm" type="submit">Filtrele</button>
+            <button class="btn btn-sm" type="submit"><?= icon('filter', 'icon-sm') ?> Filtrele</button>
         </form>
         <div class="table-wrap">
             <table>
@@ -102,12 +102,12 @@ require __DIR__ . '/partials/header.php';
                         <td><?= status_badge((string) $r['status']) ?></td>
                         <td>
                             <div class="row-actions">
-                                <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('faq.php', ['id' => $r['id']])) ?>">Düzenle</a>
+                                <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('faq.php', ['id' => $r['id']])) ?>"><?= icon('edit', 'icon-sm') ?> Düzenle</a>
                                 <form method="post" action="<?= e(admin_url('faq.php')) ?>" data-confirm="Soru silinsin mi?">
                                     <?= Csrf::field() ?>
                                     <input type="hidden" name="do" value="delete">
                                     <input type="hidden" name="id" value="<?= (int) $r['id'] ?>">
-                                    <button class="btn btn-sm btn-danger" type="submit">Sil</button>
+                                    <button class="btn btn-sm btn-danger" type="submit"><?= icon('delete', 'icon-sm') ?> Sil</button>
                                 </form>
                             </div>
                         </td>

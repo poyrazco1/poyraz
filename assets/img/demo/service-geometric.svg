@@ -1,9 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
-<rect width="800" height="1000" fill="url(#g)"/>
-<path d='M170 654 Q531 734 741 429' stroke='#e11d2e' stroke-width='5' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M489 597 Q26 443 480 59' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.21' stroke-linecap='round'/><path d='M530 970 Q434 611 76 599' stroke='#ffffff' stroke-width='3' fill='none' opacity='0.34' stroke-linecap='round'/><path d='M250 295 Q447 138 4 905' stroke='#e11d2e' stroke-width='3' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M205 22 Q57 426 470 400' stroke='#ffffff' stroke-width='5' fill='none' opacity='0.33' stroke-linecap='round'/><path d='M420 991 Q316 631 618 97' stroke='#ffffff' stroke-width='3' fill='none' opacity='0.3' stroke-linecap='round'/><circle cx='71' cy='360' r='76' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='585' cy='879' r='83' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='599' cy='510' r='70' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
-<rect x="0" y="0" width="800" height="1000" fill="none" stroke="#2a2a2a" stroke-width="4"/>
-<text x="50%" y="880" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#ffffff">GEOMETRİK</text>
-<text x="50%" y="1000" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">D4STATTOO — DEMO</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-label="GEOMETRIK">
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="80%">
+<stop offset="0%" stop-color="#1c1114"/><stop offset="55%" stop-color="#121013"/><stop offset="100%" stop-color="#0a0a0b"/>
+</radialGradient>
+<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#ff4d5e"/><stop offset="100%" stop-color="#b3121f"/>
+</linearGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+<stop offset="60%" stop-color="#0a0a0b" stop-opacity="0"/><stop offset="100%" stop-color="#0a0a0b" stop-opacity="0.92"/>
+</linearGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#bg)"/>
+<path d='M400 440 C 519.9 549.4, 619.7 393.1, 647.2 474.7' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='647.2' cy='474.7' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 371.9 593.4, 550.2 595.2, 497.6 659.3' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='497.6' cy='659.3' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 243 452.7, 287.8 627.1, 211.6 592.5' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='211.6' cy='592.5' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 344.2 306.1, 204.2 395, 212.8 318.4' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='212.8' cy='318.4' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 510.5 348.5, 386 241.8, 460.9 227.8' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='460.9' cy='227.8' r='2.4' fill='#e11d2e' opacity='0.8'/><circle cx='400' cy='440' r='57.1' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.13'/><circle cx='400' cy='440' r='114.3' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.1'/><circle cx='400' cy='440' r='171.4' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.07'/><path d='M-20 152 Q 400 301, 820 687' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 790 Q 400 597, 820 786' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 693 Q 400 602, 820 390' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/>
+<rect width="800" height="1000" fill="url(#fade)"/>
+<rect x="26" y="26" width="748" height="948" fill="none" stroke="#e11d2e" stroke-opacity="0.35" stroke-width="1.5"/>
+<rect x="34" y="34" width="16" height="16" fill="none" stroke="#e11d2e" stroke-width="2" opacity=".8" transform="rotate(45 42 42)"/>
+<text x="50%" y="860" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#f5f5f5" letter-spacing="6">GEOMETRIK</text>
+<text x="50%" y="940" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#e11d2e" letter-spacing="8" font-weight="700">D4STATTOO</text>
 </svg>

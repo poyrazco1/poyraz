@@ -194,7 +194,7 @@ if ($action === 'new' || $action === 'edit'):
         <h1>Galeri</h1>
         <p>Portfolyo görselleri, önce/sonra çiftleri ve dövme modelleri.</p>
     </div>
-    <a class="btn btn-primary" href="<?= e(admin_url('gallery.php', ['action' => 'new'])) ?>">+ Yeni Görsel</a>
+    <a class="btn btn-primary" href="<?= e(admin_url('gallery.php', ['action' => 'new'])) ?>"><?= icon('plus', 'icon-sm') ?> Yeni Görsel</a>
 </div>
 <form class="filter-bar" method="get" action="">
     <select name="cat">
@@ -209,7 +209,7 @@ if ($action === 'new' || $action === 'edit'):
         <option value="<?= $k ?>" <?= $typeFilter === $k ? 'selected' : '' ?>><?= $v ?></option>
         <?php endforeach; ?>
     </select>
-    <button class="btn btn-sm" type="submit">Filtrele</button>
+    <button class="btn btn-sm" type="submit"><?= icon('filter', 'icon-sm') ?> Filtrele</button>
 </form>
 <div class="table-wrap">
     <table>
@@ -226,12 +226,12 @@ if ($action === 'new' || $action === 'edit'):
                 <td><?= status_badge((string) $r['status']) ?></td>
                 <td>
                     <div class="row-actions">
-                        <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('gallery.php', ['action' => 'edit', 'id' => $r['id']])) ?>">Düzenle</a>
+                        <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('gallery.php', ['action' => 'edit', 'id' => $r['id']])) ?>"><?= icon('edit', 'icon-sm') ?> Düzenle</a>
                         <form method="post" action="<?= e(admin_url('gallery.php')) ?>" data-confirm="Bu görsel silinsin mi?">
                             <?= Csrf::field() ?>
                             <input type="hidden" name="do" value="delete">
                             <input type="hidden" name="id" value="<?= (int) $r['id'] ?>">
-                            <button class="btn btn-sm btn-danger" type="submit">Sil</button>
+                            <button class="btn btn-sm btn-danger" type="submit"><?= icon('delete', 'icon-sm') ?> Sil</button>
                         </form>
                     </div>
                 </td>

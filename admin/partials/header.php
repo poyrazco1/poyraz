@@ -12,27 +12,27 @@ $newMessages = (int) Database::value("SELECT COUNT(*) FROM contact_messages WHER
 
 $menu = [
     'Genel' => [
-        'dashboard'  => ['dashboard.php', 'Dashboard', 0],
-        'settings'   => ['settings.php', 'Site Ayarları', 0],
-        'languages'  => ['languages.php', 'Dil Yönetimi', 0],
+        'dashboard'  => ['dashboard.php', 'Dashboard', 0, 'dashboard'],
+        'settings'   => ['settings.php', 'Site Ayarları', 0, 'settings'],
+        'languages'  => ['languages.php', 'Dil Yönetimi', 0, 'language'],
     ],
     'İçerik' => [
-        'pages'      => ['pages.php', 'Sayfalar', 0],
-        'services'   => ['services.php', 'Hizmetler', 0],
-        'blog'       => ['blog.php', 'Blog Yazıları', 0],
-        'blog-categories' => ['blog-categories.php', 'Blog Kategorileri', 0],
-        'gallery'    => ['gallery.php', 'Galeri', 0],
-        'gallery-categories' => ['gallery-categories.php', 'Galeri Kategorileri', 0],
-        'faq'        => ['faq.php', 'SSS', 0],
-        'prices'     => ['prices.php', 'Fiyat Listesi', 0],
-        'testimonials' => ['testimonials.php', 'Yorumlar', 0],
-        'campaigns'  => ['campaigns.php', 'Kampanyalar', 0],
+        'pages'      => ['pages.php', 'Sayfalar', 0, 'edit'],
+        'services'   => ['services.php', 'Hizmetler', 0, 'brush'],
+        'blog'       => ['blog.php', 'Blog Yazıları', 0, 'blog'],
+        'blog-categories' => ['blog-categories.php', 'Blog Kategorileri', 0, 'filter'],
+        'gallery'    => ['gallery.php', 'Galeri', 0, 'gallery'],
+        'gallery-categories' => ['gallery-categories.php', 'Galeri Kategorileri', 0, 'image'],
+        'faq'        => ['faq.php', 'SSS', 0, 'faq'],
+        'prices'     => ['prices.php', 'Fiyat Listesi', 0, 'price'],
+        'testimonials' => ['testimonials.php', 'Yorumlar', 0, 'quote'],
+        'campaigns'  => ['campaigns.php', 'Kampanyalar', 0, 'campaign'],
     ],
     'Talepler' => [
-        'appointments' => ['appointments.php', 'Randevular', $newAppointments],
-        'quotes'       => ['quotes.php', 'Fiyat Teklifleri', $newQuotes],
-        'messages'     => ['messages.php', 'İletişim Mesajları', $newMessages],
-        'tracking'     => ['tracking.php', 'Müşteri Takip', 0],
+        'appointments' => ['appointments.php', 'Randevular', $newAppointments, 'calendar'],
+        'quotes'       => ['quotes.php', 'Fiyat Teklifleri', $newQuotes, 'price'],
+        'messages'     => ['messages.php', 'İletişim Mesajları', $newMessages, 'mail'],
+        'tracking'     => ['tracking.php', 'Müşteri Takip', 0, 'search'],
     ],
 ];
 ?><!doctype html>
@@ -52,18 +52,18 @@ $menu = [
         <ul class="side-nav">
             <?php foreach ($menu as $section => $items): ?>
             <li class="nav-sec"><?= e($section) ?></li>
-            <?php foreach ($items as $key => [$href, $label, $count]): ?>
+            <?php foreach ($items as $key => [$href, $label, $count, $icn]): ?>
             <li>
                 <a href="<?= e(admin_url($href)) ?>" class="<?= $active === $key ? 'active' : '' ?>">
-                    <?= e($label) ?>
+                    <span class="menu-label"><?= icon($icn, 'admin-menu-icon icon-sm') ?> <?= e($label) ?></span>
                     <?php if ($count > 0): ?><span class="count"><?= $count ?></span><?php endif; ?>
                 </a>
             </li>
             <?php endforeach; ?>
             <?php endforeach; ?>
             <li class="nav-sec">Hesap</li>
-            <li><a href="<?= e(base_url()) ?>" target="_blank">Siteyi Görüntüle ↗</a></li>
-            <li><a href="<?= e(admin_url('logout.php', ['t' => Csrf::token()])) ?>">Çıkış Yap</a></li>
+            <li><a href="<?= e(base_url()) ?>" target="_blank"><span class="menu-label"><?= icon('home', 'admin-menu-icon icon-sm') ?> Siteyi Görüntüle ↗</span></a></li>
+            <li><a href="<?= e(admin_url('logout.php', ['t' => Csrf::token()])) ?>"><span class="menu-label"><?= icon('logout', 'admin-menu-icon icon-sm') ?> Çıkış Yap</span></a></li>
         </ul>
     </aside>
     <div class="admin-main">

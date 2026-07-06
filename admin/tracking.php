@@ -126,12 +126,12 @@ require __DIR__ . '/partials/header.php';
                     <td><?= e(format_date($r['updated_at'], true)) ?></td>
                     <td>
                         <div class="row-actions">
-                            <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('tracking.php', ['id' => $r['id']])) ?>">Düzenle</a>
+                            <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('tracking.php', ['id' => $r['id']])) ?>"><?= icon('edit', 'icon-sm') ?> Düzenle</a>
                             <form method="post" action="<?= e(admin_url('tracking.php')) ?>" data-confirm="Kayıt silinsin mi?">
                                 <?= Csrf::field() ?>
                                 <input type="hidden" name="do" value="delete">
                                 <input type="hidden" name="id" value="<?= (int) $r['id'] ?>">
-                                <button class="btn btn-sm btn-danger" type="submit">Sil</button>
+                                <button class="btn btn-sm btn-danger" type="submit"><?= icon('delete', 'icon-sm') ?> Sil</button>
                             </form>
                         </div>
                     </td>

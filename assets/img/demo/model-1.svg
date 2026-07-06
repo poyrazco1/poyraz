@@ -1,9 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
-<rect width="800" height="1000" fill="url(#g)"/>
-<path d='M274 579 Q429 351 2 798' stroke='#e11d2e' stroke-width='6' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M219 68 Q457 707 670 524' stroke='#ffffff' stroke-width='5' fill='none' opacity='0.39' stroke-linecap='round'/><path d='M394 78 Q235 88 696 991' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.4' stroke-linecap='round'/><path d='M633 979 Q40 448 376 793' stroke='#e11d2e' stroke-width='6' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M780 376 Q629 377 83 909' stroke='#ffffff' stroke-width='5' fill='none' opacity='0.29' stroke-linecap='round'/><path d='M731 37 Q250 190 29 172' stroke='#ffffff' stroke-width='5' fill='none' opacity='0.34' stroke-linecap='round'/><circle cx='750' cy='157' r='80' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='147' cy='442' r='62' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='675' cy='512' r='43' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
-<rect x="0" y="0" width="800" height="1000" fill="none" stroke="#2a2a2a" stroke-width="4"/>
-<text x="50%" y="880" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#ffffff">MODEL — DAĞ</text>
-<text x="50%" y="1000" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">D4STATTOO — DEMO</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-label="DAğ MODELI">
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="80%">
+<stop offset="0%" stop-color="#1c1114"/><stop offset="55%" stop-color="#121013"/><stop offset="100%" stop-color="#0a0a0b"/>
+</radialGradient>
+<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#ff4d5e"/><stop offset="100%" stop-color="#b3121f"/>
+</linearGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+<stop offset="60%" stop-color="#0a0a0b" stop-opacity="0"/><stop offset="100%" stop-color="#0a0a0b" stop-opacity="0.92"/>
+</linearGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#bg)"/>
+<path d='M400 440 C 531 533, 610.3 367.4, 647.2 444.3' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='647.2' cy='444.3' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 350.6 573.1, 510.1 602.9, 452.8 651.9' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='452.8' cy='651.9' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 238.5 424.8, 252.8 609.7, 181.7 561' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='181.7' cy='561' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 340 314.8, 210.6 406.8, 215 333.2' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='215' cy='333.2' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 521.4 349.7, 396.1 230.5, 475.8 219.9' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='475.8' cy='219.9' r='2.4' fill='#e11d2e' opacity='0.8'/><circle cx='400' cy='440' r='57.1' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.13'/><circle cx='400' cy='440' r='114.3' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.1'/><circle cx='400' cy='440' r='171.4' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.07'/><path d='M-20 181 Q 400 395, 820 750' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 701 Q 400 612, 820 576' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 190 Q 400 94, 820 184' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/>
+<rect width="800" height="1000" fill="url(#fade)"/>
+<rect x="26" y="26" width="748" height="948" fill="none" stroke="#e11d2e" stroke-opacity="0.35" stroke-width="1.5"/>
+<rect x="34" y="34" width="16" height="16" fill="none" stroke="#e11d2e" stroke-width="2" opacity=".8" transform="rotate(45 42 42)"/>
+<text x="50%" y="860" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#f5f5f5" letter-spacing="6">DAğ MODELI</text>
+<text x="50%" y="940" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#e11d2e" letter-spacing="8" font-weight="700">D4STATTOO</text>
 </svg>

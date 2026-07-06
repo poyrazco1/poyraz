@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="YAZı DöVMESI">
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="80%">
+<stop offset="0%" stop-color="#1c1114"/><stop offset="55%" stop-color="#121013"/><stop offset="100%" stop-color="#0a0a0b"/>
+</radialGradient>
+<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#ff4d5e"/><stop offset="100%" stop-color="#b3121f"/>
+</linearGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+<stop offset="60%" stop-color="#0a0a0b" stop-opacity="0"/><stop offset="100%" stop-color="#0a0a0b" stop-opacity="0.92"/>
+</linearGradient>
+</defs>
+<rect width="1200" height="900" fill="url(#bg)"/>
+<path d='M600 396 C 740.2 495.6, 825.1 318.3, 864.6 400.6' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='864.6' cy='400.6' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 598 536.4, 756.5 511.3, 719.4 576' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='719.4' cy='576' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 464.7 521.1, 632 649.1, 536.9 672.4' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='536.9' cy='672.4' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 435.2 370.9, 439 561.4, 368.9 507.3' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='368.9' cy='507.3' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 546.7 269.9, 415.1 354.5, 422.8 282.2' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='422.8' cy='282.2' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 658.6 230.6, 460.9 196.7, 530.8 135' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='530.8' cy='135' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 771.1 365.7, 703.6 178.9, 790.9 208.9' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='790.9' cy='208.9' r='2.4' fill='#e11d2e' opacity='0.8'/><circle cx='600' cy='396' r='64.3' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.13'/><circle cx='600' cy='396' r='128.6' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.1'/><circle cx='600' cy='396' r='192.9' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.07'/><path d='M-20 268 Q 600 667, 1220 380' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 337 Q 600 63, 1220 284' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 261 Q 600 735, 1220 525' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/>
+<rect width="1200" height="900" fill="url(#fade)"/>
+<rect x="26" y="26" width="1148" height="848" fill="none" stroke="#e11d2e" stroke-opacity="0.35" stroke-width="1.5"/>
+<rect x="34" y="34" width="16" height="16" fill="none" stroke="#e11d2e" stroke-width="2" opacity=".8" transform="rotate(45 42 42)"/>
+<text x="50%" y="774" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="75" font-weight="700" fill="#f5f5f5" letter-spacing="6">YAZı DöVMESI</text>
+<text x="50%" y="846" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#e11d2e" letter-spacing="8" font-weight="700">D4STATTOO</text>
+</svg>

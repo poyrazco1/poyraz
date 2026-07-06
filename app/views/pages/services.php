@@ -26,7 +26,7 @@ require BASE_PATH . '/app/views/layout/header.php';
             <?php foreach ($services as $s): ?>
             <article class="card">
                 <a class="card-img" href="<?= e(url('hizmetler/' . $s['slug'])) ?>">
-                    <img src="<?= e(upload_url($s['image'])) ?>" alt="<?= e($s['title']) ?>" loading="lazy">
+                    <img src="<?= e(media_url($s['image'], service_demo_image($s['slug']))) ?>" alt="<?= e($s['title']) ?>" loading="lazy">
                 </a>
                 <div class="card-body">
                     <h3><a href="<?= e(url('hizmetler/' . $s['slug'])) ?>"><?= e($s['title']) ?></a></h3>

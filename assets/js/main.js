@@ -2,33 +2,56 @@
 (function () {
     'use strict';
 
-    /* --- Mobil menü ------------------------------------------------------ */
+    /* --- Mobil off-canvas menü -------------------------------------------- */
     var toggle = document.querySelector('[data-nav-toggle]');
     var nav = document.querySelector('[data-nav]');
+    var overlay = document.querySelector('[data-nav-overlay]');
+    var closeBtn = document.querySelector('[data-nav-close]');
+
+    function menuOpen() {
+        if (!nav) return;
+        nav.classList.add('open');
+        if (overlay) { overlay.hidden = false; overlay.classList.add('open'); }
+        if (toggle) { toggle.classList.add('open'); toggle.setAttribute('aria-expanded', 'true'); }
+        document.body.classList.add('body-menu-open');
+    }
+    function menuClose() {
+        if (!nav) return;
+        nav.classList.remove('open');
+        if (overlay) { overlay.classList.remove('open'); }
+        if (toggle) { toggle.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }
+        document.body.classList.remove('body-menu-open');
+    }
+    function menuIsOpen() {
+        return nav && nav.classList.contains('open');
+    }
+
     if (toggle && nav) {
         toggle.addEventListener('click', function () {
-            var open = nav.classList.toggle('open');
-            toggle.classList.toggle('open', open);
-            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-            document.body.style.overflow = open ? 'hidden' : '';
+            menuIsOpen() ? menuClose() : menuOpen();
+        });
+    }
+    if (closeBtn) closeBtn.addEventListener('click', menuClose);
+    if (overlay) overlay.addEventListener('click', menuClose);
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && menuIsOpen()) menuClose();
+    });
+    // Linke tıklanınca menüyü kapat (mobil)
+    if (nav) {
+        nav.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', function () {
+                if (menuIsOpen()) menuClose();
+            });
         });
     }
 
-    /* --- Dropdownlar (mobilde tıkla-aç; masaüstünde hover CSS ile) ------- */
+    /* --- Dropdown / accordion (mobilde tıkla-aç; masaüstünde hover CSS ile) */
     document.querySelectorAll('.has-dropdown > .drop-btn').forEach(function (btn) {
         btn.addEventListener('click', function (e) {
             e.preventDefault();
             var li = btn.parentElement;
             var open = li.classList.toggle('open');
             btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-            // aynı seviyedeki diğerlerini kapat
-            li.parentElement.querySelectorAll('.has-dropdown.open').forEach(function (other) {
-                if (other !== li) {
-                    other.classList.remove('open');
-                    var b = other.querySelector('.drop-btn');
-                    if (b) b.setAttribute('aria-expanded', 'false');
-                }
-            });
         });
     });
 
@@ -76,10 +99,10 @@
                 document.body.style.overflow = 'hidden';
             });
         });
-        function closeLb() {
+        var closeLb = function () {
             lightbox.hidden = true;
             document.body.style.overflow = '';
-        }
+        };
         lightbox.addEventListener('click', function (e) {
             if (e.target === lightbox || e.target.classList.contains('lightbox-close')) closeLb();
         });
@@ -104,24 +127,47 @@
         });
     });
 
-    /* --- Popup teklif formu (10 sn sonra, oturumda bir kez) ------------------ */
+    /* --- Popup teklif formu ------------------------------------------------------
+       Ziyaretçiyi boğmadan: 10 sn SONRA ya da sayfanın %35'i scroll edildikten
+       sonra gösterilir; kapatınca oturum boyunca tekrar açılmaz. */
     var popup = document.getElementById('quotePopup');
     if (popup) {
         var KEY = 'd4_popup_seen';
         var seen = false;
         try { seen = sessionStorage.getItem(KEY) === '1'; } catch (err) { /* gizli mod */ }
-        var closePopup = function () {
-            popup.hidden = true;
+
+        var markSeen = function () {
             try { sessionStorage.setItem(KEY, '1'); } catch (err) { /* yoksay */ }
         };
+        var showPopup = function () {
+            if (seen || !popup.hidden) return;
+            if (document.querySelector('.form-card')) return; // form sayfalarında açma
+            if (menuIsOpen()) return;                          // menü açıkken açma
+            popup.hidden = false;
+            markSeen();
+            seen = true;
+        };
+        var closePopup = function () {
+            popup.hidden = true;
+            markSeen();
+            seen = true;
+        };
+
         if (!seen) {
-            setTimeout(function () {
-                // form sayfalarında popup açma
-                if (!document.querySelector('.form-card')) popup.hidden = false;
-            }, 10000);
+            setTimeout(showPopup, 10000);
+            var onScroll = function () {
+                var doc = document.documentElement;
+                var max = doc.scrollHeight - doc.clientHeight;
+                if (max > 0 && window.scrollY / max >= 0.35) {
+                    showPopup();
+                    window.removeEventListener('scroll', onScroll);
+                }
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
         }
+
         popup.addEventListener('click', function (e) {
-            if (e.target === popup || e.target.hasAttribute('data-popup-close')) closePopup();
+            if (e.target === popup || e.target.closest('[data-popup-close]')) closePopup();
         });
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && !popup.hidden) closePopup();

@@ -53,7 +53,7 @@ require BASE_PATH . '/app/views/layout/header.php';
             <?php foreach ($posts as $p): ?>
             <article class="card">
                 <a class="card-img" href="<?= e(url('blog/' . $p['slug'])) ?>">
-                    <img src="<?= e(upload_url($p['cover_image'])) ?>" alt="<?= e($p['title']) ?>" loading="lazy">
+                    <img src="<?= e(media_url($p['cover_image'], blog_fallback_image())) ?>" alt="<?= e($p['title']) ?>" loading="lazy">
                 </a>
                 <div class="card-body">
                     <span class="card-meta"><?= e(format_date($p['published_at'])) ?></span>

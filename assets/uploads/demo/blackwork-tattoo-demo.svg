@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="BLACKWORK">
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="80%">
+<stop offset="0%" stop-color="#1c1114"/><stop offset="55%" stop-color="#121013"/><stop offset="100%" stop-color="#0a0a0b"/>
+</radialGradient>
+<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#ff4d5e"/><stop offset="100%" stop-color="#b3121f"/>
+</linearGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+<stop offset="60%" stop-color="#0a0a0b" stop-opacity="0"/><stop offset="100%" stop-color="#0a0a0b" stop-opacity="0.92"/>
+</linearGradient>
+</defs>
+<rect width="1200" height="900" fill="url(#bg)"/>
+<path d='M600 396 C 698.5 485.9, 780.6 357.4, 803.2 424.6' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='803.2' cy='424.6' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 601.9 569.7, 797.2 533.8, 753.3 615' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='753.3' cy='615' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 446.6 498, 591.3 651, 493.8 658.9' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='493.8' cy='658.9' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 461 277.8, 354.8 457.4, 320.7 366.6' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='320.7' cy='366.6' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 614.6 265.2, 464.4 274.2, 504.9 217.2' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='504.9' cy='217.2' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 723.2 328.7, 623.5 203, 698.1 203.5' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='698.1' cy='203.5' r='2.4' fill='#e11d2e' opacity='0.8'/><circle cx='600' cy='396' r='64.3' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.13'/><circle cx='600' cy='396' r='128.6' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.1'/><circle cx='600' cy='396' r='192.9' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.07'/><path d='M-20 513 Q 600 360, 1220 171' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 405 Q 600 520, 1220 369' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 438 Q 600 116, 1220 229' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/>
+<rect width="1200" height="900" fill="url(#fade)"/>
+<rect x="26" y="26" width="1148" height="848" fill="none" stroke="#e11d2e" stroke-opacity="0.35" stroke-width="1.5"/>
+<rect x="34" y="34" width="16" height="16" fill="none" stroke="#e11d2e" stroke-width="2" opacity=".8" transform="rotate(45 42 42)"/>
+<text x="50%" y="774" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="75" font-weight="700" fill="#f5f5f5" letter-spacing="6">BLACKWORK</text>
+<text x="50%" y="846" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#e11d2e" letter-spacing="8" font-weight="700">D4STATTOO</text>
+</svg>

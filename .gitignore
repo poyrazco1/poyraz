@@ -1,9 +1,10 @@
 # Loglar
 storage/logs/*.log
 
-# Panelden yüklenen dosyalar (demo görseller assets/img altında tutulur)
+# Panelden yüklenen dosyalar (demo görseller repo ile gelir)
 assets/uploads/*/*
 !assets/uploads/*/.gitkeep
+!assets/uploads/demo/*
 
 # Sistem dosyaları
 .DS_Store

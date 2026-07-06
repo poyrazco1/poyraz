@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="GALERI">
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="80%">
+<stop offset="0%" stop-color="#1c1114"/><stop offset="55%" stop-color="#121013"/><stop offset="100%" stop-color="#0a0a0b"/>
+</radialGradient>
+<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#ff4d5e"/><stop offset="100%" stop-color="#b3121f"/>
+</linearGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+<stop offset="60%" stop-color="#0a0a0b" stop-opacity="0"/><stop offset="100%" stop-color="#0a0a0b" stop-opacity="0.92"/>
+</linearGradient>
+</defs>
+<rect width="1200" height="900" fill="url(#bg)"/>
+<path d='M600 396 C 757.5 488.3, 830.8 293, 880.1 376.4' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='880.1' cy='376.4' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 627.6 558.6, 805.4 495.9, 776.3 578.6' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='776.3' cy='578.6' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 495.4 519, 654.3 612.9, 574 643' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='574' cy='643' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 444.1 405.9, 485.6 579.5, 410.6 543.9' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='410.6' cy='543.9' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 459.3 316.8, 397.5 490.7, 352.5 417.6' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='352.5' cy='417.6' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 570.5 264.1, 427.7 323.1, 448 254.2' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='448' cy='254.2' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 680.1 247.8, 497.5 186.4, 572.9 138.2' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='572.9' cy='138.2' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 731.3 364.2, 669.9 222.4, 739.1 241.5' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='739.1' cy='241.5' r='2.4' fill='#e11d2e' opacity='0.8'/><circle cx='600' cy='396' r='64.3' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.13'/><circle cx='600' cy='396' r='128.6' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.1'/><circle cx='600' cy='396' r='192.9' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.07'/><path d='M-20 401 Q 600 580, 1220 588' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 159 Q 600 83, 1220 357' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 375 Q 600 154, 1220 433' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/>
+<rect width="1200" height="900" fill="url(#fade)"/>
+<rect x="26" y="26" width="1148" height="848" fill="none" stroke="#e11d2e" stroke-opacity="0.35" stroke-width="1.5"/>
+<rect x="34" y="34" width="16" height="16" fill="none" stroke="#e11d2e" stroke-width="2" opacity=".8" transform="rotate(45 42 42)"/>
+<text x="50%" y="774" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="75" font-weight="700" fill="#f5f5f5" letter-spacing="6">GALERI</text>
+<text x="50%" y="846" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#e11d2e" letter-spacing="8" font-weight="700">D4STATTOO</text>
+</svg>

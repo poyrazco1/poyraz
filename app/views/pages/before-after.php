@@ -30,11 +30,11 @@ require BASE_PATH . '/app/views/layout/header.php';
                 <div class="ba-pair">
                     <div class="ba-half">
                         <span class="ba-tag"><?= e(t('gallery.before')) ?></span>
-                        <img src="<?= e(upload_url($p['before_image'])) ?>" alt="<?= e($p['alt_text'] ?: $p['title']) ?> — <?= e(t('gallery.before')) ?>" loading="lazy">
+                        <img src="<?= e(media_url($p['before_image'], 'assets/uploads/demo/before-demo.svg')) ?>" alt="<?= e($p['alt_text'] ?: $p['title']) ?> — <?= e(t('gallery.before')) ?>" loading="lazy">
                     </div>
                     <div class="ba-half">
                         <span class="ba-tag after"><?= e(t('gallery.after')) ?></span>
-                        <img src="<?= e(upload_url($p['after_image'])) ?>" alt="<?= e($p['alt_text'] ?: $p['title']) ?> — <?= e(t('gallery.after')) ?>" loading="lazy">
+                        <img src="<?= e(media_url($p['after_image'], 'assets/uploads/demo/after-demo.svg')) ?>" alt="<?= e($p['alt_text'] ?: $p['title']) ?> — <?= e(t('gallery.after')) ?>" loading="lazy">
                     </div>
                 </div>
                 <p class="ba-title"><?= e($p['title']) ?></p>

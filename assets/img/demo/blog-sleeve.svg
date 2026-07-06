@@ -1,9 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
-<rect width="1200" height="675" fill="url(#g)"/>
-<path d='M1160 88 Q13 477 1125 495' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M1050 541 Q459 660 826 422' stroke='#ffffff' stroke-width='5' fill='none' opacity='0.34' stroke-linecap='round'/><path d='M755 249 Q614 623 73 207' stroke='#ffffff' stroke-width='5' fill='none' opacity='0.32' stroke-linecap='round'/><path d='M607 236 Q650 590 1115 130' stroke='#e11d2e' stroke-width='4' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M847 32 Q55 617 473 232' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.21' stroke-linecap='round'/><path d='M1162 252 Q1029 198 400 160' stroke='#ffffff' stroke-width='4' fill='none' opacity='0.28' stroke-linecap='round'/><circle cx='561' cy='498' r='81' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='964' cy='156' r='42' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='341' cy='92' r='29' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
-<rect x="0" y="0" width="1200" height="675" fill="none" stroke="#2a2a2a" stroke-width="4"/>
-<text x="50%" y="594" text-anchor="middle" font-family="Arial, sans-serif" font-size="66" font-weight="bold" fill="#ffffff">KOL KAPLAMA</text>
-<text x="50%" y="675" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">D4STATTOO — DEMO</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="KOL KAPLAMA">
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="80%">
+<stop offset="0%" stop-color="#1c1114"/><stop offset="55%" stop-color="#121013"/><stop offset="100%" stop-color="#0a0a0b"/>
+</radialGradient>
+<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#ff4d5e"/><stop offset="100%" stop-color="#b3121f"/>
+</linearGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+<stop offset="60%" stop-color="#0a0a0b" stop-opacity="0"/><stop offset="100%" stop-color="#0a0a0b" stop-opacity="0.92"/>
+</linearGradient>
+</defs>
+<rect width="1200" height="675" fill="url(#bg)"/>
+<path d='M600 297 C 719.3 364.2, 771.7 216.7, 809.8 278.6' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='809.8' cy='278.6' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 297 C 615.2 402.5, 731.1 364.9, 711 417.8' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='711' cy='417.8' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 297 C 519.9 356.9, 602.9 435.5, 550.3 442.6' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='550.3' cy='442.6' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 297 C 463.8 273.8, 464.1 431.8, 406.9 385.9' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='406.9' cy='385.9' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 297 C 549.5 201.6, 451.9 277.1, 453 219.8' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='453' cy='219.8' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 297 C 648.8 194.8, 524.2 159.8, 573.2 124.9' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='573.2' cy='124.9' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 297 C 696.4 261.8, 638 160, 691.9 168.5' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='691.9' cy='168.5' r='2.4' fill='#e11d2e' opacity='0.8'/><circle cx='600' cy='297' r='48.2' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.13'/><circle cx='600' cy='297' r='96.4' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.1'/><circle cx='600' cy='297' r='144.6' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.07'/><path d='M-20 320 Q 600 343, 1220 107' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 173 Q 600 219, 1220 529' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 540 Q 600 346, 1220 436' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/>
+<rect width="1200" height="675" fill="url(#fade)"/>
+<rect x="26" y="26" width="1148" height="623" fill="none" stroke="#e11d2e" stroke-opacity="0.35" stroke-width="1.5"/>
+<rect x="34" y="34" width="16" height="16" fill="none" stroke="#e11d2e" stroke-width="2" opacity=".8" transform="rotate(45 42 42)"/>
+<text x="50%" y="580" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="75" font-weight="700" fill="#f5f5f5" letter-spacing="6">KOL KAPLAMA</text>
+<text x="50%" y="634" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#e11d2e" letter-spacing="8" font-weight="700">D4STATTOO</text>
 </svg>

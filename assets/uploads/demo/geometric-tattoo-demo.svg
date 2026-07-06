@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="GEOMETRIK">
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="80%">
+<stop offset="0%" stop-color="#1c1114"/><stop offset="55%" stop-color="#121013"/><stop offset="100%" stop-color="#0a0a0b"/>
+</radialGradient>
+<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#ff4d5e"/><stop offset="100%" stop-color="#b3121f"/>
+</linearGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+<stop offset="60%" stop-color="#0a0a0b" stop-opacity="0"/><stop offset="100%" stop-color="#0a0a0b" stop-opacity="0.92"/>
+</linearGradient>
+</defs>
+<rect width="1200" height="900" fill="url(#bg)"/>
+<path d='M600 396 C 710.2 477.2, 780.2 337.3, 810.5 403.3' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='810.5' cy='403.3' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 597.8 553.9, 776.1 525.7, 734.4 598.5' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='734.4' cy='598.5' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 483.7 489.4, 611.5 602.2, 533.4 615.6' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='533.4' cy='615.6' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 461.5 389.6, 481.2 546.8, 418.5 508.1' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='418.5' cy='508.1' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 524.9 241.3, 365.2 356, 370.2 264.8' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='370.2' cy='264.8' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 668.8 251.9, 493.1 202.4, 562.2 153.2' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='562.2' cy='153.2' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 770.2 353.4, 689.1 169.9, 779.2 194' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='779.2' cy='194' r='2.4' fill='#e11d2e' opacity='0.8'/><circle cx='600' cy='396' r='64.3' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.13'/><circle cx='600' cy='396' r='128.6' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.1'/><circle cx='600' cy='396' r='192.9' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.07'/><path d='M-20 540 Q 600 727, 1220 162' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 155 Q 600 191, 1220 492' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 306 Q 600 504, 1220 147' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/>
+<rect width="1200" height="900" fill="url(#fade)"/>
+<rect x="26" y="26" width="1148" height="848" fill="none" stroke="#e11d2e" stroke-opacity="0.35" stroke-width="1.5"/>
+<rect x="34" y="34" width="16" height="16" fill="none" stroke="#e11d2e" stroke-width="2" opacity=".8" transform="rotate(45 42 42)"/>
+<text x="50%" y="774" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="75" font-weight="700" fill="#f5f5f5" letter-spacing="6">GEOMETRIK</text>
+<text x="50%" y="846" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#e11d2e" letter-spacing="8" font-weight="700">D4STATTOO</text>
+</svg>

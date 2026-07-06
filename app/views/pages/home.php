@@ -52,11 +52,11 @@ require BASE_PATH . '/app/views/layout/header.php';
 <div class="badges">
     <div class="container">
         <ul class="badges-list">
-            <li><?= e(t('badge.single_needle')) ?></li>
-            <li><?= e(t('badge.sterile')) ?></li>
-            <li><?= e(t('badge.custom')) ?></li>
-            <li><?= e(t('badge.experience', ['years' => setting('experience_years', '3')])) ?></li>
-            <li><?= e(setting('working_hours', t('badge.hours'))) ?></li>
+            <li><?= icon('needle', 'icon-sm') ?> <?= e(t('badge.single_needle')) ?></li>
+            <li><?= icon('shield', 'icon-sm') ?> <?= e(t('badge.sterile')) ?></li>
+            <li><?= icon('sparkle', 'icon-sm') ?> <?= e(t('badge.custom')) ?></li>
+            <li><?= icon('star', 'icon-sm') ?> <?= e(t('badge.experience', ['years' => setting('experience_years', '3')])) ?></li>
+            <li><?= icon('clock', 'icon-sm') ?> <?= e(setting('working_hours', t('badge.hours'))) ?></li>
         </ul>
     </div>
 </div>
@@ -71,12 +71,15 @@ require BASE_PATH . '/app/views/layout/header.php';
             <?php foreach ($services as $s): ?>
             <article class="card">
                 <a class="card-img" href="<?= e(url('hizmetler/' . $s['slug'])) ?>">
-                    <img src="<?= e(upload_url($s['image'])) ?>" alt="<?= e($s['title']) ?>" loading="lazy">
+                    <img src="<?= e(media_url($s['image'], service_demo_image($s['slug']))) ?>" alt="<?= e($s['title']) ?>" loading="lazy">
                 </a>
                 <div class="card-body">
-                    <h3><a href="<?= e(url('hizmetler/' . $s['slug'])) ?>"><?= e($s['title']) ?></a></h3>
+                    <div class="card-title-row">
+                        <?= icon(service_icon_name($s['icon']), 'icon-md') ?>
+                        <h3><a href="<?= e(url('hizmetler/' . $s['slug'])) ?>"><?= e($s['title']) ?></a></h3>
+                    </div>
                     <p><?= e($s['short_description']) ?></p>
-                    <a class="card-link" href="<?= e(url('hizmetler/' . $s['slug'])) ?>"><?= e(t('btn.details')) ?> →</a>
+                    <a class="card-link" href="<?= e(url('hizmetler/' . $s['slug'])) ?>"><?= e(t('btn.details')) ?> <?= icon('arrow-right', 'icon-sm') ?></a>
                 </div>
             </article>
             <?php endforeach; ?>
@@ -118,10 +121,11 @@ require BASE_PATH . '/app/views/layout/header.php';
             <?php endforeach; ?>
         </div>
         <div class="gallery-grid">
-            <?php foreach ($galleryItems as $g): ?>
+            <?php if (empty($galleryItems)) { $galleryItems = demo_gallery_items(); } ?>
+            <?php foreach ($galleryItems as $g): $gImg = media_url($g['image'], gallery_fallback_image()); ?>
             <button type="button" class="gallery-item" data-cat="<?= e($g['cat_slug'] ?? '') ?>"
-                    data-lightbox="<?= e(upload_url($g['image'])) ?>" data-caption="<?= e($g['title']) ?>">
-                <img src="<?= e(upload_url($g['image'])) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" loading="lazy">
+                    data-lightbox="<?= e($gImg) ?>" data-caption="<?= e($g['title']) ?>">
+                <img src="<?= e($gImg) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" loading="lazy">
                 <span class="gi-label"><?= e($g['title']) ?></span>
             </button>
             <?php endforeach; ?>
@@ -138,10 +142,10 @@ require BASE_PATH . '/app/views/layout/header.php';
             <h2><?= e(t('home.hygiene_title')) ?></h2>
         </div>
         <div class="hygiene-grid">
-            <div class="hyg-item"><div class="hyg-icon">1×</div><h3><?= e(t('badge.single_needle')) ?></h3><p><?= e(t('badge.sterile')) ?> — <?= e(t('badge.custom')) ?></p></div>
-            <div class="hyg-item"><div class="hyg-icon">✚</div><h3><?= e(t('badge.sterile')) ?></h3><p><?= e(t('title.hygiene')) ?></p></div>
-            <div class="hyg-item"><div class="hyg-icon">✎</div><h3><?= e(t('badge.consult')) ?></h3><p><?= e(t('service.cta_text')) ?></p></div>
-            <div class="hyg-item"><div class="hyg-icon">♥</div><h3><?= e(t('nav.aftercare')) ?></h3><p><?= e(t('home.blog_sub')) ?></p></div>
+            <div class="hyg-item"><div class="hyg-icon"><?= icon('needle') ?></div><h3><?= e(t('badge.single_needle')) ?></h3><p><?= e(t('badge.sterile')) ?> — <?= e(t('badge.custom')) ?></p></div>
+            <div class="hyg-item"><div class="hyg-icon"><?= icon('shield') ?></div><h3><?= e(t('badge.sterile')) ?></h3><p><?= e(t('title.hygiene')) ?></p></div>
+            <div class="hyg-item"><div class="hyg-icon"><?= icon('user') ?></div><h3><?= e(t('badge.consult')) ?></h3><p><?= e(t('service.cta_text')) ?></p></div>
+            <div class="hyg-item"><div class="hyg-icon"><?= icon('sparkle') ?></div><h3><?= e(t('nav.aftercare')) ?></h3><p><?= e(t('home.blog_sub')) ?></p></div>
         </div>
         <div class="section-more">
             <a class="btn btn-outline" href="<?= e(url('hijyen')) ?>"><?= e(t('nav.hygiene')) ?> →</a>
@@ -197,7 +201,7 @@ require BASE_PATH . '/app/views/layout/header.php';
             <?php foreach ($posts as $p): ?>
             <article class="card">
                 <a class="card-img" href="<?= e(url('blog/' . $p['slug'])) ?>">
-                    <img src="<?= e(upload_url($p['cover_image'])) ?>" alt="<?= e($p['title']) ?>" loading="lazy">
+                    <img src="<?= e(media_url($p['cover_image'], blog_fallback_image())) ?>" alt="<?= e($p['title']) ?>" loading="lazy">
                 </a>
                 <div class="card-body">
                     <span class="card-meta"><?= e(format_date($p['published_at'])) ?></span>

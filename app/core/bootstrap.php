@@ -12,6 +12,8 @@ require_once BASE_PATH . '/app/helpers/functions.php';
 require_once BASE_PATH . '/app/helpers/security.php';
 require_once BASE_PATH . '/app/helpers/seo.php';
 require_once BASE_PATH . '/app/helpers/upload.php';
+require_once BASE_PATH . '/app/helpers/icons.php';
+require_once BASE_PATH . '/app/helpers/media.php';
 require_once BASE_PATH . '/app/core/Database.php';
 require_once BASE_PATH . '/app/core/Lang.php';
 require_once BASE_PATH . '/app/core/Csrf.php';

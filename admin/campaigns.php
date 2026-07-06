@@ -130,12 +130,12 @@ require __DIR__ . '/partials/header.php';
                     <td><?= status_badge((string) $r['status']) ?></td>
                     <td>
                         <div class="row-actions">
-                            <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('campaigns.php', ['id' => $r['id']])) ?>">Düzenle</a>
+                            <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('campaigns.php', ['id' => $r['id']])) ?>"><?= icon('edit', 'icon-sm') ?> Düzenle</a>
                             <form method="post" action="<?= e(admin_url('campaigns.php')) ?>" data-confirm="Kampanya silinsin mi?">
                                 <?= Csrf::field() ?>
                                 <input type="hidden" name="do" value="delete">
                                 <input type="hidden" name="id" value="<?= (int) $r['id'] ?>">
-                                <button class="btn btn-sm btn-danger" type="submit">Sil</button>
+                                <button class="btn btn-sm btn-danger" type="submit"><?= icon('delete', 'icon-sm') ?> Sil</button>
                             </form>
                         </div>
                     </td>

@@ -150,11 +150,11 @@ if ($action === 'new' || $action === 'edit'):
         <h1>Hizmetler</h1>
         <p>Her hizmet, /hizmetler/{slug} adresinde ayrı bir SEO sayfası olarak yayınlanır.</p>
     </div>
-    <a class="btn btn-primary" href="<?= e(admin_url('services.php', ['action' => 'new'])) ?>">+ Yeni Hizmet</a>
+    <a class="btn btn-primary" href="<?= e(admin_url('services.php', ['action' => 'new'])) ?>"><?= icon('plus', 'icon-sm') ?> Yeni Hizmet</a>
 </div>
 <form class="filter-bar" method="get" action="">
     <?= lang_select('lang', $langFilter, true) ?>
-    <button class="btn btn-sm" type="submit">Filtrele</button>
+    <button class="btn btn-sm" type="submit"><?= icon('filter', 'icon-sm') ?> Filtrele</button>
 </form>
 <div class="table-wrap">
     <table>
@@ -171,12 +171,12 @@ if ($action === 'new' || $action === 'edit'):
                 <td><?= status_badge((string) $r['status']) ?></td>
                 <td>
                     <div class="row-actions">
-                        <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('services.php', ['action' => 'edit', 'id' => $r['id']])) ?>">Düzenle</a>
+                        <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('services.php', ['action' => 'edit', 'id' => $r['id']])) ?>"><?= icon('edit', 'icon-sm') ?> Düzenle</a>
                         <form method="post" action="<?= e(admin_url('services.php')) ?>" data-confirm="Bu hizmet silinsin mi?">
                             <?= Csrf::field() ?>
                             <input type="hidden" name="do" value="delete">
                             <input type="hidden" name="id" value="<?= (int) $r['id'] ?>">
-                            <button class="btn btn-sm btn-danger" type="submit">Sil</button>
+                            <button class="btn btn-sm btn-danger" type="submit"><?= icon('delete', 'icon-sm') ?> Sil</button>
                         </form>
                     </div>
                 </td>

@@ -52,8 +52,8 @@ require BASE_PATH . '/app/views/layout/header.php';
         <div class="gallery-grid">
             <?php foreach ($works as $g): ?>
             <button type="button" class="gallery-item"
-                    data-lightbox="<?= e(upload_url($g['image'])) ?>" data-caption="<?= e($g['title']) ?>">
-                <img src="<?= e(upload_url($g['image'])) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" loading="lazy">
+                    data-lightbox="<?= e(media_url($g['image'], gallery_fallback_image())) ?>" data-caption="<?= e($g['title']) ?>">
+                <img src="<?= e(media_url($g['image'], gallery_fallback_image())) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" loading="lazy">
                 <span class="gi-label"><?= e($g['title']) ?></span>
             </button>
             <?php endforeach; ?>

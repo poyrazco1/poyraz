@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="TRIBAL">
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="80%">
+<stop offset="0%" stop-color="#1c1114"/><stop offset="55%" stop-color="#121013"/><stop offset="100%" stop-color="#0a0a0b"/>
+</radialGradient>
+<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#ff4d5e"/><stop offset="100%" stop-color="#b3121f"/>
+</linearGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+<stop offset="60%" stop-color="#0a0a0b" stop-opacity="0"/><stop offset="100%" stop-color="#0a0a0b" stop-opacity="0.92"/>
+</linearGradient>
+</defs>
+<rect width="1200" height="900" fill="url(#bg)"/>
+<path d='M600 396 C 718.8 477.3, 787.2 327.7, 821.4 396' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='821.4' cy='396' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 617.2 554.8, 792.7 504.5, 759.8 582.6' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='759.8' cy='582.6' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 498.8 480.2, 613.3 577.8, 544.7 590.8' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='544.7' cy='590.8' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 456.2 389.3, 476.7 552.5, 411.7 512.4' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='411.7' cy='512.4' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 522.8 289.4, 417.8 397.1, 409.4 327.7' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='409.4' cy='327.7' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 654.6 270.5, 502.6 233.4, 560.3 189.2' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='560.3' cy='189.2' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 396 C 738.5 363.9, 675.4 214.2, 748 234.9' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='748' cy='234.9' r='2.4' fill='#e11d2e' opacity='0.8'/><circle cx='600' cy='396' r='64.3' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.13'/><circle cx='600' cy='396' r='128.6' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.1'/><circle cx='600' cy='396' r='192.9' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.07'/><path d='M-20 447 Q 600 619, 1220 475' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 501 Q 600 628, 1220 622' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 654 Q 600 500, 1220 329' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/>
+<rect width="1200" height="900" fill="url(#fade)"/>
+<rect x="26" y="26" width="1148" height="848" fill="none" stroke="#e11d2e" stroke-opacity="0.35" stroke-width="1.5"/>
+<rect x="34" y="34" width="16" height="16" fill="none" stroke="#e11d2e" stroke-width="2" opacity=".8" transform="rotate(45 42 42)"/>
+<text x="50%" y="774" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="75" font-weight="700" fill="#f5f5f5" letter-spacing="6">TRIBAL</text>
+<text x="50%" y="846" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#e11d2e" letter-spacing="8" font-weight="700">D4STATTOO</text>
+</svg>

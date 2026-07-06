@@ -79,7 +79,7 @@ if ($action === 'view' && $id):
         <option value="new" <?= $statusFilter === 'new' ? 'selected' : '' ?>>Bekleyen</option>
         <option value="read" <?= $statusFilter === 'read' ? 'selected' : '' ?>>Okundu</option>
     </select>
-    <button class="btn btn-sm" type="submit">Filtrele</button>
+    <button class="btn btn-sm" type="submit"><?= icon('filter', 'icon-sm') ?> Filtrele</button>
 </form>
 <div class="table-wrap">
     <table>
@@ -95,7 +95,7 @@ if ($action === 'view' && $id):
                 <td><?= e(format_date($r['created_at'], true)) ?></td>
                 <td>
                     <div class="row-actions">
-                        <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('messages.php', ['action' => 'view', 'id' => $r['id']])) ?>">Oku</a>
+                        <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('messages.php', ['action' => 'view', 'id' => $r['id']])) ?>"><?= icon('eye', 'icon-sm') ?> Oku</a>
                         <form method="post" action="<?= e(admin_url('messages.php')) ?>">
                             <?= Csrf::field() ?>
                             <input type="hidden" name="do" value="toggle">
@@ -106,7 +106,7 @@ if ($action === 'view' && $id):
                             <?= Csrf::field() ?>
                             <input type="hidden" name="do" value="delete">
                             <input type="hidden" name="id" value="<?= (int) $r['id'] ?>">
-                            <button class="btn btn-sm btn-danger" type="submit">Sil</button>
+                            <button class="btn btn-sm btn-danger" type="submit"><?= icon('delete', 'icon-sm') ?> Sil</button>
                         </form>
                     </div>
                 </td>

@@ -12,8 +12,8 @@ $footServices = rows_lang(
                  alt="<?= e(setting('site_name', SITE_NAME)) ?>" class="footer-logo">
             <p><?= e(setting('footer_text')) ?></p>
             <div class="footer-social">
-                <a href="<?= e(setting('instagram_url', INSTAGRAM_URL)) ?>" target="_blank" rel="noopener" aria-label="Instagram" class="social-link">Instagram</a>
-                <a href="<?= e(whatsapp_link(t('whatsapp.default_message'))) ?>" target="_blank" rel="noopener" aria-label="WhatsApp" class="social-link">WhatsApp</a>
+                <a href="<?= e(setting('instagram_url', INSTAGRAM_URL)) ?>" target="_blank" rel="noopener" aria-label="Instagram" class="social-link"><?= icon('instagram', 'icon-sm') ?> Instagram</a>
+                <a href="<?= e(whatsapp_link(t('whatsapp.default_message'))) ?>" target="_blank" rel="noopener" aria-label="WhatsApp" class="social-link"><?= icon('whatsapp', 'icon-sm') ?> WhatsApp</a>
             </div>
         </div>
         <div class="footer-col">
@@ -39,9 +39,9 @@ $footServices = rows_lang(
         <div class="footer-col">
             <h3><?= e(t('footer.contact')) ?></h3>
             <ul class="footer-contact">
-                <li><?= e(setting('location_text', 'İstanbul / Bağcılar')) ?></li>
-                <li><a href="tel:+<?= e(whatsapp_number()) ?>"><?= e(setting('phone', '+90 505 801 61 26')) ?></a></li>
-                <li><strong><?= e(t('footer.hours')) ?>:</strong> <?= e(setting('working_hours', t('footer.hours_value'))) ?></li>
+                <li><?= icon('location', 'icon-sm') ?> <?= e(setting('location_text', 'İstanbul / Bağcılar')) ?></li>
+                <li><?= icon('phone', 'icon-sm') ?> <a href="tel:+<?= e(whatsapp_number()) ?>"><?= e(setting('phone', '+90 505 801 61 26')) ?></a></li>
+                <li><?= icon('clock', 'icon-sm') ?> <?= e(setting('working_hours', t('footer.hours_value'))) ?></li>
             </ul>
         </div>
     </div>

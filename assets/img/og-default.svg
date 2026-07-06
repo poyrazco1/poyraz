@@ -1,9 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
-<rect width="1200" height="630" fill="url(#g)"/>
-<path d='M908 245 Q443 232 211 271' stroke='#e11d2e' stroke-width='5' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M838 144 Q154 353 680 602' stroke='#ffffff' stroke-width='4' fill='none' opacity='0.28' stroke-linecap='round'/><path d='M825 339 Q636 564 313 159' stroke='#ffffff' stroke-width='6' fill='none' opacity='0.19' stroke-linecap='round'/><path d='M287 398 Q161 134 54 191' stroke='#e11d2e' stroke-width='3' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M856 73 Q331 227 1199 56' stroke='#ffffff' stroke-width='3' fill='none' opacity='0.18' stroke-linecap='round'/><path d='M60 336 Q675 295 704 306' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.17' stroke-linecap='round'/><circle cx='790' cy='248' r='65' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='190' cy='207' r='59' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='902' cy='399' r='56' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
-<rect x="0" y="0" width="1200" height="630" fill="none" stroke="#2a2a2a" stroke-width="4"/>
-<text x="50%" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="66" font-weight="bold" fill="#ffffff">D4STATTOO</text>
-<text x="50%" y="630" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">İSTANBUL / BAĞCILAR — TATTOO STUDIO</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="D4STATTOO">
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="80%">
+<stop offset="0%" stop-color="#1c1114"/><stop offset="55%" stop-color="#121013"/><stop offset="100%" stop-color="#0a0a0b"/>
+</radialGradient>
+<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#ff4d5e"/><stop offset="100%" stop-color="#b3121f"/>
+</linearGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+<stop offset="60%" stop-color="#0a0a0b" stop-opacity="0"/><stop offset="100%" stop-color="#0a0a0b" stop-opacity="0.92"/>
+</linearGradient>
+</defs>
+<rect width="1200" height="630" fill="url(#bg)"/>
+<path d='M600 277.2 C 674.1 338, 728.1 242.7, 746.9 290' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='746.9' cy='290' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 277.2 C 556 384, 684.9 412.7, 636.9 451' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='636.9' cy='451' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 277.2 C 483.3 274.4, 502.9 406.3, 449.4 375' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='449.4' cy='375' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 277.2 C 550.5 178.4, 448.8 253.4, 451.2 194.7' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='451.2' cy='194.7' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M600 277.2 C 694.1 221.5, 613.1 126.4, 671.1 124.7' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='671.1' cy='124.7' r='2.4' fill='#e11d2e' opacity='0.8'/><circle cx='600' cy='277.2' r='45' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.13'/><circle cx='600' cy='277.2' r='90' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.1'/><circle cx='600' cy='277.2' r='135' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.07'/><path d='M-20 147 Q 600 570, 1220 268' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 106 Q 600 321, 1220 309' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 471 Q 600 124, 1220 203' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/>
+<rect width="1200" height="630" fill="url(#fade)"/>
+<rect x="26" y="26" width="1148" height="578" fill="none" stroke="#e11d2e" stroke-opacity="0.35" stroke-width="1.5"/>
+<rect x="34" y="34" width="16" height="16" fill="none" stroke="#e11d2e" stroke-width="2" opacity=".8" transform="rotate(45 42 42)"/>
+<text x="50%" y="541" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="75" font-weight="700" fill="#f5f5f5" letter-spacing="6">D4STATTOO</text>
+<text x="50%" y="592" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#e11d2e" letter-spacing="8" font-weight="700">D4STATTOO</text>
 </svg>

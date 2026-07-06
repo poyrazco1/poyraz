@@ -28,19 +28,19 @@ require __DIR__ . '/partials/header.php';
 
 <div class="stat-grid">
     <div class="stat-card <?= $stats['new_appointments'] ? 'hot' : '' ?>">
-        <div class="num"><?= $stats['appointments'] ?></div>
+        <div class="num"><?= icon('calendar', 'icon-lg') ?> <?= $stats['appointments'] ?></div>
         <div class="lbl">Toplam Randevu (<?= $stats['new_appointments'] ?> yeni)</div>
     </div>
     <div class="stat-card <?= $stats['new_quotes'] ? 'hot' : '' ?>">
-        <div class="num"><?= $stats['quotes'] ?></div>
+        <div class="num"><?= icon('price', 'icon-lg') ?> <?= $stats['quotes'] ?></div>
         <div class="lbl">Fiyat Teklifi (<?= $stats['new_quotes'] ?> bekleyen)</div>
     </div>
     <div class="stat-card">
-        <div class="num"><?= $stats['gallery'] ?></div>
+        <div class="num"><?= icon('gallery', 'icon-lg') ?> <?= $stats['gallery'] ?></div>
         <div class="lbl">Galeri Görseli</div>
     </div>
     <div class="stat-card">
-        <div class="num"><?= $stats['posts'] ?></div>
+        <div class="num"><?= icon('blog', 'icon-lg') ?> <?= $stats['posts'] ?></div>
         <div class="lbl">Yayında Blog Yazısı</div>
     </div>
 </div>

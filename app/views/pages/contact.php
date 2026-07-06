@@ -74,13 +74,13 @@ require BASE_PATH . '/app/views/layout/header.php';
         <aside class="sidebar">
             <div class="side-card">
                 <h3><?= e(t('footer.contact')) ?></h3>
-                <ul>
-                    <li><?= e(setting('location_text', 'İstanbul / Bağcılar')) ?></li>
-                    <li><a href="tel:+<?= e(whatsapp_number()) ?>"><?= e(setting('phone', '+90 505 801 61 26')) ?></a></li>
-                    <li><strong><?= e(t('footer.hours')) ?>:</strong> <?= e(setting('working_hours')) ?></li>
+                <ul class="footer-contact" style="list-style:none;padding:0;display:grid;gap:10px">
+                    <li><?= icon('location', 'icon-sm') ?> <?= e(setting('location_text', 'İstanbul / Bağcılar')) ?></li>
+                    <li><?= icon('phone', 'icon-sm') ?> <a href="tel:+<?= e(whatsapp_number()) ?>"><?= e(setting('phone', '+90 505 801 61 26')) ?></a></li>
+                    <li><?= icon('clock', 'icon-sm') ?> <?= e(setting('working_hours')) ?></li>
                 </ul>
-                <a class="btn btn-wa btn-block" style="margin-top:14px" href="<?= e(whatsapp_link(t('whatsapp.default_message'))) ?>" target="_blank" rel="noopener"><?= e(t('btn.whatsapp')) ?></a>
-                <a class="btn btn-outline btn-block" style="margin-top:10px" href="<?= e(setting('instagram_url', INSTAGRAM_URL)) ?>" target="_blank" rel="noopener"><?= e(t('btn.instagram')) ?></a>
+                <a class="btn btn-wa btn-block" style="margin-top:14px" href="<?= e(whatsapp_link(t('whatsapp.default_message'))) ?>" target="_blank" rel="noopener"><?= icon('whatsapp', 'icon-sm') ?> <?= e(t('btn.whatsapp')) ?></a>
+                <a class="btn btn-outline btn-block" style="margin-top:10px" href="<?= e(setting('instagram_url', INSTAGRAM_URL)) ?>" target="_blank" rel="noopener"><?= icon('instagram', 'icon-sm') ?> <?= e(t('btn.instagram')) ?></a>
             </div>
         </aside>
     </div>

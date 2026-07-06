@@ -174,12 +174,12 @@ if ($action === 'new' || $action === 'edit'):
         <h1>Blog Yazıları</h1>
         <p>Blog ve Akademi içerikleri. Akademi sayfası, "Akademi" kategorisindeki yazıları listeler.</p>
     </div>
-    <a class="btn btn-primary" href="<?= e(admin_url('blog.php', ['action' => 'new'])) ?>">+ Yeni Yazı</a>
+    <a class="btn btn-primary" href="<?= e(admin_url('blog.php', ['action' => 'new'])) ?>"><?= icon('plus', 'icon-sm') ?> Yeni Yazı</a>
 </div>
 <form class="filter-bar" method="get" action="">
     <input type="text" name="q" placeholder="Başlıkta ara…" value="<?= e($q) ?>">
     <?= lang_select('lang', $langFilter, true) ?>
-    <button class="btn btn-sm" type="submit">Ara</button>
+    <button class="btn btn-sm" type="submit"><?= icon('search', 'icon-sm') ?> Ara</button>
 </form>
 <div class="table-wrap">
     <table>
@@ -196,12 +196,12 @@ if ($action === 'new' || $action === 'edit'):
                 <td><?= e(format_date($r['published_at'])) ?></td>
                 <td>
                     <div class="row-actions">
-                        <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('blog.php', ['action' => 'edit', 'id' => $r['id']])) ?>">Düzenle</a>
+                        <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('blog.php', ['action' => 'edit', 'id' => $r['id']])) ?>"><?= icon('edit', 'icon-sm') ?> Düzenle</a>
                         <form method="post" action="<?= e(admin_url('blog.php')) ?>" data-confirm="Bu yazı silinsin mi?">
                             <?= Csrf::field() ?>
                             <input type="hidden" name="do" value="delete">
                             <input type="hidden" name="id" value="<?= (int) $r['id'] ?>">
-                            <button class="btn btn-sm btn-danger" type="submit">Sil</button>
+                            <button class="btn btn-sm btn-danger" type="submit"><?= icon('delete', 'icon-sm') ?> Sil</button>
                         </form>
                     </div>
                 </td>

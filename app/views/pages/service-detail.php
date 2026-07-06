@@ -52,7 +52,7 @@ require BASE_PATH . '/app/views/layout/header.php';
     <div class="container detail-layout">
         <div>
             <div class="post-cover">
-                <img src="<?= e(upload_url($service['image'])) ?>" alt="<?= e($service['title']) ?>">
+                <img src="<?= e(media_url($service['image'], service_demo_image($service['slug']))) ?>" alt="<?= e($service['title']) ?>">
             </div>
             <div class="prose"><?= clean_html($service['content'] ?? '') ?></div>
 
@@ -62,8 +62,8 @@ require BASE_PATH . '/app/views/layout/header.php';
             <div class="gallery-grid" style="grid-template-columns:repeat(4,1fr)">
                 <?php foreach ($galleryPreview as $g): ?>
                 <button type="button" class="gallery-item"
-                        data-lightbox="<?= e(upload_url($g['image'])) ?>" data-caption="<?= e($g['title']) ?>">
-                    <img src="<?= e(upload_url($g['image'])) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" loading="lazy">
+                        data-lightbox="<?= e(media_url($g['image'], gallery_fallback_image())) ?>" data-caption="<?= e($g['title']) ?>">
+                    <img src="<?= e(media_url($g['image'], gallery_fallback_image())) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" loading="lazy">
                 </button>
                 <?php endforeach; ?>
             </div>

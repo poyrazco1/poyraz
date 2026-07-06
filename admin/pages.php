@@ -114,11 +114,11 @@ if ($action === 'new' || $action === 'edit'):
         <h1>Sayfalar</h1>
         <p>Hakkımızda, hijyen, KVKK gibi içerik sayfaları.</p>
     </div>
-    <a class="btn btn-primary" href="<?= e(admin_url('pages.php', ['action' => 'new'])) ?>">+ Yeni Sayfa</a>
+    <a class="btn btn-primary" href="<?= e(admin_url('pages.php', ['action' => 'new'])) ?>"><?= icon('plus', 'icon-sm') ?> Yeni Sayfa</a>
 </div>
 <form class="filter-bar" method="get" action="">
     <?= lang_select('lang', $langFilter, true) ?>
-    <button class="btn btn-sm" type="submit">Filtrele</button>
+    <button class="btn btn-sm" type="submit"><?= icon('filter', 'icon-sm') ?> Filtrele</button>
 </form>
 <div class="table-wrap">
     <table>
@@ -134,12 +134,12 @@ if ($action === 'new' || $action === 'edit'):
                 <td><?= e(format_date($r['updated_at'])) ?></td>
                 <td>
                     <div class="row-actions">
-                        <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('pages.php', ['action' => 'edit', 'id' => $r['id']])) ?>">Düzenle</a>
+                        <a class="btn btn-sm btn-ghost" href="<?= e(admin_url('pages.php', ['action' => 'edit', 'id' => $r['id']])) ?>"><?= icon('edit', 'icon-sm') ?> Düzenle</a>
                         <form method="post" action="<?= e(admin_url('pages.php')) ?>" data-confirm="Bu sayfa silinsin mi?">
                             <?= Csrf::field() ?>
                             <input type="hidden" name="do" value="delete">
                             <input type="hidden" name="id" value="<?= (int) $r['id'] ?>">
-                            <button class="btn btn-sm btn-danger" type="submit">Sil</button>
+                            <button class="btn btn-sm btn-danger" type="submit"><?= icon('delete', 'icon-sm') ?> Sil</button>
                         </form>
                     </div>
                 </td>

@@ -1,9 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
-<rect width="800" height="1000" fill="url(#g)"/>
-<path d='M418 973 Q183 47 62 349' stroke='#e11d2e' stroke-width='3' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M375 728 Q699 157 727 437' stroke='#ffffff' stroke-width='4' fill='none' opacity='0.39' stroke-linecap='round'/><path d='M466 319 Q10 446 186 977' stroke='#ffffff' stroke-width='6' fill='none' opacity='0.32' stroke-linecap='round'/><path d='M356 705 Q182 430 664 192' stroke='#e11d2e' stroke-width='5' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M634 971 Q601 55 610 797' stroke='#ffffff' stroke-width='3' fill='none' opacity='0.18' stroke-linecap='round'/><path d='M271 684 Q499 958 696 491' stroke='#ffffff' stroke-width='4' fill='none' opacity='0.24' stroke-linecap='round'/><circle cx='622' cy='223' r='47' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='50' cy='379' r='86' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='490' cy='258' r='56' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
-<rect x="0" y="0" width="800" height="1000" fill="none" stroke="#2a2a2a" stroke-width="4"/>
-<text x="50%" y="880" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#ffffff">COLOR II</text>
-<text x="50%" y="1000" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">D4STATTOO — DEMO</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-label="COLOR II">
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="80%">
+<stop offset="0%" stop-color="#1c1114"/><stop offset="55%" stop-color="#121013"/><stop offset="100%" stop-color="#0a0a0b"/>
+</radialGradient>
+<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#ff4d5e"/><stop offset="100%" stop-color="#b3121f"/>
+</linearGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+<stop offset="60%" stop-color="#0a0a0b" stop-opacity="0"/><stop offset="100%" stop-color="#0a0a0b" stop-opacity="0.92"/>
+</linearGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#bg)"/>
+<path d='M400 440 C 517.3 514.3, 578.2 367.8, 613.5 432.5' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='613.5' cy='432.5' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 414.1 595.4, 586.4 549.2, 552.9 625' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='552.9' cy='625' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 286.3 525, 404.1 636.5, 329.4 646.7' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='329.4' cy='646.7' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 275.3 436.4, 295.4 577.6, 238.5 543.8' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='238.5' cy='543.8' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 311.2 307.9, 179.8 433.6, 172.6 349.4' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='172.6' cy='349.4' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 477.6 302.9, 308.1 242.1, 379.5 198.5' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='379.5' cy='198.5' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 531.2 412, 474.1 269.7, 542.3 290.5' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='542.3' cy='290.5' r='2.4' fill='#e11d2e' opacity='0.8'/><circle cx='400' cy='440' r='57.1' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.13'/><circle cx='400' cy='440' r='114.3' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.1'/><circle cx='400' cy='440' r='171.4' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.07'/><path d='M-20 619 Q 400 542, 820 463' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 177 Q 400 477, 820 200' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 502 Q 400 668, 820 586' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/>
+<rect width="800" height="1000" fill="url(#fade)"/>
+<rect x="26" y="26" width="748" height="948" fill="none" stroke="#e11d2e" stroke-opacity="0.35" stroke-width="1.5"/>
+<rect x="34" y="34" width="16" height="16" fill="none" stroke="#e11d2e" stroke-width="2" opacity=".8" transform="rotate(45 42 42)"/>
+<text x="50%" y="860" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#f5f5f5" letter-spacing="6">COLOR II</text>
+<text x="50%" y="940" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#e11d2e" letter-spacing="8" font-weight="700">D4STATTOO</text>
 </svg>

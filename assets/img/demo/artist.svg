@@ -1,9 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
-<rect width="800" height="1000" fill="url(#g)"/>
-<path d='M39 75 Q451 263 482 180' stroke='#e11d2e' stroke-width='4' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M133 84 Q629 909 114 408' stroke='#ffffff' stroke-width='6' fill='none' opacity='0.18' stroke-linecap='round'/><path d='M175 796 Q590 946 600 30' stroke='#ffffff' stroke-width='3' fill='none' opacity='0.26' stroke-linecap='round'/><path d='M154 406 Q249 135 398 922' stroke='#e11d2e' stroke-width='6' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M174 87 Q143 254 79 122' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.24' stroke-linecap='round'/><path d='M64 281 Q612 981 747 83' stroke='#ffffff' stroke-width='6' fill='none' opacity='0.38' stroke-linecap='round'/><circle cx='552' cy='401' r='45' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='274' cy='771' r='59' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='261' cy='701' r='36' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
-<rect x="0" y="0" width="800" height="1000" fill="none" stroke="#2a2a2a" stroke-width="4"/>
-<text x="50%" y="880" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#ffffff">D4STATTOO ARTIST</text>
-<text x="50%" y="1000" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">D4STATTOO — DEMO</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-label="D4STATTOO ARTIST">
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="80%">
+<stop offset="0%" stop-color="#1c1114"/><stop offset="55%" stop-color="#121013"/><stop offset="100%" stop-color="#0a0a0b"/>
+</radialGradient>
+<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#ff4d5e"/><stop offset="100%" stop-color="#b3121f"/>
+</linearGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+<stop offset="60%" stop-color="#0a0a0b" stop-opacity="0"/><stop offset="100%" stop-color="#0a0a0b" stop-opacity="0.92"/>
+</linearGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#bg)"/>
+<path d='M400 440 C 523 501, 567.7 350.6, 609.1 410.6' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='609.1' cy='410.6' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 364.6 588.7, 539 599.6, 484.3 659.6' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='484.3' cy='659.6' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 245.7 433.6, 268.5 608.6, 198.5 565.9' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='198.5' cy='565.9' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 345.4 320.9, 221.9 405.5, 227.2 336.2' stroke='url(#rg)' stroke-width='3' fill='none' opacity='0.9' stroke-linecap='round'/><circle cx='227.2' cy='336.2' r='2.4' fill='#e11d2e' opacity='0.8'/><path d='M400 440 C 515.5 326, 364.7 218.2, 447.6 195' stroke='#e8e8ea' stroke-width='1.6' fill='none' opacity='0.5' stroke-linecap='round'/><circle cx='447.6' cy='195' r='2.4' fill='#e11d2e' opacity='0.8'/><circle cx='400' cy='440' r='57.1' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.13'/><circle cx='400' cy='440' r='114.3' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.1'/><circle cx='400' cy='440' r='171.4' stroke='#ffffff' stroke-width='0.8' fill='none' opacity='0.07'/><path d='M-20 162 Q 400 727, 820 512' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 763 Q 400 489, 820 519' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/><path d='M-20 176 Q 400 255, 820 416' stroke='url(#rg)' stroke-width='1.4' fill='none' opacity='0.28'/>
+<rect width="800" height="1000" fill="url(#fade)"/>
+<rect x="26" y="26" width="748" height="948" fill="none" stroke="#e11d2e" stroke-opacity="0.35" stroke-width="1.5"/>
+<rect x="34" y="34" width="16" height="16" fill="none" stroke="#e11d2e" stroke-width="2" opacity=".8" transform="rotate(45 42 42)"/>
+<text x="50%" y="860" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#f5f5f5" letter-spacing="6">D4STATTOO ARTIST</text>
+<text x="50%" y="940" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#e11d2e" letter-spacing="8" font-weight="700">D4STATTOO</text>
 </svg>
