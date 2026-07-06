@@ -54,9 +54,34 @@ $styles = rows_lang('SELECT title FROM services WHERE lang = ? AND status = 1 OR
     <input id="f-budget" type="text" name="budget_range" maxlength="100" placeholder="<?= e(t('placeholder.budget')) ?>" value="<?= e(old('budget_range')) ?>">
 </div>
 <?php endif; ?>
+<?php
+// Randevu formunda tarih/saat zorunlu; teklif formunda ($withBudget) opsiyonel.
+$dtRequired = !$withBudget;
+$timeSlots = [];
+for ($h = 9; $h <= 23; $h++) {
+    $timeSlots[] = sprintf('%02d:00', $h);
+    if ($h < 23) {
+        $timeSlots[] = sprintf('%02d:30', $h);
+    }
+}
+?>
 <div class="form-group">
-    <label for="f-datetime"><?= e(t('field.preferred_datetime')) ?></label>
-    <input id="f-datetime" type="text" name="preferred_datetime" maxlength="190" placeholder="<?= e(t('placeholder.datetime')) ?>" value="<?= e(old('preferred_datetime')) ?>">
+    <label for="f-date"><?= e(t('field.appointment_date')) ?><?= $dtRequired ? ' <span class="req">*</span>' : '' ?></label>
+    <input id="f-date" type="date" name="appointment_date" <?= $dtRequired ? 'required' : '' ?>
+           min="<?= e(date('Y-m-d')) ?>" max="<?= e(date('Y-m-d', strtotime('+1 year'))) ?>"
+           value="<?= e(old('appointment_date')) ?>" data-appt-date>
+    <?php if (isset($errors['appointment_date'])): ?><span class="field-error"><?= e($errors['appointment_date']) ?></span><?php endif; ?>
+</div>
+<div class="form-group">
+    <label for="f-time"><?= e(t('field.appointment_time')) ?><?= $dtRequired ? ' <span class="req">*</span>' : '' ?></label>
+    <select id="f-time" name="appointment_time" <?= $dtRequired ? 'required' : '' ?> data-appt-time>
+        <option value=""><?= e(t('option.select')) ?></option>
+        <?php foreach ($timeSlots as $slot): ?>
+        <option value="<?= $slot ?>" <?= old('appointment_time') === $slot ? 'selected' : '' ?>><?= $slot ?></option>
+        <?php endforeach; ?>
+    </select>
+    <?php if (isset($errors['appointment_time'])): ?><span class="field-error"><?= e($errors['appointment_time']) ?></span><?php endif; ?>
+    <span class="field-hint"><?= e(t('form.datetime_hint')) ?></span>
 </div>
 <div class="form-group full">
     <span style="font-weight:600;font-size:.88rem"><?= e(t('field.has_previous_tattoo')) ?></span>

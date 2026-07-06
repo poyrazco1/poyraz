@@ -39,7 +39,7 @@ $menu = [
 <html lang="tr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <title><?= e($pageTitle) ?> — <?= e(setting('site_name', SITE_NAME)) ?> Panel</title>
 <link rel="icon" href="<?= e(upload_url(setting('favicon'), 'img/favicon.svg')) ?>">

@@ -127,6 +127,31 @@
         });
     });
 
+    /* --- Randevu tarih/saat: bugün seçiliyse geçmiş saatleri kapat ------------ */
+    var apptDate = document.querySelector('[data-appt-date]');
+    var apptTime = document.querySelector('[data-appt-time]');
+    if (apptDate && apptTime) {
+        var syncTimes = function () {
+            var now = new Date();
+            var todayStr = now.getFullYear() + '-'
+                + String(now.getMonth() + 1).padStart(2, '0') + '-'
+                + String(now.getDate()).padStart(2, '0');
+            var isToday = apptDate.value === todayStr;
+            var nowMinutes = now.getHours() * 60 + now.getMinutes();
+            Array.prototype.forEach.call(apptTime.options, function (opt) {
+                if (!opt.value) return;
+                var parts = opt.value.split(':');
+                var mins = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+                opt.disabled = isToday && mins <= nowMinutes;
+            });
+            if (apptTime.value && apptTime.options[apptTime.selectedIndex].disabled) {
+                apptTime.value = '';
+            }
+        };
+        apptDate.addEventListener('change', syncTimes);
+        syncTimes();
+    }
+
     /* --- Popup teklif formu ------------------------------------------------------
        Ziyaretçiyi boğmadan: 10 sn SONRA ya da sayfanın %35'i scroll edildikten
        sonra gösterilir; kapatınca oturum boyunca tekrar açılmaz. */

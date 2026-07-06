@@ -21,6 +21,17 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* KRİTİK: yatay pan/kaydırma engeli her iki kök elemanda olmalı.
+   iOS Safari body'deki overflow-x:hidden'ı tek başına dikkate almaz;
+   `clip` değeri kaydırma alanı da oluşturmaz (hidden satırı eski
+   tarayıcılar için fallback'tir). */
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
+}
+
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
@@ -30,7 +41,6 @@ body {
     font-family: var(--font);
     font-size: 16px;
     line-height: 1.65;
-    overflow-x: hidden;
 }
 
 img { max-width: 100%; height: auto; display: block; }
@@ -723,4 +733,18 @@ img, svg, video { max-width: 100%; }
 /* Dropdown masaüstünde ekran dışına taşmasın */
 @media (min-width: 901px) {
     .nav-list > li:nth-last-child(-n+4) .dropdown { inset-inline-start: auto; inset-inline-end: 0; }
+}
+
+/* ============================================================================
+   CRITICAL VIEWPORT HOTFIX — mobil yatay pan/taşma kesin engeli
+   ========================================================================== */
+img, svg, video, canvas { max-width: 100%; }
+main, section, footer, header { max-width: 100%; }
+
+/* WhatsApp butonu her zaman görünür viewport içinde (çentikli ekranlar dahil) */
+.wa-float {
+    inset-inline-end: max(16px, env(safe-area-inset-right, 16px));
+}
+@media (max-width: 768px) {
+    .wa-float { inset-inline-end: 16px; width: 50px; height: 50px; min-width: 50px; min-height: 50px; }
 }

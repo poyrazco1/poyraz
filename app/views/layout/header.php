@@ -12,7 +12,7 @@ $favicon = setting('favicon');
 <html lang="<?= e(Lang::current()) ?>" dir="<?= $isRtl ? 'rtl' : 'ltr' ?>">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <?= seo_tags($meta) ?>
 <link rel="icon" href="<?= e(upload_url($favicon, 'img/favicon.svg')) ?>">
 <link rel="stylesheet" href="<?= e(asset('css/style.css')) ?>">

@@ -190,4 +190,10 @@ return [
 
     'breadcrumb.home' => 'الرئيسية',
     'lang.switch' => 'اللغة',
+
+    'field.appointment_date' => 'تاريخ الموعد',
+    'field.appointment_time' => 'وقت الموعد',
+    'form.datetime_hint'     => 'اليوم والوقت المختاران طلب مبدئي؛ يتم تأكيد التوفر عبر واتساب.',
+    'validation.past_datetime' => 'لا يمكن اختيار تاريخ/وقت في الماضي.',
+    'validation.time_range'  => 'يجب أن يكون وقت الموعد بين 09:00 و 23:00.',
 ];

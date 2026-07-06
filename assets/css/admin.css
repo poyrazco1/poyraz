@@ -222,3 +222,11 @@ td .thumb, .current-img img { aspect-ratio: 1 / 1; object-fit: cover; }
     .form-group input, .form-group select, .form-group textarea { min-height: 44px; }
     .burger { min-width: 44px; min-height: 44px; }
 }
+
+/* CRITICAL VIEWPORT HOTFIX — admin yatay taşma kesin engeli */
+html, body { overflow-x: hidden; overflow-x: clip; }
+@media (max-width: 960px) {
+    /* Kapalı sidebar belge genişliğini artırmasın */
+    .sidebar { visibility: hidden; transition: transform .25s, visibility .25s; }
+    .sidebar.open { visibility: visible; }
+}

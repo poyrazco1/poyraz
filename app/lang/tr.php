@@ -209,4 +209,10 @@ return [
 
     'breadcrumb.home' => 'Ana Sayfa',
     'lang.switch' => 'Dil',
+
+    'field.appointment_date' => 'Randevu Tarihi',
+    'field.appointment_time' => 'Randevu Saati',
+    'form.datetime_hint'     => 'Seçtiğiniz gün ve saat ön talep olarak alınır; uygunluk WhatsApp üzerinden onaylanır.',
+    'validation.past_datetime' => 'Geçmiş bir tarih/saat seçilemez.',
+    'validation.time_range'  => 'Randevu saati 09:00 – 23:00 arasında olmalıdır.',
 ];

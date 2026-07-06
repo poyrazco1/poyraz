@@ -23,7 +23,6 @@ $data = [
     'color_type'         => post('color_type'),
     'style'              => post('style'),
     'description'        => post('description'),
-    'preferred_datetime' => post('preferred_datetime'),
     'has_previous_tattoo' => post('has_previous_tattoo') === '1' ? 1 : 0,
 ];
 
@@ -36,8 +35,40 @@ $errors = validate($data, [
     'style'       => 'max:150',
     'color_type'  => 'in:color,blackgray,undecided',
     'description' => 'max:3000',
-    'preferred_datetime' => 'max:190',
 ]);
+
+// Randevu tarihi + saati: format, çalışma saati (09:00-23:00) ve geçmiş kontrolü
+$apptDate = post('appointment_date');
+$apptTime = post('appointment_time');
+$preferredDatetime = null;
+
+if ($apptDate === '' || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $apptDate)) {
+    $errors['appointment_date'] = t('validation.required', ['field' => t('field.appointment_date')]);
+}
+if ($apptTime === '' || !preg_match('/^([01]\d|2[0-3]):[0-5]\d$/', $apptTime)) {
+    $errors['appointment_time'] = t('validation.required', ['field' => t('field.appointment_time')]);
+}
+if (!isset($errors['appointment_date'], $errors['appointment_time'])
+    && $apptDate !== '' && $apptTime !== ''
+    && preg_match('/^\d{4}-\d{2}-\d{2}$/', $apptDate)
+    && preg_match('/^([01]\d|2[0-3]):[0-5]\d$/', $apptTime)) {
+
+    [$y, $m, $d] = array_map('intval', explode('-', $apptDate));
+    [$hh, $mm] = array_map('intval', explode(':', $apptTime));
+
+    if (!checkdate($m, $d, $y)) {
+        $errors['appointment_date'] = t('validation.invalid', ['field' => t('field.appointment_date')]);
+    } elseif ($hh < 9 || $hh > 23 || ($hh === 23 && $mm > 0)) {
+        $errors['appointment_time'] = t('validation.time_range');
+    } else {
+        $ts = mktime($hh, $mm, 0, $m, $d, $y);
+        if ($ts === false || $ts < time()) {
+            $errors['appointment_date'] = t('validation.past_datetime');
+        } else {
+            $preferredDatetime = date('Y-m-d H:i:s', $ts);
+        }
+    }
+}
 
 // Referans görsel (opsiyonel)
 $referencePath = null;
@@ -57,6 +88,7 @@ if ($errors) {
     redirect($backUrl);
 }
 
+$data['preferred_datetime'] = $preferredDatetime;
 $data['reference_image'] = $referencePath;
 $data['status'] = 'new';
 Database::insert('appointments', $data);

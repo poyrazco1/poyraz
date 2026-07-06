@@ -190,4 +190,10 @@ return [
 
     'breadcrumb.home' => 'Главная',
     'lang.switch' => 'Язык',
+
+    'field.appointment_date' => 'Дата записи',
+    'field.appointment_time' => 'Время записи',
+    'form.datetime_hint'     => 'Выбранные день и время — предварительная заявка; доступность подтверждается в WhatsApp.',
+    'validation.past_datetime' => 'Нельзя выбрать прошедшую дату/время.',
+    'validation.time_range'  => 'Время записи должно быть между 09:00 и 23:00.',
 ];

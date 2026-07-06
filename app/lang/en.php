@@ -190,4 +190,10 @@ return [
 
     'breadcrumb.home' => 'Home',
     'lang.switch' => 'Language',
+
+    'field.appointment_date' => 'Appointment Date',
+    'field.appointment_time' => 'Appointment Time',
+    'form.datetime_hint'     => 'The selected day and time is a preliminary request; availability is confirmed via WhatsApp.',
+    'validation.past_datetime' => 'A past date/time cannot be selected.',
+    'validation.time_range'  => 'Appointment time must be between 09:00 and 23:00.',
 ];

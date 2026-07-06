@@ -43,10 +43,12 @@ if ($action === 'view' && $id):
         require __DIR__ . '/partials/footer.php';
         exit;
     }
-    $waMsg = 'Merhaba ' . $a['full_name'] . ', D4stattoo randevu talebiniz için yazıyoruz. '
-           . 'Talebiniz: ' . ($a['style'] ?: 'dövme') . ' — Bölge: ' . ($a['tattoo_area'] ?: '-')
-           . ($a['tattoo_size'] ? ', Ölçü: ' . $a['tattoo_size'] : '')
-           . '. Uygunluk ve detaylar için görüşebilir miyiz?';
+    $prefText = format_preferred($a['preferred_datetime']);
+    $waMsg = 'Merhaba ' . $a['full_name'] . ', D4stattoo randevu talebiniz bize ulaştı. '
+           . ($prefText !== 'Tarih/saat seçilmemiş' ? 'Talep ettiğiniz tarih/saat: ' . $prefText . '. ' : '')
+           . 'Dövme stiliniz: ' . ($a['style'] ?: 'dövme') . ', bölge: ' . ($a['tattoo_area'] ?: '-')
+           . ($a['tattoo_size'] ? ', ölçü: ' . $a['tattoo_size'] : '')
+           . '. Uygunluk için size dönüş yapacağız.';
     $colorLabels = ['color' => 'Renkli', 'blackgray' => 'Siyah/Gri', 'undecided' => 'Kararsız'];
 ?>
 <div class="page-head">
@@ -64,7 +66,7 @@ if ($action === 'view' && $id):
             <div><dt>Ölçü</dt><dd><?= e($a['tattoo_size'] ?: '—') ?></dd></div>
             <div><dt>Renk</dt><dd><?= e($colorLabels[$a['color_type']] ?? '—') ?></dd></div>
             <div><dt>Stil</dt><dd><?= e($a['style'] ?: '—') ?></dd></div>
-            <div><dt>Uygun Gün/Saat</dt><dd><?= e($a['preferred_datetime'] ?: '—') ?></dd></div>
+            <div><dt>Uygun Gün/Saat</dt><dd><strong><?= e(format_preferred($a['preferred_datetime'])) ?></strong></dd></div>
             <div><dt>Daha Önce Dövme</dt><dd><?= $a['has_previous_tattoo'] ? 'Evet' : 'Hayır' ?></dd></div>
             <div><dt>Tarih</dt><dd><?= e(format_date($a['created_at'], true)) ?></dd></div>
             <div class="full"><dt>Açıklama</dt><dd><?= nl2br(e($a['description'] ?: '—')) ?></dd></div>
@@ -134,7 +136,7 @@ if ($action === 'view' && $id):
 </form>
 <div class="table-wrap">
     <table>
-        <thead><tr><th>Ad Soyad</th><th>Telefon</th><th>Bölge</th><th>Stil</th><th>Durum</th><th>Tarih</th><th></th></tr></thead>
+        <thead><tr><th>Ad Soyad</th><th>Telefon</th><th>Bölge</th><th>Randevu Tarihi</th><th>Durum</th><th>Talep</th><th></th></tr></thead>
         <tbody>
         <?php if (!$rows): ?><tr class="empty-row"><td colspan="7">Randevu talebi yok.</td></tr><?php endif; ?>
         <?php foreach ($rows as $r): ?>
@@ -142,7 +144,7 @@ if ($action === 'view' && $id):
                 <td><strong><?= e($r['full_name']) ?></strong></td>
                 <td><?= e($r['phone']) ?></td>
                 <td><?= e($r['tattoo_area']) ?></td>
-                <td><?= e($r['style'] ?: '—') ?></td>
+                <td><?= e(format_preferred($r['preferred_datetime'])) ?></td>
                 <td><?= status_badge($r['status']) ?></td>
                 <td><?= e(format_date($r['created_at'], true)) ?></td>
                 <td>

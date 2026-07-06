@@ -56,6 +56,26 @@ function lang_select(string $name, string $selected = 'tr', bool $withAll = fals
     return $out . '</select>';
 }
 
+/**
+ * preferred_datetime alanını okunabilir gösterir (23.07.2026 14:30).
+ * Eski kayıtlardaki serbest metinler olduğu gibi, boş değer
+ * "Tarih/saat seçilmemiş" olarak döner.
+ */
+function format_preferred(?string $value): string
+{
+    $value = trim((string) $value);
+    if ($value === '') {
+        return 'Tarih/saat seçilmemiş';
+    }
+    if (preg_match('/^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}/', $value)) {
+        $ts = strtotime($value);
+        if ($ts !== false) {
+            return date('d.m.Y H:i', $ts);
+        }
+    }
+    return $value; // eski serbest metin kayıtları
+}
+
 /** Müşteriye hazır WhatsApp mesajı linki üretir */
 function admin_wa_link(string $phone, string $message): string
 {
