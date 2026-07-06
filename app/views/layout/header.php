@@ -16,6 +16,9 @@ $favicon = setting('favicon');
 <?= seo_tags($meta) ?>
 <link rel="icon" href="<?= e(upload_url($favicon, 'img/favicon.svg')) ?>">
 <link rel="stylesheet" href="<?= e(asset('css/style.css')) ?>">
+<?php $primary = setting('primary_color', ''); if ($primary && preg_match('/^#[0-9a-fA-F]{3,8}$/', $primary) && strtolower($primary) !== '#e11d2e'): ?>
+<style>:root { --red: <?= e($primary) ?>; --red-dark: <?= e($primary) ?>; }</style>
+<?php endif; ?>
 <?= jsonld_local_business() ?>
 <?= $extraHead ?? '' ?>
 </head>
