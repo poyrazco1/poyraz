@@ -1,6 +1,12 @@
 <?php
 /** İstanbul lokasyon SEO detay sayfası — /istanbul/{slug} */
-$loc = row_lang('SELECT * FROM location_pages WHERE lang = ? AND slug = ? AND status = 1 LIMIT 1', [$slug]);
+ensure_location_pages(); // eski DB'de tablo yoksa otomatik oluştur + doldur
+try {
+    $loc = row_lang('SELECT * FROM location_pages WHERE lang = ? AND slug = ? AND status = 1 LIMIT 1', [$slug]);
+} catch (Throwable $e) {
+    app_log('location-detail: sorgu hatası: ' . $e->getMessage());
+    $loc = null;
+}
 if (!$loc) {
     http_response_code(404);
     require BASE_PATH . '/app/views/pages/404.php';

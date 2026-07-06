@@ -76,6 +76,7 @@ Ayrıntılı adımlar için **[KURULUM.md](KURULUM.md)** dosyasına bakın.
 | Görsel yüklenmiyor | `assets/uploads` iznini 755/775 yapın; PHP `upload_max_filesize` ≥ 5M olmalı (Plesk > PHP Ayarları). |
 | Site kök yerine alt dizinde | `APP_URL`'i tam adresle doldurun (örn. `https://site.com/alt-dizin`). |
 | Türkçe karakter bozuk | Veritabanı `utf8mb4_unicode_ci` olmalı; install.sql'i yeniden import edin. |
+| `/istanbul` sayfasında "Beklenmeyen hata" | Eski bir veritabanında lokasyon tablosu eksik olabilir. Yeni dosyalar yüklendiğinde tablo **otomatik oluşturulur ve demo içerikle dolar** (elle işlem gerekmez). Otomatik oluşmazsa DB kullanıcısının CREATE yetkisi olduğundan emin olup `database/install.sql`'i yeniden import edin. |
 | Beyaz sayfa | `storage/logs/php-error.log` dosyasına bakın; geçici olarak `config.php` içinde `APP_DEBUG` true yapın. |
 
 ## Dokümanlar

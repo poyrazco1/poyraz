@@ -19,6 +19,7 @@ require_once BASE_PATH . '/app/core/Lang.php';
 require_once BASE_PATH . '/app/core/Csrf.php';
 require_once BASE_PATH . '/app/core/Auth.php';
 require_once BASE_PATH . '/app/core/Router.php';
+require_once BASE_PATH . '/app/core/migrations.php';
 
 // Yakalanmayan hatalar log'a yazılır, kullanıcıya sade bir sayfa gösterilir.
 set_exception_handler(function (Throwable $e) {

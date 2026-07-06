@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/partials/top.php';
 
+ensure_location_pages(); // eski DB'de tablo yoksa otomatik oluştur + doldur
+
 $action = get_param('action', 'list');
 $id = int_param('id');
 $q = get_param('q');

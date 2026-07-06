@@ -24,13 +24,18 @@ foreach (Database::all('SELECT slug, lang, updated_at FROM blog_posts WHERE stat
 foreach (Database::all("SELECT slug, lang, updated_at FROM pages WHERE status = 1 AND slug NOT IN ('hakkimizda','hijyen','bakim-talimatlari','kvkk')") as $r) {
     $urls[] = ['loc' => url($r['slug'], $r['lang']), 'lastmod' => $r['updated_at'], 'priority' => '0.5'];
 }
-// İstanbul landing + lokasyon SEO sayfaları
+// İstanbul landing + lokasyon SEO sayfaları (tablo yoksa güvenli atla)
 $urls[] = ['loc' => url('istanbul'), 'priority' => '0.7'];
-foreach (Database::all("SELECT slug, lang, updated_at, canonical_url FROM location_pages WHERE status = 1") as $r) {
-    if (trim((string) $r['canonical_url']) !== '') {
-        continue; // farklı bir canonical'a işaret ediyorsa sitemap'e ekleme
+try {
+    ensure_location_pages();
+    foreach (Database::all("SELECT slug, lang, updated_at, canonical_url FROM location_pages WHERE status = 1") as $r) {
+        if (trim((string) $r['canonical_url']) !== '') {
+            continue; // farklı bir canonical'a işaret ediyorsa sitemap'e ekleme
+        }
+        $urls[] = ['loc' => url('istanbul/' . $r['slug'], $r['lang']), 'lastmod' => $r['updated_at'], 'priority' => '0.6'];
     }
-    $urls[] = ['loc' => url('istanbul/' . $r['slug'], $r['lang']), 'lastmod' => $r['updated_at'], 'priority' => '0.6'];
+} catch (Throwable $e) {
+    app_log('sitemap: location_pages atlandı: ' . $e->getMessage());
 }
 
 echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";

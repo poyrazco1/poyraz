@@ -1,8 +1,14 @@
 <?php
 /** İstanbul lokasyon landing sayfası — /istanbul */
-$all = rows_lang(
-    "SELECT district, slug, intro, sort_order FROM location_pages WHERE lang = ? AND status = 1 ORDER BY sort_order, district"
-);
+ensure_location_pages(); // eski DB'de tablo yoksa otomatik oluştur + doldur
+try {
+    $all = rows_lang(
+        "SELECT district, slug, intro, sort_order FROM location_pages WHERE lang = ? AND status = 1 ORDER BY sort_order, district"
+    );
+} catch (Throwable $e) {
+    app_log('locations: sorgu hatası: ' . $e->getMessage());
+    $all = [];
+}
 // Öncelikli (sort_order < 100) ve diğerleri ayrı gruplanır
 $featured = array_filter($all, fn ($r) => (int) $r['sort_order'] < 100);
 $rest = array_filter($all, fn ($r) => (int) $r['sort_order'] >= 100);
