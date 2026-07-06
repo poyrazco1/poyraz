@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
+<rect width="800" height="1000" fill="url(#g)"/>
+<path d='M756 899 Q231 629 149 942' stroke='#e11d2e' stroke-width='3' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M606 412 Q122 820 452 489' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.33' stroke-linecap='round'/><path d='M266 359 Q531 32 207 303' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.2' stroke-linecap='round'/><path d='M302 819 Q728 549 497 633' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M782 971 Q480 262 138 270' stroke='#ffffff' stroke-width='6' fill='none' opacity='0.38' stroke-linecap='round'/><path d='M640 487 Q144 582 328 313' stroke='#ffffff' stroke-width='3' fill='none' opacity='0.28' stroke-linecap='round'/><circle cx='574' cy='118' r='62' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='98' cy='908' r='30' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='427' cy='217' r='82' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
+<rect x="0" y="0" width="800" height="1000" fill="none" stroke="#2a2a2a" stroke-width="4"/>
+<text x="50%" y="880" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#ffffff">REALISTIC I</text>
+<text x="50%" y="1000" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">D4STATTOO — DEMO</text>
+</svg>

@@ -21,7 +21,6 @@ $controllers = [
     'appointment' => 'AppointmentController.php',
     'quote'       => 'QuoteController.php',
     'contact'     => 'ContactController.php',
-    'tracking'    => 'TrackingController.php',
 ];
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($controllers[$router->view])) {
     require BASE_PATH . '/app/controllers/' . $controllers[$router->view];

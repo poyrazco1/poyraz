@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
+<rect width="800" height="1000" fill="url(#g)"/>
+<path d='M34 934 Q180 344 379 746' stroke='#e11d2e' stroke-width='5' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M586 799 Q259 110 780 2' stroke='#ffffff' stroke-width='4' fill='none' opacity='0.25' stroke-linecap='round'/><path d='M37 30 Q777 496 394 259' stroke='#ffffff' stroke-width='3' fill='none' opacity='0.37' stroke-linecap='round'/><path d='M233 227 Q295 490 608 268' stroke='#e11d2e' stroke-width='4' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M722 612 Q760 678 751 822' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.19' stroke-linecap='round'/><path d='M71 793 Q597 210 540 449' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.34' stroke-linecap='round'/><circle cx='416' cy='328' r='88' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='227' cy='669' r='29' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='433' cy='135' r='84' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
+<rect x="0" y="0" width="800" height="1000" fill="none" stroke="#2a2a2a" stroke-width="4"/>
+<text x="50%" y="880" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#ffffff">BLACKWORK I</text>
+<text x="50%" y="1000" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">D4STATTOO — DEMO</text>
+</svg>

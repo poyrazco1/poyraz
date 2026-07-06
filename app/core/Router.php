@@ -34,6 +34,7 @@ class Router
         'gizlilik-politikasi' => 'kvkk',
         'takip'             => 'tracking',
         'sitemap.xml'       => 'sitemap',
+        'robots.txt'        => 'robots',
     ];
 
     /** slug alan dinamik rotalar: prefix => view */

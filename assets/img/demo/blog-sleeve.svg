@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
+<rect width="1200" height="675" fill="url(#g)"/>
+<path d='M1160 88 Q13 477 1125 495' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M1050 541 Q459 660 826 422' stroke='#ffffff' stroke-width='5' fill='none' opacity='0.34' stroke-linecap='round'/><path d='M755 249 Q614 623 73 207' stroke='#ffffff' stroke-width='5' fill='none' opacity='0.32' stroke-linecap='round'/><path d='M607 236 Q650 590 1115 130' stroke='#e11d2e' stroke-width='4' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M847 32 Q55 617 473 232' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.21' stroke-linecap='round'/><path d='M1162 252 Q1029 198 400 160' stroke='#ffffff' stroke-width='4' fill='none' opacity='0.28' stroke-linecap='round'/><circle cx='561' cy='498' r='81' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='964' cy='156' r='42' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='341' cy='92' r='29' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
+<rect x="0" y="0" width="1200" height="675" fill="none" stroke="#2a2a2a" stroke-width="4"/>
+<text x="50%" y="594" text-anchor="middle" font-family="Arial, sans-serif" font-size="66" font-weight="bold" fill="#ffffff">KOL KAPLAMA</text>
+<text x="50%" y="675" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">D4STATTOO — DEMO</text>
+</svg>

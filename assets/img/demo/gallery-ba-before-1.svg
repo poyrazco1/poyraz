@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
+<rect width="800" height="1000" fill="url(#g)"/>
+<path d='M82 486 Q139 701 78 17' stroke='#e11d2e' stroke-width='6' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M420 455 Q151 719 791 394' stroke='#ffffff' stroke-width='5' fill='none' opacity='0.37' stroke-linecap='round'/><path d='M188 26 Q610 587 67 919' stroke='#ffffff' stroke-width='3' fill='none' opacity='0.28' stroke-linecap='round'/><path d='M623 976 Q765 161 223 465' stroke='#e11d2e' stroke-width='6' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M181 661 Q639 946 188 900' stroke='#ffffff' stroke-width='6' fill='none' opacity='0.21' stroke-linecap='round'/><path d='M512 923 Q411 445 251 752' stroke='#ffffff' stroke-width='5' fill='none' opacity='0.23' stroke-linecap='round'/><circle cx='115' cy='634' r='51' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='627' cy='310' r='65' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='272' cy='480' r='66' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
+<rect x="0" y="0" width="800" height="1000" fill="none" stroke="#2a2a2a" stroke-width="4"/>
+<text x="50%" y="880" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#ffffff">ÖNCE</text>
+<text x="50%" y="1000" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">D4STATTOO — DEMO</text>
+</svg>

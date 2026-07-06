@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
+<rect width="800" height="1000" fill="url(#g)"/>
+<path d='M796 626 Q740 730 276 69' stroke='#e11d2e' stroke-width='3' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M376 498 Q127 855 291 248' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.22' stroke-linecap='round'/><path d='M597 406 Q341 156 257 551' stroke='#ffffff' stroke-width='4' fill='none' opacity='0.16' stroke-linecap='round'/><path d='M766 237 Q491 927 186 591' stroke='#e11d2e' stroke-width='3' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M537 855 Q496 941 564 638' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.19' stroke-linecap='round'/><path d='M725 539 Q592 831 67 267' stroke='#ffffff' stroke-width='4' fill='none' opacity='0.17' stroke-linecap='round'/><circle cx='311' cy='610' r='49' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='148' cy='354' r='56' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='732' cy='734' r='70' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
+<rect x="0" y="0" width="800" height="1000" fill="none" stroke="#2a2a2a" stroke-width="4"/>
+<text x="50%" y="880" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#ffffff">YAZI</text>
+<text x="50%" y="1000" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">D4STATTOO — DEMO</text>
+</svg>

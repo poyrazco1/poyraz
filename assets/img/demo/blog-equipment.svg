@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
+<rect width="1200" height="675" fill="url(#g)"/>
+<path d='M846 558 Q257 292 13 376' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M810 332 Q1173 254 660 320' stroke='#ffffff' stroke-width='4' fill='none' opacity='0.39' stroke-linecap='round'/><path d='M1145 43 Q267 559 1021 459' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.28' stroke-linecap='round'/><path d='M367 449 Q11 410 998 78' stroke='#e11d2e' stroke-width='5' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M280 405 Q1019 535 241 338' stroke='#ffffff' stroke-width='4' fill='none' opacity='0.27' stroke-linecap='round'/><path d='M522 41 Q822 223 594 648' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.22' stroke-linecap='round'/><circle cx='518' cy='612' r='58' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='783' cy='300' r='47' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='296' cy='350' r='87' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
+<rect x="0" y="0" width="1200" height="675" fill="none" stroke="#2a2a2a" stroke-width="4"/>
+<text x="50%" y="594" text-anchor="middle" font-family="Arial, sans-serif" font-size="66" font-weight="bold" fill="#ffffff">EKİPMAN</text>
+<text x="50%" y="675" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">D4STATTOO — DEMO</text>
+</svg>

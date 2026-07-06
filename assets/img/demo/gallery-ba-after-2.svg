@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
+<rect width="800" height="1000" fill="url(#g)"/>
+<path d='M103 587 Q156 476 340 390' stroke='#e11d2e' stroke-width='3' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M222 605 Q659 715 542 878' stroke='#ffffff' stroke-width='6' fill='none' opacity='0.34' stroke-linecap='round'/><path d='M616 321 Q228 403 757 388' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.4' stroke-linecap='round'/><path d='M558 387 Q659 603 298 45' stroke='#e11d2e' stroke-width='3' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M433 228 Q485 726 649 70' stroke='#ffffff' stroke-width='5' fill='none' opacity='0.29' stroke-linecap='round'/><path d='M61 512 Q102 494 383 82' stroke='#ffffff' stroke-width='5' fill='none' opacity='0.19' stroke-linecap='round'/><circle cx='283' cy='115' r='36' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='181' cy='595' r='74' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='185' cy='395' r='84' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
+<rect x="0" y="0" width="800" height="1000" fill="none" stroke="#2a2a2a" stroke-width="4"/>
+<text x="50%" y="880" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#ffffff">SONRA</text>
+<text x="50%" y="1000" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">D4STATTOO — DEMO</text>
+</svg>

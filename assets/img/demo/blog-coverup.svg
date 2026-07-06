@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
+<rect width="1200" height="675" fill="url(#g)"/>
+<path d='M617 497 Q880 231 162 492' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M513 270 Q593 185 650 353' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.16' stroke-linecap='round'/><path d='M887 645 Q701 150 835 350' stroke='#ffffff' stroke-width='3' fill='none' opacity='0.4' stroke-linecap='round'/><path d='M619 282 Q312 164 446 402' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.85' stroke-linecap='round'/><path d='M877 512 Q329 435 1125 432' stroke='#ffffff' stroke-width='2' fill='none' opacity='0.16' stroke-linecap='round'/><path d='M1102 409 Q13 374 111 370' stroke='#ffffff' stroke-width='6' fill='none' opacity='0.21' stroke-linecap='round'/><circle cx='274' cy='141' r='43' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='889' cy='493' r='44' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/><circle cx='405' cy='152' r='87' stroke='#e11d2e' stroke-width='2' fill='none' opacity='0.35'/>
+<rect x="0" y="0" width="1200" height="675" fill="none" stroke="#2a2a2a" stroke-width="4"/>
+<text x="50%" y="594" text-anchor="middle" font-family="Arial, sans-serif" font-size="66" font-weight="bold" fill="#ffffff">COVER-UP</text>
+<text x="50%" y="675" dy="-30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#888888">D4STATTOO — DEMO</text>
+</svg>
