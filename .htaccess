@@ -1,0 +1,51 @@
+# D4stattoo — Apache / Plesk yeniden yazma kuralları
+# Plesk (Apache + FPM) ile uyumludur. mod_rewrite gerektirir.
+
+Options -Indexes
+AddDefaultCharset UTF-8
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Alt dizine kurulumda RewriteBase'i açıp yolu düzenleyin (örn: /alt-dizin/)
+    # RewriteBase /
+
+    # Uygulama iç dizinlerine HTTP erişimini engelle
+    RewriteRule ^(app|storage|database)(/|$) - [F,L]
+
+    # Gerçek dosya ve dizinlere dokunma (assets, uploads, admin vb.)
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Geri kalan her şey ön kontrolcüye (SEO URL'ler)
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+# Hassas dosyalara doğrudan erişimi kapat
+<FilesMatch "^(config\.php|composer\.(json|lock)|\.git.*|.*\.sql|.*\.log|.*\.md)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Temel güvenlik başlıkları
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Statik dosyalar için önbellek
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/webp "access plus 30 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+</IfModule>
