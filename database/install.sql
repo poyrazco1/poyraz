@@ -399,7 +399,8 @@ INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`, `setting_type`, `
 ('artist_image',     '', 'image', 'tr'),
 ('campaign_show',    '1', 'text', 'tr'),
 ('popup_show',       '1', 'text', 'tr'),
-('google_reviews_url', '', 'url', 'tr');
+('google_reviews_url', '', 'url', 'tr'),
+('google_site_verification', 'DF9HSHuM8FJsCswWne9SNM_yMG_-rHbOIP3vsIhNLto', 'text', 'tr');
 
 INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`, `setting_type`, `lang`) VALUES
 ('hero_title',    'Custom Designs That Leave a Mark on Your Skin', 'text', 'en'),

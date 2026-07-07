@@ -25,6 +25,7 @@ $fields = [
     'campaign_show'    => ['Kampanya Bandı (1=göster, 0=gizle)', 'text', ''],
     'popup_show'       => ['Pop-up Teklif Formu (1=göster, 0=gizle)', 'text', ''],
     'google_reviews_url' => ['Google Yorumlar Linki', 'url', 'Yorumlar bölümündeki kaynak bağlantısı için'],
+    'google_site_verification' => ['Google Search Console Doğrulama Kodu', 'text', 'Yalnızca içerik değeri (content="..." içindeki kod). Tüm sayfaların <head> bölümüne eklenir.'],
 ];
 $imageFields = [
     'logo'         => ['Logo', 'PNG/SVG önerilir, koyu zeminde görünecek'],

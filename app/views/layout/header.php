@@ -13,6 +13,12 @@ $favicon = setting('favicon');
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<?php
+// Google Search Console doğrulaması (panelden değiştirilebilir; verilen kod fallback).
+$gsv = setting('google_site_verification', 'DF9HSHuM8FJsCswWne9SNM_yMG_-rHbOIP3vsIhNLto');
+if ($gsv !== ''): ?>
+<meta name="google-site-verification" content="<?= e($gsv) ?>">
+<?php endif; ?>
 <?= seo_tags($meta) ?>
 <link rel="icon" href="<?= e(upload_url($favicon, 'img/favicon.svg')) ?>">
 <link rel="stylesheet" href="<?= e(asset('css/style.css')) ?>">
