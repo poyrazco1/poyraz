@@ -49,7 +49,13 @@ $menu = [
 <body>
 <div class="admin-wrap">
     <aside class="sidebar" id="sidebar">
-        <a class="sidebar-brand" href="<?= e(admin_url('dashboard.php')) ?>">D4<span>s</span>tattoo</a>
+        <a class="sidebar-brand" href="<?= e(admin_url('dashboard.php')) ?>">
+            <?php if (setting('logo')): ?>
+            <img src="<?= e(upload_url(setting('logo'))) ?>" alt="<?= e(setting('site_name', SITE_NAME)) ?>" class="sidebar-logo">
+            <?php else: ?>
+            D4<span>s</span>tattoo
+            <?php endif; ?>
+        </a>
         <ul class="side-nav">
             <?php foreach ($menu as $section => $items): ?>
             <li class="nav-sec"><?= e($section) ?></li>

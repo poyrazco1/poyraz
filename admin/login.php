@@ -38,7 +38,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="login-page">
 <div class="login-box">
-    <div class="login-logo">D4<span>s</span>tattoo</div>
+    <div class="login-logo">
+        <?php if (setting('logo')): ?>
+        <img src="<?= e(upload_url(setting('logo'))) ?>" alt="<?= e(setting('site_name', SITE_NAME)) ?>" class="login-logo-img">
+        <?php else: ?>
+        D4<span>s</span>tattoo
+        <?php endif; ?>
+    </div>
     <h1>Yönetim Paneli</h1>
     <?php if ($error): ?>
         <div class="alert alert-danger"><?= e($error) ?></div>

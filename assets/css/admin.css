@@ -230,3 +230,7 @@ html, body { overflow-x: hidden; overflow-x: clip; }
     .sidebar { visibility: hidden; transition: transform .25s, visibility .25s; }
     .sidebar.open { visibility: visible; }
 }
+
+/* Yüklenen logo görselleri (admin) */
+.sidebar-logo { height: 42px; width: auto; max-width: 190px; object-fit: contain; display: block; }
+.login-logo-img { height: 54px; width: auto; max-width: 240px; object-fit: contain; margin: 0 auto 4px; display: block; }

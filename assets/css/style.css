@@ -779,3 +779,6 @@ main, section, footer, header { max-width: 100%; }
 .footer-address .icon { color: var(--red); vertical-align: -0.15em; }
 .footer-address a { color: #cfcfcf; }
 .footer-address a:hover { color: var(--red); }
+
+/* Mobil menü başlığında yüklenen logo görseli */
+.mm-logo { height: 40px; width: auto; max-width: 170px; object-fit: contain; display: block; }

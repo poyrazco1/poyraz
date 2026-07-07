@@ -25,7 +25,11 @@ $waHref = whatsapp_link(t('whatsapp.default_message'));
         <nav class="main-nav" id="mobileNav" data-nav aria-label="Ana menü">
             <div class="mobile-menu-head">
                 <div>
+                    <?php if (setting('logo')): ?>
+                    <img src="<?= e(upload_url(setting('logo'))) ?>" alt="<?= e(setting('site_name', SITE_NAME)) ?>" class="mm-logo">
+                    <?php else: ?>
                     <span class="mm-brand">D4<span>s</span>tattoo</span>
+                    <?php endif; ?>
                     <span class="mm-tagline"><?= e(setting('location_text', 'İstanbul / Bağcılar')) ?> Tattoo Studio</span>
                 </div>
                 <button type="button" class="mobile-menu-close" data-nav-close aria-label="<?= e(t('btn.close')) ?>">
