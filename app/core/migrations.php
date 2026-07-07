@@ -78,6 +78,82 @@ function ensure_location_pages(): bool
     return $ready;
 }
 
+/**
+ * Yerel SEO / rehber sayfalarını (bagcilar-tattoo, minimal-dovme vb.) pages
+ * tablosunda eksikse ekler. İçerik app/data/seo_pages_seed.php'den gelir.
+ * Var olan aynı slug'a dokunmaz (admin düzenlemesi korunur).
+ */
+function ensure_seo_pages(): bool
+{
+    static $done = null;
+    if ($done !== null) {
+        return $done;
+    }
+    $done = false;
+    try {
+        $file = BASE_PATH . '/app/data/seo_pages_seed.php';
+        if (!is_file($file)) {
+            return $done;
+        }
+        $rows = require $file;
+        if (!is_array($rows)) {
+            return $done;
+        }
+        $added = 0;
+        foreach ($rows as $p) {
+            $exists = Database::value(
+                "SELECT COUNT(*) FROM pages WHERE slug = ? AND lang = 'tr'",
+                [$p['slug']]
+            );
+            if ($exists) {
+                continue;
+            }
+            Database::insert('pages', [
+                'lang' => 'tr',
+                'title' => $p['title'],
+                'slug' => $p['slug'],
+                'body' => $p['body'],
+                'meta_title' => $p['meta_title'] ?? $p['title'],
+                'meta_description' => $p['meta_description'] ?? '',
+                'status' => 1,
+            ]);
+            $added++;
+        }
+        if ($added > 0) {
+            app_log("migrations: $added SEO sayfası eklendi.");
+        }
+        $done = true;
+    } catch (Throwable $e) {
+        app_log('migrations: ensure_seo_pages hatası: ' . $e->getMessage());
+    }
+    return $done;
+}
+
+/**
+ * Tek seferlik marka adı güncellemesi: eski varsayılan "D4stattoo" kaydı hâlâ
+ * duruyorsa "D4S Tattoo" yapar. Kullanıcı admin'den farklı bir ad girdiyse
+ * dokunmaz (yalnızca eski literal varsayılanı değiştirir, sonra bayrak koyar).
+ */
+function ensure_brand_name(): void
+{
+    static $done = false;
+    if ($done) {
+        return;
+    }
+    $done = true;
+    try {
+        if (setting('brand_v2_applied', '', 'tr') === '1') {
+            return;
+        }
+        if (setting('site_name', '', 'tr') === 'D4stattoo') {
+            set_setting('site_name', 'D4S Tattoo', 'tr');
+        }
+        set_setting('brand_v2_applied', '1', 'tr');
+    } catch (Throwable $e) {
+        app_log('migrations: ensure_brand_name hatası: ' . $e->getMessage());
+    }
+}
+
 /** Demo lokasyon kayıtlarını app/data/location_seed.php'den ekler. */
 function seed_location_pages(): void
 {

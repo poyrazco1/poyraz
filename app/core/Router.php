@@ -36,6 +36,7 @@ class Router
         'istanbul'          => 'locations',
         'sitemap.xml'       => 'sitemap',
         'robots.txt'        => 'robots',
+        'llms.txt'          => 'llms',
     ];
 
     /** slug alan dinamik rotalar: prefix => view */

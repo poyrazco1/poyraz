@@ -11,6 +11,11 @@ if (!$slug) {
 }
 
 $page = row_lang('SELECT * FROM pages WHERE lang = ? AND slug = ? AND status = 1 LIMIT 1', [$slug]);
+// SEO/rehber sayfaları eski DB'de eksikse otomatik ekle ve tekrar dene
+if (!$page) {
+    ensure_seo_pages();
+    $page = row_lang('SELECT * FROM pages WHERE lang = ? AND slug = ? AND status = 1 LIMIT 1', [$slug]);
+}
 if (!$page) {
     http_response_code(404);
     require BASE_PATH . '/app/views/pages/404.php';

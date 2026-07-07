@@ -46,7 +46,21 @@ $breadcrumbs = [
     ['name' => 'İstanbul', 'path' => 'istanbul'],
     ['name' => $D, 'path' => 'istanbul/' . $loc['slug']],
 ];
-$canonicalPath = $loc['canonical_url'] !== '' ? null : 'istanbul/' . $loc['slug'];
+// Aynı slug'a sahip bir kök SEO sayfası varsa (örn. /bagcilar-tattoo),
+// yinelenen içerik olmaması için canonical'ı ona yönlendir (konsolidasyon).
+$rootTwin = null;
+try {
+    $rootTwin = Database::value(
+        "SELECT slug FROM pages WHERE slug = ? AND lang = 'tr' AND status = 1 LIMIT 1",
+        [$loc['slug']]
+    );
+} catch (Throwable $e) { /* pages tablosu her zaman var */ }
+
+if ($rootTwin) {
+    $canonicalPath = $loc['slug']; // kök sayfa canonical
+} else {
+    $canonicalPath = $loc['canonical_url'] !== '' ? null : 'istanbul/' . $loc['slug'];
+}
 // seo_tags() başlığa zaten " | SITE_NAME" ekler; meta_title'daki tekrarı kırp.
 $metaTitle = $loc['meta_title'] ?: $loc['h1'];
 $metaTitle = preg_replace('/\s*\|\s*' . preg_quote(SITE_NAME, '/') . '\s*$/u', '', $metaTitle);

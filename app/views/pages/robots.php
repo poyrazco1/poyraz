@@ -1,8 +1,25 @@
 <?php
-/** Dinamik robots.txt — sitemap mutlak URL ister */
+/** Dinamik robots.txt — arama motorları + AI crawler botları */
 header('Content-Type: text/plain; charset=utf-8');
-echo "User-agent: *\n";
-echo "Allow: /\n";
-echo "Disallow: /admin/\n";
-echo "Disallow: /takip\n\n";
-echo 'Sitemap: ' . base_url('sitemap.xml') . "\n";
+?>
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /takip
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: <?= base_url('sitemap.xml') . "\n" ?>

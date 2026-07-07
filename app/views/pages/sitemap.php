@@ -21,16 +21,30 @@ foreach (Database::all('SELECT slug, lang, updated_at FROM services WHERE status
 foreach (Database::all('SELECT slug, lang, updated_at FROM blog_posts WHERE status = 1') as $r) {
     $urls[] = ['loc' => url('blog/' . $r['slug'], $r['lang']), 'lastmod' => $r['updated_at'], 'priority' => '0.6'];
 }
+ensure_seo_pages(); // yeni SEO/rehber sayfaları sitemap'e girmeden önce hazır olsun
+$locationSlugs = ['bagcilar-tattoo', 'gunesli-tattoo'];             // yerel SEO → 0.9
+$guideSlugs = ['minimal-dovme', 'yazi-dovmesi', 'ilk-dovme-rehberi', 'dovme-bakimi', 'dovme-fiyatlari']; // hizmet/rehber → 0.8
 foreach (Database::all("SELECT slug, lang, updated_at FROM pages WHERE status = 1 AND slug NOT IN ('hakkimizda','hijyen','bakim-talimatlari','kvkk')") as $r) {
-    $urls[] = ['loc' => url($r['slug'], $r['lang']), 'lastmod' => $r['updated_at'], 'priority' => '0.5'];
+    if (in_array($r['slug'], $locationSlugs, true)) {
+        $priority = '0.9';
+    } elseif (in_array($r['slug'], $guideSlugs, true)) {
+        $priority = '0.8';
+    } else {
+        $priority = '0.5';
+    }
+    $urls[] = ['loc' => url($r['slug'], $r['lang']), 'lastmod' => $r['updated_at'], 'priority' => $priority];
 }
 // İstanbul landing + lokasyon SEO sayfaları (tablo yoksa güvenli atla)
 $urls[] = ['loc' => url('istanbul'), 'priority' => '0.7'];
 try {
     ensure_location_pages();
+    // Kök SEO sayfası olan slug'lar (canonical oraya gider) → sitemap'te tekrar etme
+    $rootTwins = array_column(
+        Database::all("SELECT slug FROM pages WHERE lang = 'tr' AND status = 1"), 'slug'
+    );
     foreach (Database::all("SELECT slug, lang, updated_at, canonical_url FROM location_pages WHERE status = 1") as $r) {
-        if (trim((string) $r['canonical_url']) !== '') {
-            continue; // farklı bir canonical'a işaret ediyorsa sitemap'e ekleme
+        if (trim((string) $r['canonical_url']) !== '' || in_array($r['slug'], $rootTwins, true)) {
+            continue; // farklı canonical veya kök ikizi varsa sitemap'e ekleme
         }
         $urls[] = ['loc' => url('istanbul/' . $r['slug'], $r['lang']), 'lastmod' => $r['updated_at'], 'priority' => '0.6'];
     }

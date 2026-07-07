@@ -61,6 +61,22 @@ require BASE_PATH . '/app/views/layout/header.php';
     </div>
 </div>
 
+<?php $brand = setting('site_name', SITE_NAME); ?>
+<section class="section seo-intro">
+    <div class="container">
+        <div class="seo-intro-box">
+            <p>
+                <strong><?= e($brand) ?></strong>, İstanbul Bağcılar Güneşli'de hizmet veren profesyonel bir
+                dövme stüdyosudur. Minimal dövme, yazı dövmesi, sembol dövmeleri ve kişiye özel tattoo
+                tasarımları için randevulu hizmet veriyoruz. Bağcılar, Güneşli ve İstanbul çevresinde dövme
+                yaptırmak isteyenler WhatsApp üzerinden kolayca randevu alabilir.
+            </p>
+            <a class="btn btn-wa" href="<?= e(whatsapp_link('Merhaba, ' . $brand . ' hakkında bilgi almak istiyorum.')) ?>"
+               target="_blank" rel="noopener"><?= icon('whatsapp', 'icon-sm') ?> WhatsApp ile Randevu Al</a>
+        </div>
+    </div>
+</section>
+
 <section class="section">
     <div class="container">
         <div class="section-head center">

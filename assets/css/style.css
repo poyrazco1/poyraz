@@ -762,3 +762,19 @@ main, section, footer, header { max-width: 100%; }
 .chip-link:hover { border-color: var(--red); color: var(--red); }
 .loc-card { text-decoration: none; }
 .loc-card .card-link { color: var(--red); font-weight: 700; font-size: .85rem; display: inline-flex; align-items: center; gap: 4px; }
+
+/* --- Ana sayfa SEO tanıtım metni ------------------------------------------- */
+.seo-intro { padding-block: clamp(30px, 5vw, 48px); }
+.seo-intro-box {
+    max-width: 900px; margin-inline: auto; text-align: center;
+    background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: clamp(24px, 4vw, 40px);
+}
+.seo-intro-box p { color: #d4d4d8; font-size: 1.05rem; line-height: 1.7; margin: 0 0 18px; }
+.seo-intro-box strong { color: var(--white); }
+
+/* --- Footer adres bloğu ---------------------------------------------------- */
+.footer-address { font-style: normal; color: #cfcfcf; font-size: .9rem; line-height: 1.9; margin: 14px 0; }
+.footer-address .icon { color: var(--red); vertical-align: -0.15em; }
+.footer-address a { color: #cfcfcf; }
+.footer-address a:hover { color: var(--red); }

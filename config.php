@@ -18,11 +18,11 @@ define('DB_CHARSET', 'utf8mb4');
 // ---------------------------------------------------------------------------
 // SİTE
 // ---------------------------------------------------------------------------
-// Sitenin tam adresi, sonda / OLMADAN. Örn: https://www.d4stattoo.com
+// Sitenin tam adresi, sonda / OLMADAN.
 // Boş bırakılırsa istekten otomatik algılanır (Plesk'te genelde sorunsuz çalışır).
-define('APP_URL', '');
+define('APP_URL', 'https://d4stattoo.com');
 
-define('SITE_NAME', 'D4stattoo');
+define('SITE_NAME', 'D4S Tattoo');
 define('DEFAULT_LANGUAGE', 'tr');
 
 // ---------------------------------------------------------------------------

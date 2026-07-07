@@ -38,5 +38,8 @@ set_exception_handler(function (Throwable $e) {
 
 secure_session_start();
 
+// Tek seferlik marka adı güncellemesi (D4stattoo → D4S Tattoo); bayrakla korunur.
+ensure_brand_name();
+
 // Varsayılan dil yüklenir; router dili belirledikten sonra tekrar set edilir.
 Lang::set(DEFAULT_LANGUAGE);

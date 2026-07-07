@@ -78,27 +78,38 @@ function jsonld(array $data): string
 /** LocalBusiness / TattooParlor şeması */
 function jsonld_local_business(): string
 {
+    $tel = '+' . whatsapp_number();
     return jsonld([
         '@context' => 'https://schema.org',
         '@type'    => 'TattooParlor',
+        '@id'      => base_url() . '/#d4s-tattoo',
         'name'     => setting('site_name', SITE_NAME),
+        'url'      => base_url() . '/',
         'description' => setting('site_description', ''),
-        'url'      => base_url(),
         'image'    => upload_url(setting('logo', ''), 'img/logo.svg'),
-        'telephone' => '+' . whatsapp_number(),
+        'telephone' => $tel,
         'priceRange' => '₺₺',
         'address'  => [
             '@type' => 'PostalAddress',
             'addressLocality' => 'Bağcılar',
             'addressRegion'   => 'İstanbul',
             'addressCountry'  => 'TR',
+            'streetAddress'   => 'Güneşli', // sahte açık adres yok; yalnızca semt
         ],
+        'areaServed' => ['Bağcılar', 'Güneşli', 'İstanbul'],
         'openingHoursSpecification' => [[
             '@type' => 'OpeningHoursSpecification',
             'dayOfWeek' => ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
             'opens' => '09:00', 'closes' => '23:00',
         ]],
         'sameAs' => array_values(array_filter([setting('instagram_url', INSTAGRAM_URL)])),
+        'contactPoint' => [
+            '@type' => 'ContactPoint',
+            'telephone' => $tel,
+            'contactType' => 'customer service',
+            'areaServed' => 'TR',
+            'availableLanguage' => ['Turkish'],
+        ],
     ]);
 }
 

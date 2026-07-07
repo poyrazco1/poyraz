@@ -9,11 +9,16 @@ $footServices = rows_lang(
     <div class="container footer-grid">
         <div class="footer-col footer-brand">
             <img src="<?= e(setting('logo') ? upload_url(setting('logo')) : asset('img/logo.svg')) ?>"
-                 alt="<?= e(setting('site_name', SITE_NAME)) ?>" class="footer-logo">
+                 alt="<?= e(setting('site_name', SITE_NAME)) ?> Güneşli Bağcılar dövme stüdyosu" class="footer-logo">
             <p><?= e(setting('footer_text')) ?></p>
+            <address class="footer-address">
+                <strong><?= e(setting('site_name', SITE_NAME)) ?></strong><br>
+                <?= icon('location', 'icon-sm') ?> Güneşli, Bağcılar / İstanbul<br>
+                <?= icon('phone', 'icon-sm') ?> WhatsApp: <a href="tel:+<?= e(whatsapp_number()) ?>"><?= e(setting('phone', '+90 505 801 61 26')) ?></a>
+            </address>
             <div class="footer-social">
-                <a href="<?= e(setting('instagram_url', INSTAGRAM_URL)) ?>" target="_blank" rel="noopener" aria-label="Instagram" class="social-link"><?= icon('instagram', 'icon-sm') ?> Instagram</a>
-                <a href="<?= e(whatsapp_link(t('whatsapp.default_message'))) ?>" target="_blank" rel="noopener" aria-label="WhatsApp" class="social-link"><?= icon('whatsapp', 'icon-sm') ?> WhatsApp</a>
+                <a href="<?= e(whatsapp_link('Merhaba, ' . setting('site_name', SITE_NAME) . ' hakkında bilgi almak istiyorum.')) ?>" target="_blank" rel="noopener" class="social-link"><?= icon('whatsapp', 'icon-sm') ?> WhatsApp ile Randevu Al</a>
+                <a href="<?= e(setting('instagram_url', INSTAGRAM_URL)) ?>" target="_blank" rel="noopener" aria-label="Instagram" class="social-link"><?= icon('instagram', 'icon-sm') ?> @d4stattoo</a>
             </div>
         </div>
         <div class="footer-col">
