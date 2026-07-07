@@ -90,7 +90,8 @@ p { margin: 0 0 1em; }
     border-bottom: 1px solid var(--line);
 }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; }
-.brand-logo { height: 34px; width: auto; }
+.brand { display: inline-flex; align-items: center; }
+.brand-logo { height: 52px; width: auto; max-width: 220px; object-fit: contain; display: block; }
 
 .nav-toggle {
     display: none; align-items: center; justify-content: center;
@@ -510,7 +511,7 @@ p { margin: 0 0 1em; }
 @media (max-width: 900px) {
     .nav-toggle { display: inline-flex; }
     .header-inner { min-height: 64px; }
-    .brand-logo { height: 28px; max-width: 130px; }
+    .brand-logo { height: 42px; max-width: 150px; }
 
     /* Off-canvas panel */
     .main-nav {
